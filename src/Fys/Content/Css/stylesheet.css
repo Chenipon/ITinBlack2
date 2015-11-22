@@ -39,3 +39,7 @@
     -fx-background-radius: 0;
     -fx-text-fill: #ffffff;
 }
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #B71C1C; 
+}

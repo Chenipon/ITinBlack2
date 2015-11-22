@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +21,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -35,14 +33,10 @@ public class StatisticsTotalLuggageController implements Initializable {
 
     public static User currentUser;
 
-    @FXML
-    private Label lblUsername, lblErrorMessage;
-    @FXML
-    private MenuButton ddwnLuggageType;
-    @FXML
-    private BarChart<String, Number> barChart;
-    @FXML
-    private DatePicker startDate, endDate;
+    @FXML private Label lblUsername, lblErrorMessage;
+    @FXML private MenuButton ddwnLuggageType;
+    @FXML private BarChart<String, Number> barChart;
+    @FXML private DatePicker startDate, endDate;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,10 +54,43 @@ public class StatisticsTotalLuggageController implements Initializable {
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
             if (end.isAfter(start)) {
-                lblErrorMessage.setText("");
-                ChartTools chartTools = new ChartTools();
-                System.out.println(chartTools.getLostLuggage(start));
-                //CONTINUE CHARTS IN HERE
+                switch (ddwnLuggageType.getText()) {
+                    case ("Lost"): {
+                        lblErrorMessage.setText("");
+                        barChart.getData().clear();
+                        ChartTools chartTools = new ChartTools();
+                        final CategoryAxis xAxis = new CategoryAxis();
+                        final NumberAxis yAxis = new NumberAxis();
+                        barChart.setTitle("Total Luggage reported as \"Lost\"");
+                        xAxis.setLabel("Date");
+                        yAxis.setLabel("Amount");
+                        
+                        XYChart.Series lostLuggage = new XYChart.Series();
+                        lostLuggage.setName("Lost Luggage");
+                        LocalDate iterateDate = start;
+                        while(!(iterateDate.equals(end))) {
+                            lostLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getLostLuggage(iterateDate)));
+                            iterateDate = iterateDate.plusDays(1);
+                        }
+                        lostLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getLostLuggage(iterateDate)));
+                        barChart.getData().addAll(lostLuggage);
+                        break;
+                    }
+                    case ("Found"): {
+                        lblErrorMessage.setText("");
+                        ChartTools chartTools = new ChartTools();
+                        break;
+                    }
+                    case ("Connected"): {
+                        lblErrorMessage.setText("");
+                        ChartTools chartTools = new ChartTools();
+                        break;
+                    }
+                    default: {
+                        lblErrorMessage.setText("Please select a luggage type");
+                        break;
+                    }
+                }
             } else {
                 lblErrorMessage.setText("Start Date can't be after End Date");
             }
@@ -74,23 +101,20 @@ public class StatisticsTotalLuggageController implements Initializable {
 
     @FXML
     private void ddwnLostLuggageEvent(ActionEvent event) {
-        ddwnLuggageType.setText("Lost"); //Sets the text of the ddwn.
+        ddwnLuggageType.setText("Lost");
         ddwnLuggageType.setPrefWidth(95);
-        System.out.println("Lost Luggage Selected");
     }
 
     @FXML
     private void ddwnFoundLuggageEvent(ActionEvent event) {
-        ddwnLuggageType.setText("Found"); //Sets the text of the ddwn.
+        ddwnLuggageType.setText("Found");
         ddwnLuggageType.setPrefWidth(95);
-        System.out.println("Found Luggage Selected");
     }
 
     @FXML
     private void ddwnConnectedLuggageEvent(ActionEvent event) {
-        ddwnLuggageType.setText("Connected"); //Sets the text of the ddwn.
+        ddwnLuggageType.setText("Connected");
         ddwnLuggageType.setPrefWidth(95);
-        System.out.println("Connected Luggage Selected");
     }
 
     //-- DO NOT TOUCH ANY CODE BELOW THIS COMMENT. THESE ARE THE MENU BUTTONS. --
