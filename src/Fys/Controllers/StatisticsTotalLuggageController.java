@@ -57,13 +57,16 @@ public class StatisticsTotalLuggageController implements Initializable {
     @FXML
     private void btnFilterEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
         if (startDate.getValue() != null || endDate.getValue() != null) {
-            lblErrorMessage.setText("");
-            
-            ChartTools chartTools = new ChartTools();
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
-            System.out.println(chartTools.getLostLuggage(start));
-            //CONTINUE CHARTS IN HERE
+            if (end.isAfter(start)) {
+                lblErrorMessage.setText("");
+                ChartTools chartTools = new ChartTools();
+                System.out.println(chartTools.getLostLuggage(start));
+                //CONTINUE CHARTS IN HERE
+            } else {
+                lblErrorMessage.setText("Start Date can't be after End Date");
+            }
         } else {
             lblErrorMessage.setText("Please specify date(s)");
         }

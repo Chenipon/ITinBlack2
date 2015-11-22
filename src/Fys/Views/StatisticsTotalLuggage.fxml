@@ -48,7 +48,7 @@
                   </MenuButton>
                   <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" />
                   <DatePicker fx:id="endDate" layoutX="156.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" />
-                  <Label fx:id="lblErrorMessage" layoutX="441.0" layoutY="140.0" prefHeight="17.0" prefWidth="188.0" textFill="RED">
+                  <Label fx:id="lblErrorMessage" layoutX="441.0" layoutY="140.0" prefHeight="17.0" prefWidth="221.0" textFill="RED">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
