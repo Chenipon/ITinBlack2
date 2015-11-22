@@ -80,7 +80,7 @@
                </children>
             </AnchorPane>
             <Button fx:id="btnTotalLuggage" alignment="CENTER" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" onAction="#btnTotalLuggageEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Statistics in total" textAlignment="CENTER" textOverrun="CLIP" />
-            <Button fx:id="btnLuggagePerEmployee" alignment="CENTER" layoutX="14.0" layoutY="196.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Stastitics per employee" textAlignment="CENTER" textOverrun="CLIP" />
+            <Button fx:id="btnLuggagePerEmployee" alignment="CENTER" layoutX="14.0" layoutY="196.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Statistics per employee" textAlignment="CENTER" textOverrun="CLIP" />
          </children>
       </AnchorPane>
    </left>
