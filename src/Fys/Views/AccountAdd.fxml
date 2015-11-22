@@ -51,7 +51,6 @@
                   <TextField fx:id="password" layoutX="115.0" layoutY="106.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="firstName" layoutX="115.0" layoutY="138.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="lastName" layoutX="115.0" layoutY="169.0" prefHeight="25.0" prefWidth="200.0" />
-                  <ChoiceBox fx:id="role" layoutX="115.0" layoutY="201.0" prefHeight="25.0" prefWidth="200.0" />
                   <Button fx:id="btnAddAccount" alignment="CENTER" layoutX="220.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnAddAccountEvent" prefHeight="25.0" prefWidth="95.0" styleClass="btnRed" text="Add Account" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="12.0" />
@@ -62,6 +61,13 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
+                  <MenuButton fx:id="ddwnUserRole" layoutX="115.0" layoutY="201.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="User Role">
+                    <items>
+                      <MenuItem fx:id="ddwnRoleAdmin" mnemonicParsing="false" onAction="#ddwnRoleAdminEvent" text="Administrator" />
+                      <MenuItem fx:id="ddwnRoleManager" mnemonicParsing="false" onAction="#ddwnRoleManagerEvent" text="Manager" />
+                        <MenuItem fx:id="ddwnRoleEmployee" mnemonicParsing="false" onAction="#ddwnRoleEmployeeEvent" text="Employee" />
+                    </items>
+                  </MenuButton>
                </children></AnchorPane>
         </items>
       </SplitPane>

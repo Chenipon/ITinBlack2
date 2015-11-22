@@ -8,7 +8,7 @@ import org.apache.commons.codec.binary.Base64;
 
 /**
  *
- * @author Daan
+ * @author Daan Befort, IS106-2
  */
 public class Password {
 
@@ -23,6 +23,9 @@ public class Password {
     /**
      * Computes a salted PBKDF2 hash of given plaintext password suitable for
      * storing in a database. Empty passwords are not supported.
+     * @param password String password is a password in String format.
+     * @return String saltedHash. This is an encrypted String of the String password.
+     * @throws java.lang.Exception 
      */
     public static String getSaltedHash(String password) throws Exception {
         byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLen);
