@@ -44,6 +44,7 @@
                       <MenuItem fx:id="ddwnLostLuggage" mnemonicParsing="false" onAction="#ddwnLostLuggageEvent" text="Lost" />
                       <MenuItem fx:id="ddwnFoundLuggage" mnemonicParsing="false" onAction="#ddwnFoundLuggageEvent" text="Found" />
                         <MenuItem fx:id="ddwnConnectedLuggage" mnemonicParsing="false" onAction="#ddwnConnectedLuggageEvent" text="Connected" />
+                        <MenuItem fx:id="ddwnAllLuggage" mnemonicParsing="false" onAction="#ddwnAllLuggageEvent" text="All" />
                     </items>
                   </MenuButton>
                   <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" />

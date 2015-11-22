@@ -41,5 +41,11 @@
 }
 
 .default-color0.chart-bar {
-    -fx-bar-fill: #B71C1C; 
+    -fx-bar-fill: #C62828; 
+}
+.default-color1.chart-bar {
+    -fx-bar-fill: #F44336; 
+}
+.default-color2.chart-bar {
+    -fx-bar-fill: #EF9A9A; 
 }
