@@ -20,7 +20,7 @@ public class User {
     private String firstname;
     private String lastname;
     private int roleId;
-    private Date registerDate;
+    private String registerDate;
     private boolean active;
 
     private Role role;
@@ -84,11 +84,11 @@ public class User {
         this.roleId = roleId;
     }
 
-    public Date getRegisterDate() {
+    public String getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
@@ -110,14 +110,14 @@ public class User {
 
     public void insertUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO users (username,password,firstname,lastname,roleid,registerdate,active) VALUES (?,?,?,?,?,?,?,?)");
+            String query = ("INSERT INTO users (username,password,firstname,lastname,roleid,registerdate,active) VALUES (?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, user.username);
             preparedStatement.setString(2, user.password);
             preparedStatement.setString(3, user.firstname);
             preparedStatement.setString(4, user.lastname);
             preparedStatement.setInt(5, user.roleId);
-            preparedStatement.setDate(6, user.registerDate);
+            preparedStatement.setString(6, user.registerDate);
             preparedStatement.setBoolean(7, user.active);
             preparedStatement.executeUpdate();
         }
@@ -134,7 +134,7 @@ public class User {
                 this.firstname = result.getString(4);
                 this.lastname = result.getString(5);
                 this.roleId = result.getInt(6);
-                this.registerDate = result.getDate(7);
+                this.registerDate = result.getString(7);
                 this.active = result.getBoolean(8);
                 this.role = new Role().getRoleById(this.roleId);
             }
@@ -153,7 +153,7 @@ public class User {
                 this.firstname = result.getString(4);
                 this.lastname = result.getString(5);
                 this.roleId = result.getInt(6);
-                this.registerDate = result.getDate(7);
+                this.registerDate = result.getString(7);
                 this.active = result.getBoolean(8);
                 this.role = new Role().getRoleById(this.roleId);
             }

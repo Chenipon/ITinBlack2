@@ -54,8 +54,20 @@ public class Role {
                 this.id = result.getInt(1);
                 this.roleName = result.getString(2);
             }
-
         }
         return this;
     }
+    
+    public Role getRoleByName(String name) throws ClassNotFoundException, SQLException {
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            Statement statement = db.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM roles WHERE rolename='" + name + "'");
+            while (result.next()) {
+                this.id = result.getInt(1);
+                this.roleName = result.getString(2);
+            }
+        }
+        return this;
+    }
+    
 }

@@ -3,6 +3,7 @@ package Fys.Controllers;
 import Fys.Models.Luggage;
 import Fys.Models.Status;
 import Fys.Models.User;
+import Fys.Tools.DateConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -72,10 +73,11 @@ public class LuggageAddController implements Initializable {
                 luggageMaterial.setStyle("-fx-border-width: 0px;");
                 luggageColor.setStyle("-fx-border-width: 0px;");
 
+                DateConverter dateConverter = new DateConverter();
                 Luggage luggage = new Luggage(luggageType.getText(), luggageBrand.getText(),
                         luggageMaterial.getText(), luggageColor.getText(), luggageComments.getText());
                 luggage.setStatusId(luggage.getStatusIdByName(ddwnLuggageStatus.getText()));
-                luggage.setRegisterDate(luggage.convertJavaDateToSqlDate(new Date()));
+                luggage.setRegisterDate(dateConverter.getCurrentDateInSqlFormat());
                 luggage.setStatus(new Status().getStatusByName(ddwnLuggageStatus.getText()));
                 luggage.insertLuggage(luggage);
             } else {

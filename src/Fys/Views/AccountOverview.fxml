@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.AccountOverviewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.AccountOverviewController">
    <center>
       <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -30,8 +30,8 @@
                       <TableColumn fx:id="columnUsername" prefWidth="116.0" text="Username" />
                         <TableColumn fx:id="columnFirstname" minWidth="8.0" prefWidth="139.0" text="First Name" />
                         <TableColumn fx:id="columnLastname" prefWidth="182.0" text="Last Name" />
-                        <TableColumn fx:id="columnRole" prefWidth="70.0" text="Role" />
-                        <TableColumn fx:id="columnActive" prefWidth="53.0" text="Active" />
+                        <TableColumn fx:id="columnRole" prefWidth="101.0" text="Role" />
+                        <TableColumn fx:id="columnActive" prefWidth="98.0" text="Active" />
                     </columns>
                   </TableView>
                </children></AnchorPane>
