@@ -15,7 +15,6 @@ import javafx.collections.ObservableList;
 public class AccountTabelView {
 
     private String username;
-    private String password;
     private String firstname;
     private String lastname;
     private String role;
@@ -26,14 +25,6 @@ public class AccountTabelView {
     }
 
     public void setUsername(String username) {
-        this.username = username;
-    }
-    
-    public String getPassword() {
-        return username;
-    }
-
-    public void setPassword(String username) {
         this.username = username;
     }
 
@@ -97,7 +88,7 @@ public class AccountTabelView {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
-            result = statement.executeQuery("select * from users where username='" + searchTerm + "' or firstname='" + searchTerm + "' or lastname='" + searchTerm + "'");
+            result = statement.executeQuery("SELECT * FROM users WHERE username LIKE '%" + searchTerm + "%' OR firstname LIKE '%" + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%'");
             while (result.next()) {
                 AccountTabelView foundUsers = new AccountTabelView();
                 Role role = new Role().getRoleById(result.getInt(6));
@@ -108,7 +99,7 @@ public class AccountTabelView {
                 if (result.getBoolean(8)) {
                     foundUsers.setActive("Active");
                 } else {
-                    foundUsers.setActive("In active");
+                    foundUsers.setActive("Inactive");
                 }
                 users.add(foundUsers);
             }

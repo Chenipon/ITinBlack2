@@ -72,8 +72,12 @@ public class AccountOverviewController implements Initializable {
 
     @FXML
     private void btnSearchAccountEvent(ActionEvent event) throws Exception {
-        ObservableList<AccountTabelView> userList = new AccountTabelView().getAccountList(lblSearch.getText());
-        tblUsers.setItems(userList);
+        if (lblSearch.getText().equals("")) {
+            tblUsers.setItems(getUserList());
+        } else {
+            ObservableList<AccountTabelView> userList = new AccountTabelView().getAccountList(lblSearch.getText());
+            tblUsers.setItems(userList);
+        }
     }
 
     @FXML
