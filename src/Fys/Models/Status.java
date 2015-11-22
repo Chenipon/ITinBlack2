@@ -43,9 +43,10 @@ public class Status {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM luggagestatus WHERE id=" + id);
-            this.id = result.getInt(1);
-            this.statusName = result.getString(2);
-
+            while (result.next()) {
+                this.id = result.getInt(1);
+                this.statusName = result.getString(2);
+            }
         }
         return this;
     }
@@ -54,9 +55,10 @@ public class Status {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM luggagestatus WHERE statusname='" + statusName + "'");
-            this.id = result.getInt(1);
-            this.statusName = result.getString(2);
-
+            while (result.next()) {
+                this.id = result.getInt(1);
+                this.statusName = result.getString(2);
+            }
         }
         return this;
     }

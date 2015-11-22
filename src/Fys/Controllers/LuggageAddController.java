@@ -6,6 +6,8 @@ import Fys.Models.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -31,10 +33,14 @@ public class LuggageAddController implements Initializable {
 
     public static User currentUser;
 
-    @FXML private Label lblUsername, lblErrorMessage;
-    @FXML private MenuButton ddwnLuggageStatus;
-    @FXML private TextField luggageType, luggageBrand, luggageMaterial, luggageColor;
-    @FXML private TextArea luggageComments;
+    @FXML
+    private Label lblUsername, lblErrorMessage;
+    @FXML
+    private MenuButton ddwnLuggageStatus;
+    @FXML
+    private TextField luggageType, luggageBrand, luggageMaterial, luggageColor;
+    @FXML
+    private TextArea luggageComments;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -65,25 +71,13 @@ public class LuggageAddController implements Initializable {
                 luggageBrand.setStyle("-fx-border-width: 0px;");
                 luggageMaterial.setStyle("-fx-border-width: 0px;");
                 luggageColor.setStyle("-fx-border-width: 0px;");
-                
-                Luggage luggage = new Luggage();
-                luggage.setType(luggageType.getText());
-                luggage.setBrand(luggageBrand.getText());
-                luggage.setMaterial(luggageMaterial.getText());
-                luggage.setColor(luggageColor.getText());
-                luggage.setComment(luggageComments.getText());
-                luggage.setStatusId(luggage.getLuggageStatusIdByName(ddwnLuggageStatus.getText()));
-                luggage.setRegisterDate(null);
-                //luggage.setStatus(new Status().getStatusByName(ddwnLuggageStatus.getText()));
+
+                Luggage luggage = new Luggage(luggageType.getText(), luggageBrand.getText(),
+                        luggageMaterial.getText(), luggageColor.getText(), luggageComments.getText());
+                luggage.setStatusId(luggage.getStatusIdByName(ddwnLuggageStatus.getText()));
+                luggage.setRegisterDate(luggage.convertJavaDateToSqlDate(new Date()));
+                luggage.setStatus(new Status().getStatusByName(ddwnLuggageStatus.getText()));
                 luggage.insertLuggage(luggage);
-                
-                System.out.println("Successfully added Luggage:");
-                System.out.println("\t Type: " + luggageType.getText());
-                System.out.println("\t Brand: " + luggageBrand.getText());
-                System.out.println("\t Material: " + luggageMaterial.getText());
-                System.out.println("\t Color: " + luggageColor.getText());
-                System.out.println("\t Status: " + ddwnLuggageStatus.getText());
-                System.out.println("\t Comments: " + luggageComments.getText());
             } else {
                 lblErrorMessage.setText("Select a Luggage Status");
             }
