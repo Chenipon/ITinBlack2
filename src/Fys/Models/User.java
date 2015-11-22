@@ -136,7 +136,6 @@ public class User {
                 this.roleId = result.getInt(6);
                 this.registerDate = result.getDate(7);
                 this.active = result.getBoolean(8);
-
                 this.role = new Role().getRoleById(this.roleId);
             }
         }
@@ -161,4 +160,5 @@ public class User {
         }
         return this;
     }
+
 }

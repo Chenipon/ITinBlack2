@@ -2,6 +2,7 @@ package Fys.Controllers;
 
 import Fys.Tools.Password;
 import Fys.Models.User;
+import Fys.Tools.Screen;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -53,46 +54,24 @@ public class LoginController implements Initializable {
         }
     }
 
-    private void loadScreen(User user) throws Exception {
+    public Stage loadScreen(User user) throws Exception {
+        Screen screen = new Screen();
         switch (user.getRoleId()) {
             case (1): {
-                AccountOverviewController.currentUser = user;
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fys/Views/AccountOverview.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene((Pane) loader.load()));
-                stage.getScene().getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-                stage.setTitle("Account Overview");
-                stage.show();
-                break;
+                AccountOverviewController.getUser(user);
+                return screen.change("AccountOverview", "Account Overview");
             }
             case (2): {
                 StatisticsTotalLuggageController.currentUser = user;
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fys/Views/StatisticsTotalLuggage.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene((Pane) loader.load()));
-                stage.getScene().getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-                stage.setTitle("Statistics - Total");
-                stage.show();
-                break;
+                return screen.change("StatisticsTotalLuggage", "Statistics - Total");
             }
             case (3): {
                 LuggageOverviewController.currentUser = user;
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fys/Views/LuggageOverview.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene((Pane) loader.load()));
-                stage.getScene().getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-                stage.setTitle("Luggage Overview");
-                stage.show();
-                break;
+                return screen.change("LuggageOverview", "Luggage Overview");
             }
             default: {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fys/Views/Main.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene((Pane) loader.load()));
-                stage.getScene().getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-                stage.setTitle("Main");
-                stage.show();
-                break;
+                MainController.currentUser = user;
+                return screen.change("Main", "Error");
             }
         }
     }
