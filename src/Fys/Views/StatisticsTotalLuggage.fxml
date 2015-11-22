@@ -33,7 +33,7 @@
                   <TextField fx:id="endDate" layoutX="143.0" layoutY="136.0" prefHeight="25.0" prefWidth="97.0" promptText="End Date" />
                   <Button fx:id="btnFilter" layoutX="365.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
                   <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Print Statistics" />
-                  <BarChart layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0">
+                  <BarChart fx:id="barChart" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>

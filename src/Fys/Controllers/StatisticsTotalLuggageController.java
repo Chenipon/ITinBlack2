@@ -11,6 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
@@ -27,9 +31,9 @@ public class StatisticsTotalLuggageController implements Initializable {
     public static User currentUser;
     
     @FXML private Label lblUsername;
-    @FXML private TextField startDate;
-    @FXML private TextField endDate;
+    @FXML private TextField startDate, endDate;
     @FXML private MenuButton ddwnLuggageType;
+    @FXML private BarChart<String, Number> barChart;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -43,7 +47,37 @@ public class StatisticsTotalLuggageController implements Initializable {
     
     @FXML
     private void btnFilterEvent(ActionEvent event) {
-        System.out.println("Filter results");
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        barChart.setTitle("Total Luggage Lost");
+        xAxis.setLabel("Date");
+        yAxis.setLabel("Amount");
+        
+        XYChart.Series luggageLost = new XYChart.Series();
+        luggageLost.setName("Total Luggage Lost");
+        luggageLost.getData().add(new XYChart.Data("22-11-2015", 3));
+        luggageLost.getData().add(new XYChart.Data("23-11-2015", 4));
+        luggageLost.getData().add(new XYChart.Data("24-11-2015", 2));
+        luggageLost.getData().add(new XYChart.Data("25-11-2015", 5));
+        luggageLost.getData().add(new XYChart.Data("26-11-2015", 8));  
+        
+        XYChart.Series luggageFound = new XYChart.Series();
+        luggageFound.setName("Total Luggage Found");
+        luggageFound.getData().add(new XYChart.Data("22-11-2015", 1));
+        luggageFound.getData().add(new XYChart.Data("23-11-2015", 2));
+        luggageFound.getData().add(new XYChart.Data("24-11-2015", 2));
+        luggageFound.getData().add(new XYChart.Data("25-11-2015", 3));
+        luggageFound.getData().add(new XYChart.Data("26-11-2015", 1));  
+        
+        XYChart.Series luggageConnected = new XYChart.Series();
+        luggageConnected.setName("Total Luggage Connected");
+        luggageConnected.getData().add(new XYChart.Data("22-11-2015", 0));
+        luggageConnected.getData().add(new XYChart.Data("23-11-2015", 0));
+        luggageConnected.getData().add(new XYChart.Data("24-11-2015", 2));
+        luggageConnected.getData().add(new XYChart.Data("25-11-2015", 1));
+        luggageConnected.getData().add(new XYChart.Data("26-11-2015", 3));
+        
+        barChart.getData().addAll(luggageLost, luggageFound, luggageConnected);
     }
     
     @FXML
