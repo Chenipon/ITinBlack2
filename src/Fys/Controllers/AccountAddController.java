@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 
 /**
  * FXML Controller class. This class controls the Add Account screen including it's
@@ -27,10 +28,28 @@ public class AccountAddController implements Initializable {
     }
     
     @FXML private Label lblUsername;
+    @FXML private MenuButton ddwnUserRole;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
+    }
+    @FXML
+    private void ddwnRoleAdminEvent(ActionEvent event) {
+        ddwnUserRole.setText("Administrator");
+        ddwnUserRole.setPrefWidth(200);
+    }
+    
+    @FXML
+    private void ddwnRoleManagerEvent(ActionEvent event) {
+        ddwnUserRole.setText("Manager");
+        ddwnUserRole.setPrefWidth(200);        
+    }
+    
+    @FXML
+    private void ddwnRoleEmployeeEvent(ActionEvent event) {
+        ddwnUserRole.setText("Employee");
+        ddwnUserRole.setPrefWidth(200);        
     }
     
     @FXML
