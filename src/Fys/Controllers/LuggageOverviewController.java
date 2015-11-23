@@ -1,7 +1,7 @@
 package Fys.Controllers;
 
 import Fys.Models.User;
-import Fys.Views.ViewModels.AccountTabelView;
+import Fys.Tools.Screen;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,18 +10,14 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import Fys.Views.ViewModels.LuggageTabelView;
 
 /**
@@ -32,23 +28,28 @@ import Fys.Views.ViewModels.LuggageTabelView;
  */
 public class LuggageOverviewController implements Initializable {
 
-    public static User currentUser;
-
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private TableView tblLuggage;
     @FXML private TableColumn colType, colBrand, colMaterial, colColor, colComment, colStatus;
     @FXML private MenuButton ddwnLuggageType;
     @FXML private TextField lblSearch;
+    
+    private final Screen SCREEN = new Screen();
+    private static User currentUser;
+    
+    public static void getUser(User user) {
+        currentUser = user;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        colType.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("type"));
-        colBrand.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("brand"));
-        colMaterial.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("material"));
-        colColor.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("color"));
-        colComment.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("comment"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("status"));
+        colType.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("type"));
+        colBrand.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("brand"));
+        colMaterial.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("material"));
+        colColor.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("color"));
+        colComment.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("comment"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("status"));
         try {
             tblLuggage.setItems(getLuggageList());
         } catch (Exception ex) {
@@ -99,28 +100,16 @@ public class LuggageOverviewController implements Initializable {
     //-- DO NOT TOUCH THESE BUTTONS BELOW, THEY ARE THE DEFAULT MENU ITEMS --
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.currentUser = currentUser;
+        CustomerOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/CustomerOverview.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Customer Overview");
-        stage.show();
+        SCREEN.change("CustomerOverview", "Customer Overview");
     }
 
     @FXML
     private void btnAddLuggageEvent(ActionEvent event) throws IOException {
-        LuggageAddController.currentUser = currentUser;
+        LuggageAddController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/LuggageAdd.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Add Luggage");
-        stage.show();
+        SCREEN.change("LuggageAdd", "Add Luggage");
     }
 
     @FXML

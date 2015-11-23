@@ -54,8 +54,7 @@
                   </Text>
                   <TextField fx:id="firstName" layoutX="115.0" layoutY="74.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="lastName" layoutX="115.0" layoutY="105.0" prefHeight="25.0" prefWidth="200.0" />
-                  <ChoiceBox layoutX="115.0" layoutY="136.0" prefHeight="25.0" prefWidth="200.0" />
-                  <TextField fx:id="phoneNumber" layoutX="115.0" layoutY="168.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="phone" layoutX="115.0" layoutY="168.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="address" layoutX="115.0" layoutY="199.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="email" layoutX="115.0" layoutY="230.0" prefHeight="25.0" prefWidth="200.0" />
                   <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="269.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Customers Overview" textAlignment="CENTER" textOverrun="CLIP">
@@ -68,6 +67,17 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
+                  <MenuButton fx:id="ddwnGender" layoutX="115.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Select...">
+                    <items>
+                      <MenuItem fx:id="ddwnGenderMale" mnemonicParsing="false" onAction="#ddwnGenderMaleEvent" text="Male" />
+                      <MenuItem fx:id="ddwnGenderFemale" mnemonicParsing="false" onAction="#ddwnGenderFemaleEvent" text="Female" />
+                    </items>
+                  </MenuButton>
+                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="311.0" prefHeight="17.0" prefWidth="291.0" textFill="RED">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
         </items>
       </SplitPane>
