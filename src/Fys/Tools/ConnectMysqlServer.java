@@ -17,7 +17,7 @@ public class ConnectMysqlServer {
     public Connection dbConnect() throws ClassNotFoundException, SQLException{
         Class.forName("com.mysql.jdbc.Driver");
         System.out.println("Driver Loaded");
-        connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fys", "root", "7747SQL.fc");
+        connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fys", "root", "12qw12qw");
         System.out.println("Database connected");
         return connection;
     }

@@ -14,12 +14,21 @@ import javafx.collections.ObservableList;
  */
 public class AccountTabelView {
 
+    private int id;
     private String username;
     private String firstname;
     private String lastname;
     private String role;
     private String active;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -68,6 +77,7 @@ public class AccountTabelView {
             while (result.next()) {
                 AccountTabelView foundUsers = new AccountTabelView();
                 Role role = new Role().getRoleById(result.getInt(6));
+                foundUsers.setId(result.getInt(1));
                 foundUsers.setUsername(result.getString(2));
                 foundUsers.setFirstname(result.getString(4));
                 foundUsers.setLastname(result.getString(5));
@@ -92,6 +102,7 @@ public class AccountTabelView {
             while (result.next()) {
                 AccountTabelView foundUsers = new AccountTabelView();
                 Role role = new Role().getRoleById(result.getInt(6));
+                foundUsers.setId(result.getInt(1));
                 foundUsers.setUsername(result.getString(2));
                 foundUsers.setFirstname(result.getString(4));
                 foundUsers.setLastname(result.getString(5));

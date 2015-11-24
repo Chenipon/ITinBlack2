@@ -9,7 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class. This class controls the Edit Account screen including it's
@@ -21,16 +23,32 @@ public class AccountEditController implements Initializable {
     
     private final Screen SCREEN = new Screen();
     private static User currentUser;
+    private static User editUser;
     
     public static void getUser(User user)   {
         currentUser = user;
     }
     
+    public static void setEditUser(User user)   {
+        editUser = user;
+    }
+    
     @FXML private Label lblUsername;
+    @FXML private TextField txtUsername;
+    @FXML private TextField txtPassword;
+    @FXML private TextField txtFirstName;
+    @FXML private TextField txtLastName;
+    @FXML private ComboBox comboRole;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
+        
+        if (editUser != null) {
+            txtUsername.setText(editUser.getUsername());
+            txtFirstName.setText(editUser.getFirstname());
+            txtLastName.setText(editUser.getLastname());
+        }
     }
     
     @FXML
@@ -61,5 +79,4 @@ public class AccountEditController implements Initializable {
     private void btnLogoutEvent(ActionEvent event) {
         System.out.println("Log out");
     }
-    
 }
