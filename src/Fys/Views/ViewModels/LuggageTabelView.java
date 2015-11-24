@@ -119,6 +119,7 @@ public class LuggageTabelView {
             }
             while (result.next()) {
                 LuggageTabelView foundLuggage = new LuggageTabelView();
+                foundLuggage.setId(result.getInt(1));
                 foundLuggage.setType(result.getString(2));
                 foundLuggage.setBrand(result.getString(3));
                 foundLuggage.setMaterial(result.getString(4));

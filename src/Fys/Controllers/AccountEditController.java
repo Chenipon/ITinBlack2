@@ -9,16 +9,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
@@ -60,11 +57,9 @@ public class AccountEditController implements Initializable {
             txtFirstName.setText(editUser.getFirstname());
             txtLastName.setText(editUser.getLastname());
             if (editUser.isActive()) 
-                chckActive.selectedProperty().set(false);
-            else
                 chckActive.selectedProperty().set(true);
-            
-            
+            else
+                chckActive.selectedProperty().set(false);
             try {
                 comboRoles.setItems(new Role().getRoles());
                 comboRoles.setConverter(new StringConverter<Role>() {
@@ -94,9 +89,9 @@ public class AccountEditController implements Initializable {
             editUser.setFirstname(txtFirstName.getText());
             editUser.setLastname(txtLastName.getText());
             if (chckActive.selectedProperty().getValue())
-                editUser.setActive(false);
-            else
                 editUser.setActive(true);
+            else
+                editUser.setActive(false);
             editUser.setRoleId(newRole.getId());
             if (!txtPassword.getText().equals("")) {
                 editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
@@ -136,7 +131,7 @@ public class AccountEditController implements Initializable {
     
     @FXML
     private void boxDisableAccountEvent(ActionEvent event) {
-        System.out.println("Box checked");
+        
     }
     
     @FXML
