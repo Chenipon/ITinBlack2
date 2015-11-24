@@ -52,27 +52,39 @@
                         <Font name="Arial" size="14.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="luggageType" layoutX="116.0" layoutY="104.0" prefHeight="25.0" prefWidth="200.0" />
-                  <TextField fx:id="luggageBrand" layoutX="116.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" />
-                  <TextField fx:id="luggageMaterial" layoutX="116.0" layoutY="166.0" prefHeight="25.0" prefWidth="200.0" />
-                  <TextField fx:id="luggageColor" layoutX="116.0" layoutY="198.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="type" layoutX="116.0" layoutY="104.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="brand" layoutX="116.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="material" layoutX="116.0" layoutY="166.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="color" layoutX="116.0" layoutY="198.0" prefHeight="25.0" prefWidth="200.0" />
                   <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Luggage Overview" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnAddLuggage" alignment="CENTER" layoutX="221.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnSaveChangesEvent" prefHeight="25.0" prefWidth="95.0" styleClass="btnRed" text="Save Changes" textAlignment="CENTER" textOverrun="CLIP">
+                  <Button fx:id="btnSaveChanges" alignment="CENTER" layoutX="221.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnSaveChangesEvent" prefHeight="25.0" prefWidth="95.0" styleClass="btnRed" text="Save Changes" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <TextArea layoutX="116.0" layoutY="264.0" prefHeight="116.0" prefWidth="350.0" />
-                  <ChoiceBox fx:id="status" layoutX="116.0" layoutY="229.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextArea fx:id="comments" layoutX="116.0" layoutY="264.0" prefHeight="116.0" prefWidth="350.0" />
                   <Button fx:id="btnPrintProof" alignment="CENTER" layoutX="24.0" layoutY="57.0" mnemonicParsing="false" onAction="#btnPrintProofEvent" prefHeight="34.0" prefWidth="160.0" styleClass="btnRed" text="Print proof of registration" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
+                  <MenuButton fx:id="ddwnStatus" layoutX="116.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Select...">
+                    <items>
+                      <MenuItem fx:id="ddwnStatusLost" mnemonicParsing="false" onAction="#ddwnStatusLostEvent" text="Lost" />
+                      <MenuItem fx:id="ddwnStatusFound" mnemonicParsing="false" onAction="#ddwnStatusFoundEvent" text="Found" />
+                        <MenuItem fx:id="ddwnStatusConnected" mnemonicParsing="false" onAction="#ddwnStatusConnectedEvent" text="Connected" />
+                    </items>
+                  </MenuButton>
+                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="434.0" prefHeight="17.0" prefWidth="442.0" textFill="RED">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnSelectCustomer" layoutX="333.0" layoutY="229.0" mnemonicParsing="false" onAction="#btnSelectCustomerEvent" prefHeight="25.0" prefWidth="132.0" styleClass="btnRed" text="Select Customer" />
                </children></AnchorPane>
         </items>
       </SplitPane>

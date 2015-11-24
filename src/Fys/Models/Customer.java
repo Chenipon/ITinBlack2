@@ -110,8 +110,22 @@ public class Customer {
             preparedStatement.executeUpdate();
         }
     }
+    
+    public void updateCustomer(Customer customer) throws ClassNotFoundException, SQLException {
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            String query = "UPDATE customers SET firstname = ?,lastname = ?,gender = ?,phone = ?,address = ?,email = ? WHERE id=" + customer.getId();
+            PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
+            preparedStatement.setString(1, customer.firstName);
+            preparedStatement.setString(2, customer.lastName);
+            preparedStatement.setString(3, customer.gender);
+            preparedStatement.setString(4, customer.phone);
+            preparedStatement.setString(5, customer.address);
+            preparedStatement.setString(6, customer.email);
+            preparedStatement.executeUpdate();
+        }
+    }
 
-    public Customer getUserById(int id) throws ClassNotFoundException, SQLException {
+    public Customer getCustomerById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM customers WHERE id=" + id);

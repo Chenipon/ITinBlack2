@@ -33,6 +33,7 @@
                         <TableColumn fx:id="colPhone" prefWidth="101.0" text="Phone Number" />
                         <TableColumn fx:id="colAddress" prefWidth="169.0" text="Home Address" />
                         <TableColumn fx:id="colEmail" prefWidth="144.0" text="Email" />
+                        <TableColumn fx:id="colAction" prefWidth="57.0" />
                     </columns>
                   </TableView>
                   <Label fx:id="lblErrorMessage" layoutX="295.0" layoutY="126.0" prefHeight="17.0" prefWidth="358.0" textFill="RED">

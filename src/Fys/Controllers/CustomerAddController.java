@@ -53,7 +53,7 @@ public class CustomerAddController implements Initializable {
     }
     
     @FXML
-    private void btnAddCustomerEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
+    private void btnAddCustomerEvent(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
         if (!(firstName.getText().equals("") || lastName.getText().equals("") || 
                 phone.getText().equals("") || address.getText().equals(""))) {
             if (!ddwnGender.getText().equals("Select...")) {
@@ -72,6 +72,9 @@ public class CustomerAddController implements Initializable {
                 customer.setEmail(email.getText());
                 customer.setRegisterDate(new DateConverter().getCurrentDateInSqlFormat());
                 customer.insertCustomer(customer);
+                CustomerOverviewController.getUser(currentUser);
+                ((Node) event.getSource()).getScene().getWindow().hide();
+                SCREEN.change("CustomerOverview", "Customer Overview");
             } else {
                 lblErrorMessage.setText("Please select a gender");
             }

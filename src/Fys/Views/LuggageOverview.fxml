@@ -39,8 +39,9 @@
                       <TableColumn fx:id="colBrand" prefWidth="105.33334350585938" text="Brand" />
                         <TableColumn fx:id="colColor" minWidth="8.0" prefWidth="70.0" text="Color" />
                         <TableColumn fx:id="colMaterial" prefWidth="89.0" text="Material" />
-                        <TableColumn fx:id="colComment" prefWidth="266.3333740234375" text="Comments" />
-                        <TableColumn fx:id="colStatus" prefWidth="70.6666259765625" text="Status" />
+                        <TableColumn fx:id="colComment" prefWidth="255.0" text="Comments" />
+                        <TableColumn fx:id="colStatus" prefWidth="78.0" text="Status" />
+                        <TableColumn fx:id="colAction" prefWidth="59.0" />
                     </columns>
                   </TableView>
                   <Label fx:id="lblErrorMessage" layoutX="422.0" layoutY="128.0" prefHeight="15.0" prefWidth="185.0" textFill="RED">

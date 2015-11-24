@@ -54,8 +54,13 @@
                   </Text>
                   <TextField fx:id="firstName" layoutX="115.0" layoutY="114.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="lastName" layoutX="115.0" layoutY="145.0" prefHeight="25.0" prefWidth="200.0" />
-                  <ChoiceBox layoutX="115.0" layoutY="176.0" prefHeight="25.0" prefWidth="200.0" />
-                  <TextField fx:id="phoneNumber" layoutX="115.0" layoutY="208.0" prefHeight="25.0" prefWidth="200.0" />
+                  <MenuButton fx:id="ddwnGender" layoutX="115.0" layoutY="176.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Select...">
+                     <items>
+                        <MenuItem fx:id="ddwnGenderMale" mnemonicParsing="false" onAction="#ddwnGenderMaleEvent" text="Male" />
+                        <MenuItem fx:id="ddwnGenderFemale" mnemonicParsing="false" onAction="#ddwnGenderFemaleEvent" text="Female" />
+                     </items>
+                  </MenuButton>
+                  <TextField fx:id="phone" layoutX="115.0" layoutY="208.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="address" layoutX="115.0" layoutY="239.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="email" layoutX="115.0" layoutY="270.0" prefHeight="25.0" prefWidth="200.0" />
                   <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Customers Overview" textAlignment="CENTER" textOverrun="CLIP">

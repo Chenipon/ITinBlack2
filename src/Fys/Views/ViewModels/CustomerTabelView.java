@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
  */
 public class CustomerTabelView {
 
+    private int id;
     private String firstname;
     private String lastname;
     private String gender;
@@ -20,6 +21,14 @@ public class CustomerTabelView {
     private String address;
     private String email;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getFirstname() {
         return firstname;
     }
@@ -75,6 +84,7 @@ public class CustomerTabelView {
             ResultSet result = statement.executeQuery("SELECT * FROM customers");
             while (result.next()) {
                 CustomerTabelView foundCustomers = new CustomerTabelView();
+                foundCustomers.setId(result.getInt(1));
                 foundCustomers.setFirstname(result.getString(2));
                 foundCustomers.setLastname(result.getString(3));
                 foundCustomers.setGender(result.getString(4));
@@ -97,6 +107,7 @@ public class CustomerTabelView {
                     + searchTerm + "%' OR email LIKE '%" + searchTerm + "%'");
             while (result.next()) {
                 CustomerTabelView foundCustomers = new CustomerTabelView();
+                foundCustomers.setId(result.getInt(1));
                 foundCustomers.setFirstname(result.getString(2));
                 foundCustomers.setLastname(result.getString(3));
                 foundCustomers.setGender(result.getString(4));
