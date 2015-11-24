@@ -83,8 +83,16 @@ public class AccountAddController implements Initializable {
                 user.setRole(role);
                 user.setRegisterDate(dateConverter.getCurrentDateInSqlFormat());
                 user.setActive(true);
-                user.insertUser(user);
+                User checkUserExist = new User().getUserByUsername(user.getUsername());
+                if (checkUserExist.getId() == 0) {
+                    user.insertUser(user);
+                    ((Node) event.getSource()).getScene().getWindow().hide();
+                    SCREEN.change("AccountOverview", "Account Overview");
+                } else {
+                    lblErrorMessage.setText("Username already exist!");
+                }
             } else {
+                username.setStyle("-fx-text-box-border: red;");
                 lblErrorMessage.setText("Select a User Role");
             }
         } else {
@@ -111,8 +119,9 @@ public class AccountAddController implements Initializable {
     }
 
     @FXML
-    private void btnLogoutEvent(ActionEvent event) {
-        System.out.println("Log out");
+    private void btnLogoutEvent(ActionEvent event) throws Exception{
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        SCREEN.change("Login", "Login");
     }
 
 }
