@@ -36,8 +36,12 @@ public class LoginController implements Initializable {
             User user = new User().getUserByUsername(txtUsername.getText());
             if (user.getId() != 0) {
                 if (Password.check(txtPassword.getText(), user.getPassword())) {
-                    ((Node) event.getSource()).getScene().getWindow().hide();
-                    loadScreen(user);
+                    if (!user.isActive()) {
+                        lblError.setText("This account has been disabled");
+                    } else {
+                        ((Node) event.getSource()).getScene().getWindow().hide();
+                        loadScreen(user);
+                    }
                 } else {
                     lblError.setText("Invalid password");
                 }

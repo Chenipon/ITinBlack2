@@ -32,7 +32,7 @@
                         <TableColumn fx:id="columnLastname" prefWidth="182.0" text="Last Name" />
                         <TableColumn fx:id="columnRole" prefWidth="101.0" text="Role" />
                         <TableColumn fx:id="columnActive" prefWidth="98.0" text="Active" />
-                        <TableColumn fx:id="columnAction" prefWidth="75.0" text="Action" />
+                        <TableColumn fx:id="columnAction" prefWidth="107.0" />
                     </columns>
                   </TableView>
                </children></AnchorPane>

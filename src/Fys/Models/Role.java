@@ -1,10 +1,13 @@
 package Fys.Models;
 
 import Fys.Tools.ConnectMysqlServer;
+import Fys.Views.ViewModels.AccountTabelView;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -56,6 +59,21 @@ public class Role {
             }
         }
         return this;
+    }
+    
+    public ObservableList<Role> getRoles() throws Exception {
+        ObservableList<Role> roleList = FXCollections.observableArrayList();
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            Statement statement = db.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM roles");
+            while (result.next()) {
+                Role addRole = new Role();
+                addRole.id = result.getInt(1);
+                addRole.roleName = result.getString(2);
+                roleList.add(addRole);
+            }
+        }
+        return roleList;
     }
     
     public Role getRoleByName(String name) throws ClassNotFoundException, SQLException {

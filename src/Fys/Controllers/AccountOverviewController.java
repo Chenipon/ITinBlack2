@@ -1,5 +1,6 @@
 package Fys.Controllers;
 
+import Fys.Models.Role;
 import Fys.Models.User;
 import Fys.Tools.Screen;
 import Fys.Views.ViewModels.AccountTabelView;
@@ -83,6 +84,7 @@ public class AccountOverviewController implements Initializable {
                                     if (item != null) {
                                         try {
                                             User editUser = new User().getUserById(item.getId());
+                                            editUser.setRole(new Role().getRoleById(editUser.getRoleId()));
                                             AccountEditController.getUser(currentUser);
                                             AccountEditController.setEditUser(editUser);
                                             ((Node) event.getSource()).getScene().getWindow().hide();
