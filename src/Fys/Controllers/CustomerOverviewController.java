@@ -1,18 +1,24 @@
 package Fys.Controllers;
 
 import Fys.Models.User;
+import Fys.Tools.Screen;
+import Fys.Views.ViewModels.CustomerTabelView;
+import Fys.Views.ViewModels.LuggageTabelView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class. This class controls the Customer Overview screen 
@@ -22,44 +28,57 @@ import javafx.stage.Stage;
  */
 public class CustomerOverviewController implements Initializable {
     
-    public static User currentUser;
+    @FXML private Label lblUsername, lblErrorMessage;
+    @FXML private TextField lblSearch;
+    @FXML private TableColumn colFirstName, colLastName, colGender, colPhone, colAddress, colEmail;
+    @FXML private TableView tblCustomers;    
     
-    @FXML private Label lblUsername;
+    private final Screen SCREEN = new Screen();
+    private static User currentUser;
+    
+    public static void getUser(User user) {
+        currentUser = user;
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
+        colFirstName.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("firstname"));
+        colLastName.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("lastname"));
+        colGender.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("gender"));
+        colPhone.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("phone"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("address"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("email"));
+        try {
+            tblCustomers.setItems(getCustomerList());
+        } catch (Exception ex) {
+            Logger.getLogger(CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public ObservableList<CustomerTabelView> getCustomerList() throws Exception{
+        ObservableList<CustomerTabelView> customerList= new CustomerTabelView().getCustomerList();
+        return customerList;
     }
     
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
-        LuggageOverviewController.currentUser = currentUser;
+        LuggageOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/LuggageOverview.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Luggage Overview");
-        stage.show();
+        SCREEN.change("LuggageOverview", "Luggage Overview");
     }
     
     @FXML
     private void btnAddCustomerEvent(ActionEvent event) throws IOException {
-        CustomerAddController.currentUser = currentUser;
+        CustomerAddController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/CustomerAdd.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Add Customer");
-        stage.show();
+        SCREEN.change("CustomerAdd", "Add Customer");
     }
     
     @FXML
-    private void btnSearchCustomerEvent(ActionEvent event) {
-        System.out.println("Search Customer");
+    private void btnSearchCustomerEvent(ActionEvent event) throws Exception {
+        ObservableList<CustomerTabelView> customerList = new CustomerTabelView().getCustomerList(lblSearch.getText());
+        tblCustomers.setItems(customerList);
     }
     
     @FXML

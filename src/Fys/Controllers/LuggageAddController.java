@@ -4,25 +4,19 @@ import Fys.Models.Luggage;
 import Fys.Models.Status;
 import Fys.Models.User;
 import Fys.Tools.DateConverter;
+import Fys.Tools.Screen;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class. This class controls the Add Luggage screen including
@@ -31,17 +25,18 @@ import javafx.stage.Stage;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class LuggageAddController implements Initializable {
-
-    public static User currentUser;
-
-    @FXML
-    private Label lblUsername, lblErrorMessage;
-    @FXML
-    private MenuButton ddwnLuggageStatus;
-    @FXML
-    private TextField luggageType, luggageBrand, luggageMaterial, luggageColor;
-    @FXML
-    private TextArea luggageComments;
+    
+    @FXML private Label lblUsername, lblErrorMessage;
+    @FXML private MenuButton ddwnLuggageStatus;
+    @FXML private TextField luggageType, luggageBrand, luggageMaterial, luggageColor;
+    @FXML private TextArea luggageComments;
+    
+    private final Screen SCREEN = new Screen();
+    private static User currentUser;
+    
+    public static void getUser(User user) {
+        currentUser = user;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,42 +89,24 @@ public class LuggageAddController implements Initializable {
 
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
-        LuggageOverviewController.currentUser = currentUser;
+        LuggageOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/LuggageOverview.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Luggage Overview");
-        stage.show();
+        SCREEN.change("LuggageOverview", "Luggage Overview");
     }
 
     //-- DO NOT TOUCH THESE BUTTONS BELOW, THEY ARE THE DEFAULT MENU ITEMS --
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
-        LuggageOverviewController.currentUser = currentUser;
+        LuggageOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/LuggageOverview.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Luggage Overview");
-        stage.show();
+        SCREEN.change("LuggageOverview", "Luggage Overview");
     }
 
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.currentUser = currentUser;
+        CustomerOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/CustomerOverview.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Customer Overview");
-        stage.show();
+        SCREEN.change("CustomerOverview", "Customer Overview");
     }
 
     @FXML
