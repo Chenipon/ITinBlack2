@@ -1,6 +1,7 @@
 package Fys.Controllers;
 
 import Fys.Models.User;
+import Fys.Tools.Screen;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,13 +25,18 @@ import javafx.stage.Stage;
  */
 public class StatisticsLuggagePerEmployeeController implements Initializable {
     
-    public static User currentUser;
-    
     @FXML private Label lblUsername;
     @FXML private TextField startDate;
     @FXML private TextField endDate;
     @FXML private MenuButton ddwnLuggageType;
     @FXML private MenuButton ddwnSelectEmployee; //This needs to contain data from the DB as ddwn.
+    
+    private final Screen SCREEN = new Screen();
+    private static User currentUser;
+    
+    public static void getUser(User user) {
+        currentUser = user;
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,15 +77,9 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
     //-- DO NOT TOUCH ANY CODE BELOW THIS COMMENT. THESE ARE THE MENU BUTTONS. --
     @FXML
     private void btnTotalLuggageEvent(ActionEvent event) throws IOException {
-        StatisticsTotalLuggageController.currentUser = currentUser;
+        StatisticsTotalLuggageController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/StatisticsTotalLuggage.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Statistics - Total");
-        stage.show();
+        SCREEN.change("StatisticsTotalLuggage", "Statistics - Total");
     }
     
     @FXML

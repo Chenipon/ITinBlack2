@@ -2,6 +2,7 @@ package Fys.Controllers;
 
 import Fys.Models.User;
 import Fys.Tools.ChartTools;
+import Fys.Tools.Screen;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -9,11 +10,8 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -21,7 +19,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class. This class controls the Account Overview screen
@@ -31,13 +28,18 @@ import javafx.stage.Stage;
  */
 public class StatisticsTotalLuggageController implements Initializable {
 
-    public static User currentUser;
-
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private MenuButton ddwnLuggageType;
     @FXML private BarChart<String, Number> barChart;
     @FXML private DatePicker startDate, endDate;
 
+    private final Screen SCREEN = new Screen();
+    private static User currentUser;
+    
+    public static void getUser(User user) {
+        currentUser = user;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
@@ -45,7 +47,7 @@ public class StatisticsTotalLuggageController implements Initializable {
 
     @FXML
     private void btnPrintStatisticsEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
-
+        
     }
 
     @FXML
@@ -198,15 +200,9 @@ public class StatisticsTotalLuggageController implements Initializable {
     //-- DO NOT TOUCH ANY CODE BELOW THIS COMMENT. THESE ARE THE MENU BUTTONS. --
     @FXML
     private void btnLuggagePerEmployeeEvent(ActionEvent event) throws IOException {
-        StatisticsLuggagePerEmployeeController.currentUser = currentUser;
+        StatisticsLuggagePerEmployeeController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        Parent parent = FXMLLoader.load(getClass().getResource("/Fys/Views/StatisticsLuggagePerEmployee.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setScene(scene);
-        stage.setTitle("Statistics - Employee");
-        stage.show();
+        SCREEN.change("StatisticsLuggagePerEmployee", "Statistics - Employee");
     }
 
     @FXML

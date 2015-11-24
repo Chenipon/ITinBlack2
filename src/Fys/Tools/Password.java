@@ -34,8 +34,12 @@ public class Password {
     }
 
     /**
-     * Checks whether given plaintext password corresponds to a stored salted
+     * Checks whether given plain text password corresponds to a stored salted
      * hash of the password.
+     * @param password String password is the normal readable password
+     * @param stored
+     * @return boolean result of password check with the password stored in the Database
+     * @throws java.lang.Exception 
      */
     public static boolean check(String password, String stored) throws Exception {
         String[] saltAndPass = stored.split("\\$");

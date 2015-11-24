@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
                 return screen.change("AccountOverview", "Account Overview");
             }
             case (2): {
-                StatisticsTotalLuggageController.currentUser = user;
+                StatisticsTotalLuggageController.getUser(user);
                 return screen.change("StatisticsTotalLuggage", "Statistics - Total");
             }
             case (3): {
