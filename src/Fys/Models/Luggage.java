@@ -236,6 +236,20 @@ public class Luggage {
         }
     }
     
+    public void updateLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            String query = ("UPDATE luggage SET type = ?,brand = ?,material = ?,color = ?,comments = ?,statusid = ? WHERE id=" + luggage.getId());
+            PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
+            preparedStatement.setString(1, luggage.type);
+            preparedStatement.setString(2, luggage.brand);
+            preparedStatement.setString(3, luggage.material);
+            preparedStatement.setString(4, luggage.color);
+            preparedStatement.setString(5, luggage.comment);
+            preparedStatement.setInt(6, luggage.statusId);
+            preparedStatement.executeUpdate();
+        }
+    }
+    
     /**
      * public int getStatusIdByName(String statusName)
      * @param statusName String of a status name of a piece of luggage.

@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
  */
 public class LuggageTabelView {
 
+    private int id;
     private String type;
     private String brand;
     private String material;
@@ -21,6 +22,14 @@ public class LuggageTabelView {
     private String comment;
     private String status;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getType() {
         return type;
     }
@@ -76,6 +85,7 @@ public class LuggageTabelView {
             ResultSet result = statement.executeQuery("SELECT * FROM luggage");
             while (result.next()) {
                 LuggageTabelView foundLuggage = new LuggageTabelView();
+                foundLuggage.setId(result.getInt(1));
                 foundLuggage.setType(result.getString(2));
                 foundLuggage.setBrand(result.getString(3));
                 foundLuggage.setMaterial(result.getString(4));

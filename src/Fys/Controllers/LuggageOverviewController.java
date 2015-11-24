@@ -1,5 +1,6 @@
 package Fys.Controllers;
 
+import Fys.Models.Luggage;
 import Fys.Models.User;
 import Fys.Tools.Screen;
 import java.io.IOException;
@@ -19,6 +20,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import Fys.Views.ViewModels.LuggageTabelView;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.TableCell;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class. This class controls the Luggage Overview screen
@@ -30,7 +36,7 @@ public class LuggageOverviewController implements Initializable {
 
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private TableView tblLuggage;
-    @FXML private TableColumn colType, colBrand, colMaterial, colColor, colComment, colStatus;
+    @FXML private TableColumn colType, colBrand, colMaterial, colColor, colComment, colStatus, colAction;
     @FXML private MenuButton ddwnLuggageType;
     @FXML private TextField lblSearch;
     
@@ -50,6 +56,50 @@ public class LuggageOverviewController implements Initializable {
         colColor.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("color"));
         colComment.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("comment"));
         colStatus.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("status"));
+        colAction.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("action"));
+        Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView, String>> printColumnCellFactory
+                = new Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView, String>>() {
+
+                    @Override
+                    public TableCell call(final TableColumn param) {
+                        final TableCell cell = new TableCell() {
+
+                            @Override
+                            public void updateItem(Object item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setText(null);
+                                    setGraphic(null);
+                                } else {
+                                    final Button btnPrint = new Button("Edit");
+                                    btnPrint.setOnAction(new EventHandler<ActionEvent>() {
+
+                                        @Override
+                                        public void handle(ActionEvent event) {
+                                            param.getTableView().getSelectionModel().select(getIndex());
+                                            LuggageTabelView item = (LuggageTabelView) tblLuggage.getSelectionModel().getSelectedItem();
+                                            if (item != null) {
+                                                try {
+                                                    Luggage editLuggage = new Luggage().getLuggageById(item.getId());
+                                                    LuggageEditController.getUser(currentUser);
+                                                    LuggageEditController.setLuggage(editLuggage);
+                                                    ((Node) event.getSource()).getScene().getWindow().hide();
+                                                    SCREEN.change("LuggageEdit", "Edit Luggage");
+                                                } catch (Exception ex) {
+                                                    Logger.getLogger(AccountOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
+                                            }
+                                        }
+                                    });
+                                    setGraphic(btnPrint);
+                                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        colAction.setCellFactory(printColumnCellFactory);
         try {
             tblLuggage.setItems(getLuggageList());
         } catch (Exception ex) {
@@ -113,8 +163,9 @@ public class LuggageOverviewController implements Initializable {
     }
 
     @FXML
-    private void btnLogoutEvent(ActionEvent event) {
-        System.out.println("Log out");
+    private void btnLogoutEvent(ActionEvent event) throws IOException {
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        SCREEN.change("Login", "Login");
     }
 
 }

@@ -56,7 +56,7 @@ public class LuggageAddController implements Initializable {
     }
 
     @FXML
-    private void btnAddLuggageEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
+    private void btnAddLuggageEvent(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
         if (!(luggageType.getText().equals("")
                 || luggageBrand.getText().equals("")
                 || luggageMaterial.getText().equals("")
@@ -75,6 +75,9 @@ public class LuggageAddController implements Initializable {
                 luggage.setRegisterDate(dateConverter.getCurrentDateInSqlFormat());
                 luggage.setStatus(new Status().getStatusByName(ddwnLuggageStatus.getText()));
                 luggage.insertLuggage(luggage);
+                LuggageOverviewController.getUser(currentUser);
+                ((Node) event.getSource()).getScene().getWindow().hide();
+                SCREEN.change("LuggageOverview", "Luggage Overview");
             } else {
                 lblErrorMessage.setText("Select a Luggage Status");
             }
@@ -110,8 +113,9 @@ public class LuggageAddController implements Initializable {
     }
 
     @FXML
-    private void btnLogoutEvent(ActionEvent event) {
-        System.out.println("Log out");
+    private void btnLogoutEvent(ActionEvent event) throws IOException {
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        SCREEN.change("Login", "Login");
     }
 
 }

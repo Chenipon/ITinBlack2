@@ -24,14 +24,12 @@
                      </font>
                   </Text>
                   <Text layoutX="24.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Luggage per Employee statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected per registered employee in the application. A start and end date can also be specified to get a specific timerange. Press &quot;Print Statistics&quot; to print the current chart." wrappingWidth="370.486328125" />
-                  <Text layoutX="129.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                  <Text layoutX="142.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                      <font>
                         <Font name="Arial" size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="97.0" promptText="Start Date" />
-                  <TextField fx:id="endDate" layoutX="143.0" layoutY="136.0" prefHeight="25.0" prefWidth="97.0" promptText="End Date" />
-                  <Button fx:id="btnFilter" layoutX="507.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
+                  <Button fx:id="btnFilter" layoutX="515.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
                   <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Print Statistics" />
                   <BarChart layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0">
                     <xAxis>
@@ -41,14 +39,16 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </BarChart>
-                  <MenuButton fx:id="ddwnLuggageType" layoutX="253.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type">
+                  <MenuButton fx:id="ddwnLuggageType" layoutX="272.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type">
                     <items>
                       <MenuItem fx:id="ddwnLostLuggage" mnemonicParsing="false" onAction="#ddwnLostLuggageEvent" text="Lost" />
                       <MenuItem fx:id="ddwnFoundLuggage" mnemonicParsing="false" onAction="#ddwnFoundLuggageEvent" text="Found" />
                         <MenuItem fx:id="ddwnConnectedLuggage" mnemonicParsing="false" onAction="#ddwnConnectedLuggageEvent" text="Connected" />
                     </items>
                   </MenuButton>
-                  <MenuButton fx:id="ddwnSelectEmployee" layoutX="359.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Select Employee" />
+                  <MenuButton fx:id="ddwnSelectEmployee" layoutX="375.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Select Employee" />
+                  <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" />
+                  <DatePicker fx:id="endDate" layoutX="154.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" />
                </children></AnchorPane>
         </items>
       </SplitPane>
