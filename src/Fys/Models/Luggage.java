@@ -294,5 +294,16 @@ public class Luggage {
         }
         return this;
     }
+    
+    public boolean checkIfLuggageIsConnected(Luggage luggage) throws ClassNotFoundException, SQLException {
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            Statement statement = db.createStatement();
+            ResultSet result = statement.executeQuery("SELECT id FROM connections WHERE luggageid=" + id);
+            while (result.next()) {
+                return true;
+            }
+            return false;
+        }
+    }
 
 }

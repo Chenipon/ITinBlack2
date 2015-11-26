@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.LuggageSelectCustomerController">
+   <center>
+      <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage - Select Customer">
+                     <font>
+                        <Font name="Arial" size="26.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="lblSearch" layoutX="24.0" layoutY="111.0" prefHeight="25.0" prefWidth="254.0" promptText="Search term..." />
+                  <Button fx:id="btnSearchLuggage" layoutX="289.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnSearchCustomerEvent" styleClass="btnRed" text="Search" />
+                  <TableView fx:id="tblCustomers" layoutX="24.0" layoutY="153.0" prefHeight="497.0" prefWidth="745.0">
+                    <columns>
+                      <TableColumn fx:id="colFirstName" editable="false" prefWidth="101.0" text="First Name" />
+                      <TableColumn fx:id="colLastName" prefWidth="127.0" text="Last Name" />
+                        <TableColumn fx:id="colGender" minWidth="8.0" prefWidth="50.0" text="Gender" />
+                        <TableColumn fx:id="colPhone" prefWidth="116.0" text="Phone Number" />
+                        <TableColumn fx:id="colAddress" prefWidth="151.0" text="Home Address" />
+                        <TableColumn fx:id="colEmail" prefWidth="129.0" text="Email" />
+                        <TableColumn fx:id="colAction" prefWidth="70.0" />
+                    </columns>
+                  </TableView>
+                  <Text layoutX="24.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a customer from the list below to attach to the piece of Luggage that is being displayed on the right." wrappingWidth="315.13671875" />
+                  <Label fx:id="lblType" layoutX="418.0" layoutY="40.0" prefHeight="17.0" prefWidth="210.0" />
+                  <Button fx:id="btnBackToEdit" layoutX="636.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnBackToEditEvent" prefHeight="25.0" prefWidth="133.0" styleClass="btnRed" text="Back to Edit Luggage" />
+                  <Text layoutX="418.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Luggage" wrappingWidth="156.08984375">
+                     <font>
+                        <Font name="Arial" size="19.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="lblBrand" layoutX="418.0" layoutY="57.0" prefHeight="17.0" prefWidth="210.0" />
+                  <Label fx:id="lblMaterial" layoutX="418.0" layoutY="74.0" prefHeight="17.0" prefWidth="210.0" />
+                  <Label fx:id="lblColor" layoutX="418.0" layoutY="91.0" prefHeight="17.0" prefWidth="210.0" />
+                  <Text layoutX="381.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font></Text>
+                  <Text layoutX="374.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brand:">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font></Text>
+                  <Text layoutX="364.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Material:">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font></Text>
+                  <Text layoutX="378.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color:">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #B71C1C;" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <ImageView fitHeight="102.0" fitWidth="180.0" layoutX="10.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Content/Image/corendonlogo.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="100.0" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: #991818;">
+               <children>
+                  <Label layoutX="14.0" layoutY="16.0" text="Hello, " textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblUsername" layoutX="60.0" layoutY="16.0" prefHeight="20.0" prefWidth="125.0" text="username" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Button fx:id="btnLuggage" alignment="CENTER" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Luggage" textAlignment="CENTER" textOverrun="CLIP" />
+            <Button fx:id="btnCustomers" alignment="CENTER" layoutX="14.0" layoutY="196.0" mnemonicParsing="false" onAction="#btnCustomerEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Customers" textAlignment="CENTER" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+   </left>
+   <bottom>
+      <AnchorPane prefHeight="30.0" prefWidth="750.0" style="-fx-background-color: #991818;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnLogout" alignment="CENTER" layoutX="14.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnLogoutEvent" styleClass="btnWhite" text="Log out" textAlignment="CENTER" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>

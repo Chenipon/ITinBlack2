@@ -1,8 +1,11 @@
 package Fys.Controllers;
 
+import Fys.Models.Connection;
+import Fys.Models.Customer;
 import Fys.Models.Luggage;
 import Fys.Models.Status;
 import Fys.Models.User;
+import Fys.Tools.DateConverter;
 import Fys.Tools.Screen;
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class. This class controls the Edit Luggage screen including 
@@ -28,15 +32,18 @@ import javafx.scene.control.TextField;
  */
 public class LuggageEditController implements Initializable {
 
-    @FXML private Label lblUsername, lblErrorMessage;
+    @FXML private Label lblUsername, lblErrorMessage, lblFirstName, lblLastName, lblGender, lblPhone, lblAddress, lblEmail;
     @FXML private TextField type, brand, material, color;
     @FXML private TextArea comments;
     @FXML private MenuButton ddwnStatus;
     @FXML private Button btnSelectCustomer;
+    @FXML private AnchorPane paneCustomer;
     
     private final Screen SCREEN = new Screen();
     private static User currentUser;
     private static Luggage editLuggage;
+    private static Customer connectedCustomer;
+    private static Connection connection;
     
     public static void getUser(User user) {
         currentUser = user;
@@ -44,6 +51,14 @@ public class LuggageEditController implements Initializable {
     
     public static void setLuggage(Luggage luggage) {
         editLuggage = luggage;
+    }
+    
+    public static void setCustomer(Customer customer) {
+        connectedCustomer = customer;
+    }
+    
+    public static void setConnection(Connection newConnection) {
+        connection = newConnection;
     }
     
     @Override
@@ -54,14 +69,35 @@ public class LuggageEditController implements Initializable {
         material.setText(editLuggage.getMaterial());
         color.setText(editLuggage.getColor());
         comments.setText(editLuggage.getComment());
+        
+        try {
+            if(editLuggage.checkIfLuggageIsConnected(editLuggage)) {
+                connection = new Connection().getConnectionByLuggageId(editLuggage.getId());
+                connectedCustomer = new Customer().getCustomerById(connection.getCustomerId());
+                lblFirstName.setText(connectedCustomer.getFirstName());
+                lblLastName.setText(connectedCustomer.getLastName());
+                lblGender.setText(connectedCustomer.getGender());
+                lblPhone.setText(connectedCustomer.getPhone());
+                lblAddress.setText(connectedCustomer.getAddress());
+                lblEmail.setText(connectedCustomer.getEmail());
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         try { 
             ddwnStatus.setText(new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         if (ddwnStatus.getText().equals("Connected")) {
             btnSelectCustomer.setVisible(true);
+            if (connectedCustomer != null) {
+                paneCustomer.setVisible(true);
+            }
         } else {
+            paneCustomer.setVisible(false);
             btnSelectCustomer.setVisible(false);
         }
         
@@ -89,14 +125,28 @@ public class LuggageEditController implements Initializable {
     }
     
     @FXML
-    private void btnSelectCustomerEvent(ActionEvent event) {
-
+    private void btnSelectCustomerEvent(ActionEvent event) throws IOException {
+        LuggageSelectCustomerController.getUser(currentUser);
+        LuggageSelectCustomerController.setLuggage(editLuggage);
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        SCREEN.change("LuggageSelectCustomer", "Select Customer");
     }
     
     @FXML
     private void btnSaveChangesEvent(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
         if (!(type.getText().equals("") || brand.getText().equals("") || 
                 material.getText().equals("") || color.getText().equals(""))) {
+            if (ddwnStatus.getText().equals("Connected") && connectedCustomer == null) {
+                lblErrorMessage.setText("Please select a customer to connect to the luggage before saving");
+                return;
+            }
+            if (ddwnStatus.getText().equals("Connected")) {
+                connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
+                connection.insertConnection(connection);
+            } else {
+                System.out.println("Flush Connection with ID: " + connection.getId());
+                connection.deleteConnection(connection);
+            }
             lblErrorMessage.setText("");
             type.setStyle("-fx-border-width: 0px;");
             brand.setStyle("-fx-border-width: 0px;");

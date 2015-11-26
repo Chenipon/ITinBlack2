@@ -43,10 +43,10 @@ public class LoginController implements Initializable {
                         loadScreen(user);
                     }
                 } else {
-                    lblError.setText("Invalid password");
+                    lblError.setText("Invalid username or password");
                 }
             } else {
-                lblError.setText("Invalid username");
+                lblError.setText("Invalid username or password");
             }
         } else {
             txtUsername.setStyle("-fx-text-box-border: red;");
