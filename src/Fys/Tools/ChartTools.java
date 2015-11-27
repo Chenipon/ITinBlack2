@@ -26,28 +26,28 @@ public class ChartTools {
     }
     
     public int getFoundLuggage(LocalDate date) throws ClassNotFoundException, SQLException {
-        int lostLuggage = 0;
+        int foundLuggage = 0;
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT id FROM luggage WHERE registerdate LIKE '"
                     + date.toString() + "%' AND statusId=2");
             while (result.next()) {
-                lostLuggage++;
+                foundLuggage++;
             }
         }
-        return lostLuggage;
+        return foundLuggage;
     }
     
     public int getConnectedLuggage(LocalDate date) throws ClassNotFoundException, SQLException {
-        int lostLuggage = 0;
+        int connectedLuggage = 0;
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT id FROM luggage WHERE registerdate LIKE '"
-                    + date.toString() + "%' AND statusId=3");
+            ResultSet result = statement.executeQuery("SELECT id FROM connections WHERE connectiondate LIKE '"
+                    + date.toString() + "%'");
             while (result.next()) {
-                lostLuggage++;
+                connectedLuggage++;
             }
         }
-        return lostLuggage;
+        return connectedLuggage;
     }
 }

@@ -67,6 +67,17 @@ public class Connection {
         }
     }
     
+    public void updateConnection(Connection connection) throws ClassNotFoundException, SQLException {
+        try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
+            String query = ("UPDATE connections SET luggageid=?,customerid=?,connectiondate=? WHERE id=" + connection.getId());
+            PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
+            preparedStatement.setInt(1, connection.getLuggageId());
+            preparedStatement.setInt(2, connection.getCustomerId());
+            preparedStatement.setString(3, connection.getConnectionDate());
+            preparedStatement.executeUpdate();
+        }
+    }
+    
     public void deleteConnection(Connection connection) throws ClassNotFoundException, SQLException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
             String query = "DELETE FROM connections WHERE id= ?";

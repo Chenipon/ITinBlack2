@@ -90,11 +90,7 @@ public class LuggageSelectCustomerController implements Initializable {
                                             if (item != null) {
                                                 try {
                                                     Customer selectedCustomer = new Customer().getCustomerById(item.getId());
-                                                    Connection connection = new Connection();
-                                                    connection.setCustomerId(selectedCustomer.getId());
-                                                    connection.setLuggageId(selectedLuggage.getId());
                                                     selectedLuggage.setStatusId(3);
-                                                    LuggageEditController.setConnection(connection);
                                                     LuggageEditController.getUser(currentUser);
                                                     LuggageEditController.setCustomer(selectedCustomer);
                                                     LuggageEditController.setLuggage(selectedLuggage);

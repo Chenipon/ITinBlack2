@@ -77,8 +77,35 @@ public class LuggageEditController implements Initializable {
         }
         
         try {
+            //Check if there is already an existing connection with this luggage
             if (editLuggage.checkIfLuggageIsConnected(editLuggage)) {
+                System.out.println("There is a valid connection, initiate the Connection");
                 connection = new Connection().getConnectionByLuggageId(editLuggage.getId());
+            }
+            //Check if the connectedCustomer equals that of the connection, if the connectedCustomer is not null
+            if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer != null && (connectedCustomer.getId() == connection.getCustomerId())) {
+                System.out.println("IDs are the same!");
+                System.out.println(connectedCustomer.getId() + " " + connection.getCustomerId());
+                lblFirstName.setText(connectedCustomer.getFirstName());
+                lblLastName.setText(connectedCustomer.getLastName());
+                lblGender.setText(connectedCustomer.getGender());
+                lblPhone.setText(connectedCustomer.getPhone());
+                lblAddress.setText(connectedCustomer.getAddress());
+                lblEmail.setText(connectedCustomer.getEmail());
+            }
+            if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer != null && !(connectedCustomer.getId() == connection.getCustomerId())) {
+                System.out.println("IDs are NOT the same, most likely a new customer has been selected");
+                System.out.println(connectedCustomer.getId() + " " + connection.getCustomerId());
+                System.out.println("Set Customer details...");
+                lblFirstName.setText(connectedCustomer.getFirstName());
+                lblLastName.setText(connectedCustomer.getLastName());
+                lblGender.setText(connectedCustomer.getGender());
+                lblPhone.setText(connectedCustomer.getPhone());
+                lblAddress.setText(connectedCustomer.getAddress());
+                lblEmail.setText(connectedCustomer.getEmail());
+            }
+            if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer == null) {
+                System.out.println("The connectedCustomer is null and will be initialized from DB");
                 connectedCustomer = new Customer().getCustomerById(connection.getCustomerId());
                 lblFirstName.setText(connectedCustomer.getFirstName());
                 lblLastName.setText(connectedCustomer.getLastName());
@@ -86,7 +113,8 @@ public class LuggageEditController implements Initializable {
                 lblPhone.setText(connectedCustomer.getPhone());
                 lblAddress.setText(connectedCustomer.getAddress());
                 lblEmail.setText(connectedCustomer.getEmail());
-            } else if (!(editLuggage.checkIfLuggageIsConnected(editLuggage)) && connectedCustomer != null) {
+            } else if (connectedCustomer != null && !(editLuggage.checkIfLuggageIsConnected(editLuggage))) {
+                System.out.println("The connectedCustomer is not null, but there is no DB entry yet");
                 lblFirstName.setText(connectedCustomer.getFirstName());
                 lblLastName.setText(connectedCustomer.getLastName());
                 lblGender.setText(connectedCustomer.getGender());
@@ -147,16 +175,23 @@ public class LuggageEditController implements Initializable {
                 return;
             }
             if (ddwnStatus.getText().equals("Connected")) {
-                if (connectedCustomer.getId() == connection.getCustomerId()) {
-                    System.out.println("CUSTOMER ID: " + connectedCustomer.getId());
-                    System.out.println("CONNECTED CUSTOMER ID: " + new Customer().getCustomerById(connection.getCustomerId()).getId());
-                    System.out.println("CUSTOMER IS THE SAME");
+                if (editLuggage.checkIfLuggageIsConnected(editLuggage) && (connectedCustomer.getId() != connection.getCustomerId())) {
+                    System.out.println("UPDATE THE USER!");
+                    connection.setCustomerId(connectedCustomer.getId());
+                    connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
+                    connection.updateConnection(connection);
+                } else if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer.getId() == connection.getCustomerId()) {
+                    System.out.println("USER HAS NOT BEEN CHANGED");
                 } else {
-                    System.out.println("CUSTOMER HAS CHANGED");
+                    System.out.println("NO USER WAS SET IN DB, SET A NEW USER");
+                    connection = new Connection();
+                    connection.setCustomerId(connectedCustomer.getId());
+                    connection.setLuggageId(editLuggage.getId());
+                    connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
+                    connection.insertConnection(connection);
                 }
-                connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
-                connection.insertConnection(connection);
-            } else {
+            } else if (editLuggage.checkIfLuggageIsConnected(editLuggage)) {
+                connectedCustomer = null;
                 connection.deleteConnection(connection);
             }
             lblErrorMessage.setText("");
@@ -172,7 +207,8 @@ public class LuggageEditController implements Initializable {
             editLuggage.setComment(comments.getText());
             editLuggage.setStatusId(new Status().getStatusByName(ddwnStatus.getText()).getId());
             editLuggage.updateLuggage(editLuggage);
-        
+            
+            connectedCustomer = null;
             LuggageOverviewController.getUser(currentUser);
             ((Node) event.getSource()).getScene().getWindow().hide();
             SCREEN.change("LuggageOverview", "Luggage Overview");
@@ -192,6 +228,7 @@ public class LuggageEditController implements Initializable {
     
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
+        connectedCustomer = null;
         LuggageOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
         SCREEN.change("LuggageOverview", "Luggage Overview");
@@ -199,6 +236,7 @@ public class LuggageEditController implements Initializable {
     
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
+        connectedCustomer = null;
         LuggageOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
         SCREEN.change("LuggageOverview", "Luggage Overview");
@@ -206,6 +244,7 @@ public class LuggageEditController implements Initializable {
     
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
+        connectedCustomer = null;
         CustomerOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
         SCREEN.change("CustomerOverview", "Customer Overview");
