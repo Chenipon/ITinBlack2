@@ -70,8 +70,14 @@ public class LuggageEditController implements Initializable {
         color.setText(editLuggage.getColor());
         comments.setText(editLuggage.getComment());
         
+        try { 
+            ddwnStatus.setText(new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         try {
-            if(editLuggage.checkIfLuggageIsConnected(editLuggage)) {
+            if (editLuggage.checkIfLuggageIsConnected(editLuggage)) {
                 connection = new Connection().getConnectionByLuggageId(editLuggage.getId());
                 connectedCustomer = new Customer().getCustomerById(connection.getCustomerId());
                 lblFirstName.setText(connectedCustomer.getFirstName());
@@ -80,13 +86,14 @@ public class LuggageEditController implements Initializable {
                 lblPhone.setText(connectedCustomer.getPhone());
                 lblAddress.setText(connectedCustomer.getAddress());
                 lblEmail.setText(connectedCustomer.getEmail());
+            } else if (!(editLuggage.checkIfLuggageIsConnected(editLuggage)) && connectedCustomer != null) {
+                lblFirstName.setText(connectedCustomer.getFirstName());
+                lblLastName.setText(connectedCustomer.getLastName());
+                lblGender.setText(connectedCustomer.getGender());
+                lblPhone.setText(connectedCustomer.getPhone());
+                lblAddress.setText(connectedCustomer.getAddress());
+                lblEmail.setText(connectedCustomer.getEmail());
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try { 
-            ddwnStatus.setText(new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,7 +107,6 @@ public class LuggageEditController implements Initializable {
             paneCustomer.setVisible(false);
             btnSelectCustomer.setVisible(false);
         }
-        
     } 
     
     @FXML
@@ -141,10 +147,16 @@ public class LuggageEditController implements Initializable {
                 return;
             }
             if (ddwnStatus.getText().equals("Connected")) {
+                if (connectedCustomer.getId() == connection.getCustomerId()) {
+                    System.out.println("CUSTOMER ID: " + connectedCustomer.getId());
+                    System.out.println("CONNECTED CUSTOMER ID: " + new Customer().getCustomerById(connection.getCustomerId()).getId());
+                    System.out.println("CUSTOMER IS THE SAME");
+                } else {
+                    System.out.println("CUSTOMER HAS CHANGED");
+                }
                 connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
                 connection.insertConnection(connection);
             } else {
-                System.out.println("Flush Connection with ID: " + connection.getId());
                 connection.deleteConnection(connection);
             }
             lblErrorMessage.setText("");

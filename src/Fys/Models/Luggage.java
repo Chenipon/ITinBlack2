@@ -152,7 +152,7 @@ public class Luggage {
     }
 
     /**
-     * public void setMaterial(String comment)
+     * public void setComment(String comment)
      * @param comment Sets String comment to Luggage Object "comment"
      */
     public void setComment(String comment) {
@@ -236,6 +236,14 @@ public class Luggage {
         }
     }
     
+    /**
+     * public void updateLuggage(Luggage luggage)
+     * This method updates already registered luggage, which can be used in the
+     * events of changing of luggage data.
+     * @param luggage Luggage luggage is the luggage that needs to be updated
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void updateLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             String query = ("UPDATE luggage SET type = ?,brand = ?,material = ?,color = ?,comments = ?,statusid = ? WHERE id=" + luggage.getId());
