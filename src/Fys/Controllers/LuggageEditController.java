@@ -32,7 +32,8 @@ import javafx.scene.layout.AnchorPane;
  */
 public class LuggageEditController implements Initializable {
 
-    @FXML private Label lblUsername, lblErrorMessage, lblFirstName, lblLastName, lblGender, lblPhone, lblAddress, lblEmail;
+    @FXML private Label lblUsername, lblErrorMessage, lblFirstName, lblLastName, 
+            lblGender, lblPhone, lblAddress, lblEmail;
     @FXML private TextField type, brand, material, color;
     @FXML private TextArea comments;
     @FXML private MenuButton ddwnStatus;
@@ -57,10 +58,12 @@ public class LuggageEditController implements Initializable {
         connectedCustomer = customer;
     }
     
-    public static void setConnection(Connection newConnection) {
-        connection = newConnection;
-    }
-    
+    /** initialize(URL url, ResourceBundle rb) executes before the FXML gets
+     * loaded and initialized. This method is used to initialize all text and
+     * information before being displayed.
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
@@ -77,55 +80,31 @@ public class LuggageEditController implements Initializable {
         }
         
         try {
-            //Check if there is already an existing connection with this luggage
+            /* if there is a Connection of Luggage and Customer registered in the database,
+             * initialize this Connection.
+             */
             if (editLuggage.checkIfLuggageIsConnected(editLuggage)) {
-                System.out.println("There is a valid connection, initiate the Connection");
                 connection = new Connection().getConnectionByLuggageId(editLuggage.getId());
             }
-            //Check if the connectedCustomer equals that of the connection, if the connectedCustomer is not null
-            if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer != null && (connectedCustomer.getId() == connection.getCustomerId())) {
-                System.out.println("IDs are the same!");
-                System.out.println(connectedCustomer.getId() + " " + connection.getCustomerId());
-                lblFirstName.setText(connectedCustomer.getFirstName());
-                lblLastName.setText(connectedCustomer.getLastName());
-                lblGender.setText(connectedCustomer.getGender());
-                lblPhone.setText(connectedCustomer.getPhone());
-                lblAddress.setText(connectedCustomer.getAddress());
-                lblEmail.setText(connectedCustomer.getEmail());
-            }
-            if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer != null && !(connectedCustomer.getId() == connection.getCustomerId())) {
-                System.out.println("IDs are NOT the same, most likely a new customer has been selected");
-                System.out.println(connectedCustomer.getId() + " " + connection.getCustomerId());
-                System.out.println("Set Customer details...");
-                lblFirstName.setText(connectedCustomer.getFirstName());
-                lblLastName.setText(connectedCustomer.getLastName());
-                lblGender.setText(connectedCustomer.getGender());
-                lblPhone.setText(connectedCustomer.getPhone());
-                lblAddress.setText(connectedCustomer.getAddress());
-                lblEmail.setText(connectedCustomer.getEmail());
-            }
+            /* if there is a Connection of Luggage and Customer, and the Customer has
+             * not yet been initialized, initialize the Customer from the Connection
+             * and display the information of this Customer. This can happen when
+             * a Connection has been registered on the selected Luggage, but no
+             * Customer has been initialized yet.
+             */
             if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer == null) {
-                System.out.println("The connectedCustomer is null and will be initialized from DB");
                 connectedCustomer = new Customer().getCustomerById(connection.getCustomerId());
-                lblFirstName.setText(connectedCustomer.getFirstName());
-                lblLastName.setText(connectedCustomer.getLastName());
-                lblGender.setText(connectedCustomer.getGender());
-                lblPhone.setText(connectedCustomer.getPhone());
-                lblAddress.setText(connectedCustomer.getAddress());
-                lblEmail.setText(connectedCustomer.getEmail());
-            } else if (connectedCustomer != null && !(editLuggage.checkIfLuggageIsConnected(editLuggage))) {
-                System.out.println("The connectedCustomer is not null, but there is no DB entry yet");
-                lblFirstName.setText(connectedCustomer.getFirstName());
-                lblLastName.setText(connectedCustomer.getLastName());
-                lblGender.setText(connectedCustomer.getGender());
-                lblPhone.setText(connectedCustomer.getPhone());
-                lblAddress.setText(connectedCustomer.getAddress());
-                lblEmail.setText(connectedCustomer.getEmail());
+                setLabelText();
+            /* else if the Customer has been initialized, display the text from this 
+             * initialized Customer.
+             */
+            } else if (connectedCustomer != null) {
+                setLabelText();
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        //Enable the right buttons and panes on the scene based off their data.
         if (ddwnStatus.getText().equals("Connected")) {
             btnSelectCustomer.setVisible(true);
             if (connectedCustomer != null) {
@@ -137,27 +116,55 @@ public class LuggageEditController implements Initializable {
         }
     } 
     
+    /** setLabelText() fills the labels displaying the Customer information, when
+     * a connectedCustomer has been found.
+     */
+    public void setLabelText() {
+        lblFirstName.setText(connectedCustomer.getFirstName());
+        lblLastName.setText(connectedCustomer.getLastName());
+        lblGender.setText(connectedCustomer.getGender());
+        lblPhone.setText(connectedCustomer.getPhone());
+        lblAddress.setText(connectedCustomer.getAddress());
+        lblEmail.setText(connectedCustomer.getEmail());
+    }
+    
+    /** ddwnStatusLostEvent() replaces the text in the Status
+     * dropdown with "Lost" and sets the width to the default one of 200. Also
+     * disables the "Select Customer" button if visable.
+     */
     @FXML
-    private void ddwnStatusLostEvent(ActionEvent event) {
+    private void ddwnStatusLostEvent() {
         ddwnStatus.setText("Lost");
         btnSelectCustomer.setVisible(false);
         ddwnStatus.setPrefWidth(200);
     }
     
+    /** ddwnStatusFoundEvent() replaces the text in the Status
+     * dropdown with "Found" and sets the width to the default one of 200. Also
+     * disables the "Select Customer" button if visable.
+     */    
     @FXML
-    private void ddwnStatusFoundEvent(ActionEvent event) {
+    private void ddwnStatusFoundEvent() {
         ddwnStatus.setText("Found");
         btnSelectCustomer.setVisible(false);
         ddwnStatus.setPrefWidth(200);
     }
-    
+
+    /** ddwnStatusConnectedEvent() replaces the text in the Status
+     * dropdown with "Lost" and sets the width to the default one of 200. Also
+     * enables the "Select Customer" button.
+     */    
     @FXML
-    private void ddwnStatusConnectedEvent(ActionEvent event) {
+    private void ddwnStatusConnectedEvent() {
         ddwnStatus.setText("Connected");
         btnSelectCustomer.setVisible(true);
         ddwnStatus.setPrefWidth(200);
     }
     
+    /** btnSelectCustomerEvent(ActionEvent event) switches screen to the 
+     * LuggageSelectCustomer FXML screen. Also sends the Luggage and User objects
+     * to the controller of the LuggageSelectCustomer FXML screen.
+     */     
     @FXML
     private void btnSelectCustomerEvent(ActionEvent event) throws IOException {
         LuggageSelectCustomerController.getUser(currentUser);
@@ -176,14 +183,12 @@ public class LuggageEditController implements Initializable {
             }
             if (ddwnStatus.getText().equals("Connected")) {
                 if (editLuggage.checkIfLuggageIsConnected(editLuggage) && (connectedCustomer.getId() != connection.getCustomerId())) {
-                    System.out.println("UPDATE THE USER!");
                     connection.setCustomerId(connectedCustomer.getId());
                     connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
                     connection.updateConnection(connection);
                 } else if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer.getId() == connection.getCustomerId()) {
                     System.out.println("USER HAS NOT BEEN CHANGED");
                 } else {
-                    System.out.println("NO USER WAS SET IN DB, SET A NEW USER");
                     connection = new Connection();
                     connection.setCustomerId(connectedCustomer.getId());
                     connection.setLuggageId(editLuggage.getId());
