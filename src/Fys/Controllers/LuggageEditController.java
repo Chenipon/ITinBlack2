@@ -7,7 +7,24 @@ import Fys.Models.Status;
 import Fys.Models.User;
 import Fys.Tools.DateConverter;
 import Fys.Tools.Screen;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.Path;
+import com.itextpdf.tool.xml.html.ParaGraph;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -23,6 +40,12 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
 
 /**
  * FXML Controller class. This class controls the Edit Luggage screen including 
@@ -227,8 +250,53 @@ public class LuggageEditController implements Initializable {
     }
     
     @FXML
-    private void btnPrintProofEvent(ActionEvent event) {
-        System.out.println("Print Proof of Registration");
+    private void btnPrintProofEvent(ActionEvent event) throws DocumentException, Exception {
+        try{
+            Document document = new Document();
+        String fileName = "/temporaryPrintFileLuggage.pdf";
+        File fileLocation = new File(new File("temp").getAbsolutePath());
+        Image corendonLogo = Image.getInstance("src/Fys/Content/Image/corendonlogo.jpg");
+        Font fontbold = FontFactory.getFont("Arial", 18, Font.BOLD);
+        if (!fileLocation.exists()) {
+            fileLocation.mkdir();
+            System.out.println("directory temp created");
+        }
+        
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileLocation.getAbsolutePath() + fileName));
+        document.open();
+        // step 4
+        corendonLogo.scalePercent(20f);
+        document.add(corendonLogo);
+        document.add(new Paragraph("Proof of registration: Luggage", fontbold));
+        document.add(new Paragraph("Type: " + editLuggage.getType()));
+        document.add(new Paragraph("Brand: " + editLuggage.getBrand()));
+        document.add(new Paragraph("Color: " + editLuggage.getColor()));
+        document.add(new Paragraph("Material: " + editLuggage.getMaterial()));
+        document.add(new Paragraph("Status: " + editLuggage.getStatus().getStatusName()));
+        document.add(new Paragraph("Register date: " + editLuggage.getRegisterDate()));
+        
+        
+        // step 5
+        document.close();
+        
+        DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc printedDocument = new SimpleDoc(new FileInputStream(fileLocation.getAbsolutePath() + fileName), docFlavor, null);  
+        DocPrintJob printJob = choosePrinter().createPrintJob();
+        
+        printJob.print(printedDocument, new HashPrintRequestAttributeSet());
+        } catch(Exception ex){
+            System.out.println(ex.toString());
+            lblErrorMessage.setText("Somthing went wrong, your request is not printed.");
+        }
+    }
+    public static PrintService choosePrinter(){
+        PrinterJob printJob = PrinterJob.getPrinterJob();
+        if(printJob.printDialog()) {
+        return printJob.getPrintService();          
+        }
+        else {
+            return null;
+        }
     }
     
     @FXML
