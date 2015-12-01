@@ -83,7 +83,7 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Text layoutX="24.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Information">
+                  <Text layoutX="24.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Information">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>

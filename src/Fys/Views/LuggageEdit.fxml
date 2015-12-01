@@ -134,7 +134,7 @@
                         <Label fx:id="lblEmail" layoutX="101.0" layoutY="125.0" prefHeight="17.0" prefWidth="190.0" textFill="WHITE" />
                      </children>
                   </AnchorPane>
-                  <Text layoutX="26.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Information">
+                  <Text layoutX="26.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Information">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
