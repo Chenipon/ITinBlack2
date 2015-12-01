@@ -21,6 +21,7 @@ public class Customer {
     private String address;
     private String email;
     private String registerDate;
+    private int employeeId;
 
     public Customer() {
         this.firstName = "";
@@ -30,6 +31,7 @@ public class Customer {
         this.address = "";
         this.email = "";
         this.registerDate = "";
+        this.employeeId = 0;
     }
 
     public int getId() {
@@ -95,10 +97,18 @@ public class Customer {
     public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
+    
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public void insertCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO customers (firstname,lastname,gender,phone,address,email,registerdate) VALUES (?,?,?,?,?,?,?)");
+            String query = ("INSERT INTO customers (firstname,lastname,gender,phone,address,email,registerdate,employeeid) VALUES (?,?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, customer.firstName);
             preparedStatement.setString(2, customer.lastName);
@@ -107,6 +117,7 @@ public class Customer {
             preparedStatement.setString(5, customer.address);
             preparedStatement.setString(6, customer.email);
             preparedStatement.setString(7, customer.registerDate);
+            preparedStatement.setInt(8, customer.employeeId);
             preparedStatement.executeUpdate();
         }
     }
@@ -138,6 +149,7 @@ public class Customer {
                 this.address = result.getString(6);
                 this.email = result.getString(7);
                 this.registerDate = result.getString(8);
+                this.employeeId = result.getInt(9);
             }
         }
         return this;

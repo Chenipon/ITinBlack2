@@ -23,6 +23,7 @@ public class Luggage {
     private String comment;
     private int statusId;
     private String registerDate;
+    private int employeeId;
     private Status status;
 
     /**
@@ -38,6 +39,7 @@ public class Luggage {
         this.comment = "";
         this.statusId = 0;
         this.registerDate = null;
+        this.employeeId = 0;
         this.status = new Status();
     }
     
@@ -61,7 +63,9 @@ public class Luggage {
         this.comment = comment;
         this.statusId = 0;
         this.registerDate = null;
+        this.employeeId = 0;
         this.status = new Status();
+        
     }
 
     /**
@@ -195,6 +199,24 @@ public class Luggage {
     public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
+    
+    /**
+     * public int getEmployeeId()
+     * @return Gets int employeeid of Luggage Object. This is the employee id of 
+     * a piece of Luggage.
+     */
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    /**
+     *
+     * @param employeeId Sets int employeeId to Luggage Object "employeeId". This is the employee
+     * id of a piece of Luggage.
+     */
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
     /**
      * public Status getStatus()
@@ -223,7 +245,7 @@ public class Luggage {
      */
     public void insertLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO luggage (type,brand,material,color,comments,registerdate,statusid) VALUES (?,?,?,?,?,?,?)");
+            String query = ("INSERT INTO luggage (type,brand,material,color,comments,registerdate,statusid,employeeid) VALUES (?,?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, luggage.type);
             preparedStatement.setString(2, luggage.brand);
@@ -232,6 +254,7 @@ public class Luggage {
             preparedStatement.setString(5, luggage.comment);
             preparedStatement.setString(6, luggage.registerDate);
             preparedStatement.setInt(7, luggage.statusId);
+            preparedStatement.setInt(8, luggage.employeeId);
             preparedStatement.executeUpdate();
         }
     }
@@ -297,6 +320,7 @@ public class Luggage {
                 this.comment = result.getString(6);
                 this.registerDate = result.getString(7);
                 this.statusId = result.getInt(8);
+                this.employeeId = result.getInt(10);
                 this.status = new Status().getStatusById(this.statusId);
             }
         }

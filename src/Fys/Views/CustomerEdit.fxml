@@ -90,12 +90,12 @@
                   </Text>
                   <Text layoutX="24.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register date">
                      <font>
-                        <Font name="Arial" size="14.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Text>
                   <Text layoutX="24.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registered by">
                      <font>
-                        <Font name="Arial" size="14.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Text>
                   <Label fx:id="lblRegisterDate" layoutX="122.0" layoutY="403.0" prefHeight="17.0" prefWidth="193.0">

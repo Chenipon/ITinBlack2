@@ -74,6 +74,7 @@ public class LuggageAddController implements Initializable {
                 luggage.setStatusId(luggage.getStatusIdByName(ddwnLuggageStatus.getText()));
                 luggage.setRegisterDate(dateConverter.getCurrentDateInSqlFormat());
                 luggage.setStatus(new Status().getStatusByName(ddwnLuggageStatus.getText()));
+                luggage.setEmployeeId(currentUser.getId());
                 luggage.insertLuggage(luggage);
                 LuggageOverviewController.getUser(currentUser);
                 ((Node) event.getSource()).getScene().getWindow().hide();
