@@ -78,6 +78,36 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
+                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="345.0" prefHeight="17.0" prefWidth="291.0" textFill="RED">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="24.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Information">
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="24.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register date">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="24.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registered by">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="lblRegisterDate" layoutX="122.0" layoutY="403.0" prefHeight="17.0" prefWidth="193.0">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblRegisterEmployee" layoutX="122.0" layoutY="426.0" prefHeight="17.0" prefWidth="193.0">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
         </items>
       </SplitPane>

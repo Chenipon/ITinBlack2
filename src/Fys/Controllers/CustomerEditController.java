@@ -23,7 +23,7 @@ import javafx.scene.control.TextField;
  */
 public class CustomerEditController implements Initializable {
 
-    @FXML private Label lblUsername;
+    @FXML private Label lblUsername, lblErrorMessage, lblRegisterDate, lblRegisterEmployee;
     @FXML private TextField firstName, lastName, phone, address, email;
     @FXML private MenuButton ddwnGender;
     
@@ -64,16 +64,24 @@ public class CustomerEditController implements Initializable {
     
     @FXML
     private void btnSaveChangesEvent(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
-        editCustomer.setFirstName(firstName.getText());
-        editCustomer.setLastName(lastName.getText());
-        editCustomer.setGender(ddwnGender.getText());
-        editCustomer.setPhone(phone.getText());
-        editCustomer.setAddress(address.getText());
-        editCustomer.setEmail(email.getText());
-        editCustomer.updateCustomer(editCustomer);
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        if (firstName.getText().equals("") || lastName.getText().equals("") || 
+                phone.getText().equals("") || address.getText().equals("") || 
+                email.getText().equals("")) {
+            lblErrorMessage.setText("");
+            editCustomer.setFirstName(firstName.getText());
+            editCustomer.setLastName(lastName.getText());
+            editCustomer.setGender(ddwnGender.getText());
+            editCustomer.setPhone(phone.getText());
+            editCustomer.setAddress(address.getText());
+            editCustomer.setEmail(email.getText());
+            editCustomer.updateCustomer(editCustomer);
+            CustomerOverviewController.getUser(currentUser);
+            ((Node) event.getSource()).getScene().getWindow().hide();
+            SCREEN.change("CustomerOverview", "Customer Overview");
+        } else {
+            lblErrorMessage.setText("The highlighted fields can't be empty");
+            
+        }
     }
     
     @FXML

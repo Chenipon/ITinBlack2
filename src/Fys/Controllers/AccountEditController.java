@@ -20,25 +20,25 @@ import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
 /**
- * FXML Controller class. This class controls the Edit Account screen including it's
- * features.
+ * FXML Controller class. This class controls the Edit Account screen including
+ * it's features.
  *
- * @author Daan Befort, Jeffrey van der Lingen, IS106-2
+ * @author Daan Befort, IS106-2
  */
 public class AccountEditController implements Initializable {
-    
+
     private final Screen SCREEN = new Screen();
     private static User currentUser;
     private static User editUser;
-    
-    public static void getUser(User user)   {
+
+    public static void getUser(User user) {
         currentUser = user;
     }
-    
-    public static void setEditUser(User user)   {
+
+    public static void setEditUser(User user) {
         editUser = user;
     }
-    
+
     @FXML private Label lblUsername;
     @FXML private Label lblError;
     @FXML private TextField txtUsername;
@@ -47,19 +47,20 @@ public class AccountEditController implements Initializable {
     @FXML private TextField txtLastName;
     @FXML private ComboBox comboRoles;
     @FXML private CheckBox chckActive;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        
+
         if (editUser != null) {
             txtUsername.setText(editUser.getUsername());
             txtFirstName.setText(editUser.getFirstname());
             txtLastName.setText(editUser.getLastname());
-            if (editUser.isActive()) 
+            if (editUser.isActive()) {
                 chckActive.selectedProperty().set(true);
-            else
+            } else {
                 chckActive.selectedProperty().set(false);
+            }
             try {
                 comboRoles.setItems(new Role().getRoles());
                 comboRoles.setConverter(new StringConverter<Role>() {
@@ -67,6 +68,7 @@ public class AccountEditController implements Initializable {
                     public String toString(Role object) {
                         return object.getRoleName();
                     }
+
                     @Override
                     public Role fromString(String string) {
                         // TODO Auto-generated method stub
@@ -79,25 +81,26 @@ public class AccountEditController implements Initializable {
             }
         }
     }
-    
+
     @FXML
     private void btnSaveChangesEvent(ActionEvent event) throws Exception {
         txtUsername.setStyle("-fx-border-width: 0px;");
-        Role newRole = (Role)comboRoles.getSelectionModel().getSelectedItem();
+        Role newRole = (Role) comboRoles.getSelectionModel().getSelectedItem();
         User checkUser = new User().getUserByUsername(txtUsername.getText());
         if (editUser.getUsername().equals(txtUsername.getText())) {
             editUser.setFirstname(txtFirstName.getText());
             editUser.setLastname(txtLastName.getText());
-            if (chckActive.selectedProperty().getValue())
+            if (chckActive.selectedProperty().getValue()) {
                 editUser.setActive(true);
-            else
+            } else {
                 editUser.setActive(false);
+            }
             editUser.setRoleId(newRole.getId());
             if (!txtPassword.getText().equals("")) {
                 editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
             }
             editUser.updateUser(editUser);
-             AccountOverviewController.getUser(currentUser);
+            AccountOverviewController.getUser(currentUser);
             ((Node) event.getSource()).getScene().getWindow().hide();
             SCREEN.change("AccountOverview", "Account Overview");
         } else {
@@ -111,36 +114,36 @@ public class AccountEditController implements Initializable {
                     editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
                 }
                 editUser.updateUser(editUser);
-                 AccountOverviewController.getUser(currentUser);
+                AccountOverviewController.getUser(currentUser);
                 ((Node) event.getSource()).getScene().getWindow().hide();
                 SCREEN.change("AccountOverview", "Account Overview");
-            }else {
+            } else {
                 lblError.setText("Username already exists!");
                 txtUsername.setStyle("-fx-text-box-border: red;");
             }
         }
-        
+
     }
-    
+
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
         AccountOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
         SCREEN.change("AccountOverview", "Account Overview");
     }
-    
+
     @FXML
     private void boxDisableAccountEvent(ActionEvent event) {
-        
+
     }
-    
+
     @FXML
     private void btnAccountEvent(ActionEvent event) throws IOException {
         AccountOverviewController.getUser(currentUser);
         ((Node) event.getSource()).getScene().getWindow().hide();
         SCREEN.change("AccountOverview", "Account Overview");
-    }    
-    
+    }
+
     @FXML
     private void btnLogoutEvent(ActionEvent event) {
         System.out.println("Log out");

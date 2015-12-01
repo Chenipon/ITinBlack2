@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -21,37 +22,43 @@ import javafx.stage.Stage;
  * @author Daan Befort, Jeffrey van der Lingen, IS106-2
  */
 public class LoginController implements Initializable {
-    
+
     @FXML private TextField txtUsername;
     @FXML private PasswordField txtPassword;
     @FXML private Label lblError;
-
+    @FXML private Button btnLogin;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-    
+
     @FXML
-    private void btnLoginAction(ActionEvent event) throws Exception {
-        if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
-            User user = new User().getUserByUsername(txtUsername.getText());
-            if (user.getId() != 0) {
-                if (Password.check(txtPassword.getText(), user.getPassword())) {
-                    if (!user.isActive()) {
-                        lblError.setText("This account has been disabled");
+    private void btnLoginAction(ActionEvent event) {
+        try {
+            if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
+                User user = new User().getUserByUsername(txtUsername.getText());
+                if (user.getId() != 0) {
+                    if (Password.check(txtPassword.getText(), user.getPassword())) {
+                        if (!user.isActive()) {
+                            lblError.setText("This account has been disabled");
+                        } else {
+                            ((Node) event.getSource()).getScene().getWindow().hide();
+                            loadScreen(user);
+                        }
                     } else {
-                        ((Node) event.getSource()).getScene().getWindow().hide();
-                        loadScreen(user);
+                        lblError.setText("Invalid username or password");
                     }
                 } else {
                     lblError.setText("Invalid username or password");
                 }
             } else {
-                lblError.setText("Invalid username or password");
+                txtUsername.setStyle("-fx-text-box-border: red;");
+                txtPassword.setStyle("-fx-text-box-border: red;");
+                lblError.setText("Username and/or password is not filled");
             }
-        } else {
-            txtUsername.setStyle("-fx-text-box-border: red;");
-            txtPassword.setStyle("-fx-text-box-border: red;");
-            lblError.setText("Username and/or password is not filled");
+        } catch (Exception e) {
+            lblError.setText("No connection with the database could be established");
+            btnLogin.setDisable(true);
         }
     }
 

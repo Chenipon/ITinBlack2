@@ -40,7 +40,7 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Button>
-            <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="149.0" layoutY="169.0" prefHeight="17.0" prefWidth="303.0" textAlignment="CENTER" textFill="#fcfcfc">
+            <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="92.0" layoutY="169.0" prefHeight="17.0" prefWidth="417.0" textAlignment="CENTER" textFill="#fcfcfc">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
