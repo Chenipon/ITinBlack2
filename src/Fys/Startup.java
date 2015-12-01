@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -16,9 +17,10 @@ public class Startup extends Application{
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Fys/Views/Login.fxml"));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("Fys/Content/Css/stylesheet.css");
+        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
         stage.setScene(scene);
         stage.setTitle("Login");
+        stage.getIcons().add(new Image("/Fys/Content/Image/corendonicon.png"));
         stage.show();
     }
     

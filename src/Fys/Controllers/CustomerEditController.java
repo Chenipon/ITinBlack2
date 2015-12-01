@@ -3,6 +3,7 @@ package Fys.Controllers;
 import static Fys.Controllers.LuggageEditController.choosePrinter;
 import Fys.Models.Customer;
 import Fys.Models.User;
+import Fys.Tools.LogTools;
 import Fys.Tools.Screen;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
@@ -17,7 +18,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,6 +69,12 @@ public class CustomerEditController implements Initializable {
         address.setText(editCustomer.getAddress());
         email.setText(editCustomer.getEmail());
         lblUsername.setText(currentUser.getUsername());
+        try {
+            lblRegisterDate.setText((new LogTools().getCustomerRegisterDate(editCustomer.getId())).toString());
+            lblRegisterEmployee.setText((new LogTools().getCustomerRegisterEmployee(editCustomer.getEmployeeId())));
+        } catch (SQLException | ParseException | ClassNotFoundException ex) {
+            Logger.getLogger(CustomerEditController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
@@ -81,10 +91,12 @@ public class CustomerEditController implements Initializable {
     
     @FXML
     private void btnSaveChangesEvent(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
-        if (firstName.getText().equals("") || lastName.getText().equals("") || 
-                phone.getText().equals("") || address.getText().equals("") || 
-                email.getText().equals("")) {
+        if (!(firstName.getText().equals("") || lastName.getText().equals("") || 
+                phone.getText().equals(""))) {
             lblErrorMessage.setText("");
+            firstName.setStyle("-fx-border-width: 0px;");
+            lastName.setStyle("-fx-border-width: 0px;");
+            phone.setStyle("-fx-border-width: 0px;");
             editCustomer.setFirstName(firstName.getText());
             editCustomer.setLastName(lastName.getText());
             editCustomer.setGender(ddwnGender.getText());
@@ -97,7 +109,9 @@ public class CustomerEditController implements Initializable {
             SCREEN.change("CustomerOverview", "Customer Overview");
         } else {
             lblErrorMessage.setText("The highlighted fields can't be empty");
-            
+            firstName.setStyle("-fx-text-box-border: red;");
+            lastName.setStyle("-fx-text-box-border: red;");
+            phone.setStyle("-fx-text-box-border: red;");
         }
     }
     

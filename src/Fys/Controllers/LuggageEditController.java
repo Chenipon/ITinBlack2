@@ -6,6 +6,7 @@ import Fys.Models.Luggage;
 import Fys.Models.Status;
 import Fys.Models.User;
 import Fys.Tools.DateConverter;
+import Fys.Tools.LogTools;
 import Fys.Tools.Screen;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +58,7 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 public class LuggageEditController implements Initializable {
 
     @FXML private Label lblUsername, lblErrorMessage, lblFirstName, lblLastName, 
-            lblGender, lblPhone, lblAddress, lblEmail;
+            lblGender, lblPhone, lblAddress, lblEmail, lblRegisterDate, lblRegisterEmployee;
     @FXML private TextField type, brand, material, color;
     @FXML private TextArea comments;
     @FXML private MenuButton ddwnStatus;
@@ -98,7 +100,9 @@ public class LuggageEditController implements Initializable {
         
         try { 
             ddwnStatus.setText(new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
-        } catch (ClassNotFoundException | SQLException ex) {
+            lblRegisterDate.setText(new LogTools().getLuggageRegisterDate(editLuggage.getId()).toString());
+            lblRegisterEmployee.setText((new LogTools().getLuggageRegisterEmployee(editLuggage.getEmployeeId())));
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
         

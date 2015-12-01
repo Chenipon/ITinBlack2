@@ -71,6 +71,7 @@ public class CustomerAddController implements Initializable {
                 customer.setAddress(address.getText());
                 customer.setEmail(email.getText());
                 customer.setRegisterDate(new DateConverter().getCurrentDateInSqlFormat());
+                customer.setEmployeeId(currentUser.getId());
                 customer.insertCustomer(customer);
                 CustomerOverviewController.getUser(currentUser);
                 ((Node) event.getSource()).getScene().getWindow().hide();

@@ -3,6 +3,7 @@ package Fys.Tools;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -26,6 +27,7 @@ public class Screen {
         stage.setScene(new Scene((Pane) loader.load()));
         stage.getScene().getStylesheets().add("/Fys/Content/Css/stylesheet.css");
         stage.setTitle(stageTitle);
+        stage.getIcons().add(new Image("/Fys/Content/Image/corendonicon.png"));
 
         stage.show();
 
