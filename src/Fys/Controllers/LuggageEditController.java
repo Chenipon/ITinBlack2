@@ -238,6 +238,9 @@ public class LuggageEditController implements Initializable {
             editLuggage.setColor(color.getText());
             editLuggage.setComment(comments.getText());
             editLuggage.setStatusId(new Status().getStatusByName(ddwnStatus.getText()).getId());
+            if (new LogTools().checkLuggageChanged(editLuggage)) {
+                new LogTools().logLuggageChanged(editLuggage, currentUser);
+            }
             editLuggage.updateLuggage(editLuggage);
             
             connectedCustomer = null;
