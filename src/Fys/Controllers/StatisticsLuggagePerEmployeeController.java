@@ -20,16 +20,19 @@ import javafx.scene.control.MenuButton;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class StatisticsLuggagePerEmployeeController implements Initializable {
+    private static Screen screen;
+    private static User currentUser;
     
     @FXML private Label lblUsername;
     @FXML private DatePicker startDate, endDate;
     @FXML private MenuButton ddwnLuggageType;
     @FXML private MenuButton ddwnSelectEmployee; //This needs to contain data from the DB as ddwn.
     
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
     
@@ -50,33 +53,34 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
     
     @FXML
     private void ddwnLostLuggageEvent(ActionEvent event) {
-        ddwnLuggageType.setText("Lost"); //Sets the text of the ddwn.
+        ddwnLuggageType.setText("Lost");
         ddwnLuggageType.setPrefWidth(95);
     }
     
     @FXML
     private void ddwnFoundLuggageEvent(ActionEvent event) {
-        ddwnLuggageType.setText("Found"); //Sets the text of the ddwn.
+        ddwnLuggageType.setText("Found");
         ddwnLuggageType.setPrefWidth(95);
     }
     
     @FXML
     private void ddwnConnectedLuggageEvent(ActionEvent event) {
-        ddwnLuggageType.setText("Connected"); //Sets the text of the ddwn.
+        ddwnLuggageType.setText("Connected");
         ddwnLuggageType.setPrefWidth(95);
     }
     
-    //-- DO NOT TOUCH ANY CODE BELOW THIS COMMENT. THESE ARE THE MENU BUTTONS. --
     @FXML
     private void btnTotalLuggageEvent(ActionEvent event) throws IOException {
-        StatisticsTotalLuggageController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("StatisticsTotalLuggage", "Statistics - Total");
+        StatisticsTotalLuggageController.setUser(currentUser);
+        StatisticsTotalLuggageController.setScreen(screen);
+        screen.change("StatisticsTotalLuggage");
     }
     
     @FXML
-    private void btnLogoutEvent(ActionEvent event) {
-        System.out.println("Log out");
+    private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        screen.change("Login");
     }
     
 }

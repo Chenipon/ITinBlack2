@@ -26,12 +26,15 @@ import javafx.util.StringConverter;
  * @author Daan Befort, IS106-2
  */
 public class AccountEditController implements Initializable {
-
-    private final Screen SCREEN = new Screen();
+    private static Screen screen;
     private static User currentUser;
     private static User editUser;
 
-    public static void getUser(User user) {
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
+    
+    public static void setUser(User user) {
         currentUser = user;
     }
 
@@ -65,13 +68,12 @@ public class AccountEditController implements Initializable {
                 comboRoles.setItems(new Role().getRoles());
                 comboRoles.setConverter(new StringConverter<Role>() {
                     @Override
-                    public String toString(Role object) {
-                        return object.getRoleName();
+                    public String toString(Role role) {
+                        return role.getRoleName();
                     }
 
                     @Override
                     public Role fromString(String string) {
-                        // TODO Auto-generated method stub
                         return null;
                     }
                 });
@@ -100,9 +102,9 @@ public class AccountEditController implements Initializable {
                 editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
             }
             editUser.updateUser(editUser);
-            AccountOverviewController.getUser(currentUser);
-            ((Node) event.getSource()).getScene().getWindow().hide();
-            SCREEN.change("AccountOverview", "Account Overview");
+            AccountOverviewController.setUser(currentUser);
+            AccountOverviewController.setScreen(screen);
+            screen.change("AccountOverview");
         } else {
             if (checkUser.getId() == 0) {
                 editUser.setUsername(txtUsername.getText());
@@ -114,9 +116,9 @@ public class AccountEditController implements Initializable {
                     editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
                 }
                 editUser.updateUser(editUser);
-                AccountOverviewController.getUser(currentUser);
-                ((Node) event.getSource()).getScene().getWindow().hide();
-                SCREEN.change("AccountOverview", "Account Overview");
+                AccountOverviewController.setUser(currentUser);
+                AccountOverviewController.setScreen(screen);
+                screen.change("AccountOverview");
             } else {
                 lblError.setText("Username already exists!");
                 txtUsername.setStyle("-fx-text-box-border: red;");
@@ -124,28 +126,25 @@ public class AccountEditController implements Initializable {
         }
 
     }
-
+    
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
-        AccountOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("AccountOverview", "Account Overview");
-    }
-
-    @FXML
-    private void boxDisableAccountEvent(ActionEvent event) {
-
+        AccountOverviewController.setUser(currentUser);
+        AccountOverviewController.setScreen(screen);
+        screen.change("AccountOverview");
     }
 
     @FXML
     private void btnAccountEvent(ActionEvent event) throws IOException {
-        AccountOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("AccountOverview", "Account Overview");
+        AccountOverviewController.setUser(currentUser);
+        AccountOverviewController.setScreen(screen);
+        screen.change("AccountOverview");
     }
 
     @FXML
-    private void btnLogoutEvent(ActionEvent event) {
-        System.out.println("Log out");
+    private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        screen.change("Login");
     }
 }

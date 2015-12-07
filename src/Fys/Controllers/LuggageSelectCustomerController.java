@@ -1,6 +1,5 @@
 package Fys.Controllers;
 
-import Fys.Models.Connection;
 import Fys.Models.Customer;
 import Fys.Models.Luggage;
 import Fys.Models.User;
@@ -8,6 +7,7 @@ import Fys.Tools.Screen;
 import Fys.Views.ViewModels.CustomerTabelView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,17 +34,20 @@ import javafx.util.Callback;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class LuggageSelectCustomerController implements Initializable {
-
+    private static Screen screen;
+    private static User currentUser;
+    private static Luggage selectedLuggage;
+    
     @FXML private Label lblUsername, lblType, lblBrand, lblMaterial, lblColor;
     @FXML private TableView tblCustomers;
     @FXML private TableColumn colFirstName, colLastName, colGender, colPhone, colAddress, colEmail, colAction;
     @FXML private TextField lblSearch;
     
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
-    private static Luggage selectedLuggage;
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
     
@@ -91,12 +94,13 @@ public class LuggageSelectCustomerController implements Initializable {
                                                 try {
                                                     Customer selectedCustomer = new Customer().getCustomerById(item.getId());
                                                     selectedLuggage.setStatusId(3);
-                                                    LuggageEditController.getUser(currentUser);
+                                                    
+                                                    LuggageEditController.setUser(currentUser);
                                                     LuggageEditController.setCustomer(selectedCustomer);
                                                     LuggageEditController.setLuggage(selectedLuggage);
-                                                    ((Node) event.getSource()).getScene().getWindow().hide();
-                                                    SCREEN.change("LuggageEdit", "Edit Luggage");
-                                                } catch (Exception ex) {
+                                                    LuggageEditController.setScreen(screen);
+                                                    screen.change("LuggageEdit");
+                                                } catch (ClassNotFoundException | SQLException | IOException ex) {
                                                     Logger.getLogger(CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
                                                 }
                                             }
@@ -132,31 +136,31 @@ public class LuggageSelectCustomerController implements Initializable {
     
     @FXML
     private void btnBackToEditEvent(ActionEvent event) throws IOException {
-        LuggageEditController.getUser(currentUser);
+        LuggageEditController.setUser(currentUser);
         LuggageEditController.setLuggage(selectedLuggage);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageEdit", "Edit Luggage");
+        LuggageEditController.setScreen(screen);
+        screen.change("LuggageEdit");
     }
 
-    //-- DO NOT TOUCH THESE BUTTONS BELOW, THEY ARE THE DEFAULT MENU ITEMS --
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
 
     @FXML
-    private void btnAddLuggageEvent(ActionEvent event) throws IOException {
-        LuggageAddController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageAdd", "Add Luggage");
+    private void btnLuggageEvent(ActionEvent event) throws IOException {
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
 
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }
 
 }

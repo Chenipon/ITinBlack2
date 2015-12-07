@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class. This class controls the Login screen including it's
@@ -23,17 +22,23 @@ import javafx.stage.Stage;
  */
 public class LoginController implements Initializable {
 
+    private static Screen screen;
+    
     @FXML private TextField txtUsername;
     @FXML private PasswordField txtPassword;
     @FXML private Label lblError;
     @FXML private Button btnLogin;
+    
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
     @FXML
-    private void btnLoginAction(ActionEvent event) {
+    private void btnLoginAction(ActionEvent event) throws Exception {
         try {
             if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
                 User user = new User().getUserByUsername(txtUsername.getText());
@@ -62,24 +67,30 @@ public class LoginController implements Initializable {
         }
     }
 
-    public Stage loadScreen(User user) throws Exception {
-        Screen screen = new Screen();
+    public void loadScreen(User user) throws Exception {
         switch (user.getRoleId()) {
             case (1): {
-                AccountOverviewController.getUser(user);
-                return screen.change("AccountOverview", "Account Overview");
+                AccountOverviewController.setUser(user);
+                AccountOverviewController.setScreen(screen);
+                screen.change("AccountOverview");
+                break;
             }
             case (2): {
-                StatisticsTotalLuggageController.getUser(user);
-                return screen.change("StatisticsTotalLuggage", "Statistics - Total");
+                StatisticsTotalLuggageController.setUser(user);
+                StatisticsTotalLuggageController.setScreen(screen);
+                screen.change("StatisticsTotalLuggage");
+                break;
             }
             case (3): {
-                LuggageOverviewController.getUser(user);
-                return screen.change("LuggageOverview", "Luggage Overview");
+                LuggageOverviewController.setUser(user);
+                LuggageOverviewController.setScreen(screen);
+                screen.change("LuggageOverview");
+                break;
             }
             default: {
                 MainController.currentUser = user;
-                return screen.change("Main", "Error");
+                screen.change("Main");
+                break;
             }
         }
     }

@@ -3,34 +3,44 @@ package Fys.Tools;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
  * This class handles quick changing of screens without having to define this
- * method over and over again at every button.
- * @author Daan Befort, IS106-2
+ * method over and over again at every event.
+ *
+ * @author Jeffrey van der Lingen, IS106-2
  */
 public class Screen {
 
+    private final Stage stage;
+
     /**
-     * public Stage change(String viewName, String stageTitle)
-     * @param fxmlName String viewName is the title of the FXML File.
-     * @param stageTitle String stageTitle is the title of the stage on top of the screen.
-     * @return Stage stage, which opens the stage in a new window.
-     * @throws IOException
+     * Constructor Screen(Stage stage) assigns Stage stage to the local
+     * attribute stage, which is a final attribute.
+     *
+     * @param stage The stage that gets sent at application launch. This is
+     * final and cannot be changed after the constuctor has been called in the
+     * startup class.
      */
-    public Stage change(String fxmlName, String stageTitle) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fys/Views/" + fxmlName + ".fxml"));
-        Stage stage = new Stage();
-        stage.setScene(new Scene((Pane) loader.load()));
-        stage.getScene().getStylesheets().add("/Fys/Content/Css/stylesheet.css");
-        stage.setTitle(stageTitle);
-        stage.getIcons().add(new Image("/Fys/Content/Image/corendonicon.png"));
+    public Screen(Stage stage) {
+        this.stage = stage;
+    }
 
+    /**
+     * Method change(String fxmlName) switches the screen to the screen that is
+     * defined in the parameter. Remember to also send the "screen" element
+     * between each class or this Method will give a NullPointerException!
+     *
+     * @param fxmlName is a String of the name of the FXML file. This is the
+     * name only, and does NOT contain the .fxml extension in the String.
+     * @throws IOException is thrown when the FXML file is not found.
+     */
+    public void change(String fxmlName) throws IOException {
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/Fys/Views/"
+                + fxmlName + ".fxml")));
+        scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
+        stage.setScene(scene);
         stage.show();
-
-        return stage;
     }
 }

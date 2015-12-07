@@ -32,17 +32,19 @@ import javafx.util.Callback;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class CustomerOverviewController implements Initializable {
-
+    private static Screen screen;
+    private static User currentUser;
+    
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private TextField lblSearch;
     @FXML private TableColumn colFirstName, colLastName, colGender, colPhone, colAddress, colEmail, colAction;
     @FXML private TableView tblCustomers;
+    
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
 
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
-    private static Customer updatedCustomer;
-
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
 
@@ -80,10 +82,10 @@ public class CustomerOverviewController implements Initializable {
                                             if (item != null) {
                                                 try {
                                                     Customer editCustomer = new Customer().getCustomerById(item.getId());
-                                                    CustomerEditController.getUser(currentUser);
+                                                    CustomerEditController.setUser(currentUser);
                                                     CustomerEditController.setCustomer(editCustomer);
-                                                    ((Node) event.getSource()).getScene().getWindow().hide();
-                                                    SCREEN.change("CustomerEdit", "Edit Customer");
+                                                    CustomerEditController.setScreen(screen);
+                                                    screen.change("CustomerEdit");
                                                 } catch (Exception ex) {
                                                     Logger.getLogger(CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
                                                 }
@@ -114,16 +116,16 @@ public class CustomerOverviewController implements Initializable {
 
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
-        LuggageOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageOverview", "Luggage Overview");
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
 
     @FXML
     private void btnAddCustomerEvent(ActionEvent event) throws IOException {
-        CustomerAddController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerAdd", "Add Customer");
+        CustomerAddController.setUser(currentUser);
+        CustomerAddController.setScreen(screen);
+        screen.change("CustomerAdd");
     }
 
     @FXML
@@ -134,8 +136,9 @@ public class CustomerOverviewController implements Initializable {
 
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }
 
 }

@@ -25,16 +25,19 @@ import javafx.scene.control.TextField;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class LuggageAddController implements Initializable {
+    private static Screen screen;
+    private static User currentUser;
     
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private MenuButton ddwnLuggageStatus;
     @FXML private TextField luggageType, luggageBrand, luggageMaterial, luggageColor;
     @FXML private TextArea luggageComments;
     
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
 
@@ -76,9 +79,10 @@ public class LuggageAddController implements Initializable {
                 luggage.setStatus(new Status().getStatusByName(ddwnLuggageStatus.getText()));
                 luggage.setEmployeeId(currentUser.getId());
                 luggage.insertLuggage(luggage);
-                LuggageOverviewController.getUser(currentUser);
-                ((Node) event.getSource()).getScene().getWindow().hide();
-                SCREEN.change("LuggageOverview", "Luggage Overview");
+                
+                LuggageOverviewController.setUser(currentUser);
+                LuggageOverviewController.setScreen(screen);
+                screen.change("LuggageOverview");
             } else {
                 lblErrorMessage.setText("Select a Luggage Status");
             }
@@ -93,30 +97,30 @@ public class LuggageAddController implements Initializable {
 
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
-        LuggageOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageOverview", "Luggage Overview");
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
 
-    //-- DO NOT TOUCH THESE BUTTONS BELOW, THEY ARE THE DEFAULT MENU ITEMS --
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
-        LuggageOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageOverview", "Luggage Overview");
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
 
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
 
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }
 
 }

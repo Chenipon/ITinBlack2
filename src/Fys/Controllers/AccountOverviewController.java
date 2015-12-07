@@ -1,12 +1,10 @@
 package Fys.Controllers;
 
-import Fys.Models.Role;
 import Fys.Models.User;
 import Fys.Tools.Screen;
 import Fys.Views.ViewModels.AccountTabelView;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +31,9 @@ import javafx.util.Callback;
  * @author Daan Befort, Jeffrey van der Lingen, IS106-2
  */
 public class AccountOverviewController implements Initializable {
-
+    private static Screen screen;    
+    private static User currentUser;
+    
     @FXML private Label lblUsername;
     @FXML private TableView tblUsers;
     @FXML private TableColumn columnUsername;
@@ -44,10 +44,11 @@ public class AccountOverviewController implements Initializable {
     @FXML private TableColumn columnAction;
     @FXML private TextField lblSearch;
 
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
-
-    public static void getUser(User user) {
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
+    
+    public static void setUser(User user) {
         currentUser = user;
     }
 
@@ -84,10 +85,10 @@ public class AccountOverviewController implements Initializable {
                                             if (item != null) {
                                                 try {
                                                     User editUser = new User().getUserById(item.getId());
-                                                    AccountEditController.getUser(currentUser);
+                                                    AccountEditController.setUser(currentUser);
+                                                    AccountEditController.setScreen(screen);
                                                     AccountEditController.setEditUser(editUser);
-                                                    ((Node) event.getSource()).getScene().getWindow().hide();
-                                                    SCREEN.change("AccountEdit", "Add Account");
+                                                    screen.change("AccountEdit");
                                                 } catch (Exception ex) {
                                                     Logger.getLogger(AccountOverviewController.class.getName()).log(Level.SEVERE, null, ex);
                                                 }
@@ -118,9 +119,9 @@ public class AccountOverviewController implements Initializable {
 
     @FXML
     private void btnAddAccountEvent(ActionEvent event) throws IOException {
-        AccountAddController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("AccountAdd", "Add Account");
+        AccountAddController.setUser(currentUser);
+        AccountAddController.setScreen(screen);
+        screen.change("AccountAdd");
     }
 
     @FXML
@@ -135,8 +136,9 @@ public class AccountOverviewController implements Initializable {
 
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws Exception {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }
 
 }

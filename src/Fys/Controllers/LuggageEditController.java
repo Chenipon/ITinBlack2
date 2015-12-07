@@ -14,18 +14,12 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.parser.Path;
-import com.itextpdf.tool.xml.html.ParaGraph;
-import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -45,6 +39,7 @@ import javafx.scene.layout.AnchorPane;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -56,7 +51,12 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class LuggageEditController implements Initializable {
-
+    private static Screen screen;
+    private static User currentUser;
+    private static Luggage editLuggage;
+    private static Customer connectedCustomer;
+    private static Connection connection;
+    
     @FXML private Label lblUsername, lblErrorMessage, lblFirstName, lblLastName, 
             lblGender, lblPhone, lblAddress, lblEmail, lblRegisterDate, lblRegisterEmployee;
     @FXML private TextField type, brand, material, color;
@@ -65,13 +65,11 @@ public class LuggageEditController implements Initializable {
     @FXML private Button btnSelectCustomer;
     @FXML private AnchorPane paneCustomer;
     
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
-    private static Luggage editLuggage;
-    private static Customer connectedCustomer;
-    private static Connection connection;
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
     
@@ -194,10 +192,10 @@ public class LuggageEditController implements Initializable {
      */     
     @FXML
     private void btnSelectCustomerEvent(ActionEvent event) throws IOException {
-        LuggageSelectCustomerController.getUser(currentUser);
+        LuggageSelectCustomerController.setUser(currentUser);
         LuggageSelectCustomerController.setLuggage(editLuggage);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageSelectCustomer", "Select Customer");
+        LuggageSelectCustomerController.setScreen(screen);
+        screen.change("LuggageSelectCustomer");
     }
     
     @FXML
@@ -244,9 +242,9 @@ public class LuggageEditController implements Initializable {
             editLuggage.updateLuggage(editLuggage);
             
             connectedCustomer = null;
-            LuggageOverviewController.getUser(currentUser);
-            ((Node) event.getSource()).getScene().getWindow().hide();
-            SCREEN.change("LuggageOverview", "Luggage Overview");
+            LuggageOverviewController.setUser(currentUser);
+            LuggageOverviewController.setScreen(screen);
+            screen.change("LuggageOverview");
         } else {
             lblErrorMessage.setText("Highlighted fields cannot be empty");
             type.setStyle("-fx-text-box-border: red;");
@@ -257,8 +255,8 @@ public class LuggageEditController implements Initializable {
     }
     
     @FXML
-    private void btnPrintProofEvent(ActionEvent event) throws DocumentException, Exception {
-        try{
+    private void btnPrintProofEvent(ActionEvent event) {
+        try {
             Document document = new Document();
         String fileName = "/temporaryPrintFileLuggage.pdf";
         File fileLocation = new File(new File("temp").getAbsolutePath());
@@ -291,7 +289,7 @@ public class LuggageEditController implements Initializable {
         DocPrintJob printJob = choosePrinter().createPrintJob();
         
         printJob.print(printedDocument, new HashPrintRequestAttributeSet());
-        } catch(Exception ex){
+        } catch (IOException | DocumentException | PrintException ex){
             System.out.println(ex.toString());
             lblErrorMessage.setText("Somthing went wrong, your request is not printed.");
         }
@@ -309,31 +307,32 @@ public class LuggageEditController implements Initializable {
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
-        LuggageOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageOverview", "Luggage Overview");
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
     
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
-        LuggageOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageOverview", "Luggage Overview");
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
     
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
     
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }   
     
 }

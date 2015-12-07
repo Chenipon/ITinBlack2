@@ -23,20 +23,20 @@ import javafx.scene.control.TextField;
  * @author Daan Befort, Jeffrey van der Lingen, IS106-2
  */
 public class AccountAddController implements Initializable {
-
-    private final Screen SCREEN = new Screen();
+    private static Screen screen;
     private static User currentUser;
 
-    public static void getUser(User user) {
+    @FXML private Label lblUsername, lblErrorMessage;
+    @FXML private MenuButton ddwnUserRole;
+    @FXML private TextField username, password, firstName, lastName;
+    
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
+    
+    public static void setUser(User user) {
         currentUser = user;
     }
-
-    @FXML
-    private Label lblUsername, lblErrorMessage;
-    @FXML
-    private MenuButton ddwnUserRole;
-    @FXML
-    private TextField username, password, firstName, lastName;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,13 +86,14 @@ public class AccountAddController implements Initializable {
                 User checkUserExist = new User().getUserByUsername(user.getUsername());
                 if (checkUserExist.getId() == 0) {
                     user.insertUser(user);
-                    ((Node) event.getSource()).getScene().getWindow().hide();
-                    SCREEN.change("AccountOverview", "Account Overview");
+                    AccountOverviewController.setScreen(screen);
+                    AccountOverviewController.setUser(currentUser);
+                    screen.change("AccountOverview");
                 } else {
+                    username.setStyle("-fx-text-box-border: red;");
                     lblErrorMessage.setText("Username already exist!");
                 }
             } else {
-                username.setStyle("-fx-text-box-border: red;");
                 lblErrorMessage.setText("Select a User Role");
             }
         } else {
@@ -106,22 +107,23 @@ public class AccountAddController implements Initializable {
 
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
-        AccountOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("AccountOverview", "Account Overview");
+        AccountOverviewController.setUser(currentUser);
+        AccountOverviewController.setScreen(screen);
+        screen.change("AccountOverview");
     }
 
     @FXML
     private void btnAccountEvent(ActionEvent event) throws IOException {
-        AccountOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("AccountOverview", "Account Overview");
+        AccountOverviewController.setUser(currentUser);
+        AccountOverviewController.setScreen(screen);
+        screen.change("AccountOverview");
     }
 
     @FXML
-    private void btnLogoutEvent(ActionEvent event) throws Exception{
+    private void btnLogoutEvent(ActionEvent event) throws Exception {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }
 
 }

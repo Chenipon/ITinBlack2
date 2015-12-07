@@ -1,7 +1,6 @@
 package Fys.Models;
 
 import Fys.Tools.ConnectMysqlServer;
-import Fys.Views.ViewModels.AccountTabelView;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

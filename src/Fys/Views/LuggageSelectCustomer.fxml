@@ -93,7 +93,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <Button fx:id="btnLuggage" alignment="CENTER" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Luggage" textAlignment="CENTER" textOverrun="CLIP" />
+            <Button fx:id="btnLuggage" alignment="CENTER" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" onAction="#btnLuggageEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Luggage" textAlignment="CENTER" textOverrun="CLIP" />
             <Button fx:id="btnCustomers" alignment="CENTER" layoutX="14.0" layoutY="196.0" mnemonicParsing="false" onAction="#btnCustomerEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnWhite" text="Customers" textAlignment="CENTER" textOverrun="CLIP" />
          </children>
       </AnchorPane>

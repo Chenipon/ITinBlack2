@@ -1,6 +1,5 @@
 package Fys.Controllers;
 
-import static Fys.Controllers.LuggageEditController.choosePrinter;
 import Fys.Models.Customer;
 import Fys.Models.User;
 import Fys.Tools.LogTools;
@@ -43,16 +42,19 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class CustomerEditController implements Initializable {
-
+    private static Screen screen;
+    private static User currentUser;
+    private static Customer editCustomer;    
+    
     @FXML private Label lblUsername, lblErrorMessage, lblRegisterDate, lblRegisterEmployee;
     @FXML private TextField firstName, lastName, phone, address, email;
     @FXML private MenuButton ddwnGender;
     
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
-    private static Customer editCustomer;
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
     
@@ -104,9 +106,10 @@ public class CustomerEditController implements Initializable {
             editCustomer.setAddress(address.getText());
             editCustomer.setEmail(email.getText());
             editCustomer.updateCustomer(editCustomer);
-            CustomerOverviewController.getUser(currentUser);
-            ((Node) event.getSource()).getScene().getWindow().hide();
-            SCREEN.change("CustomerOverview", "Customer Overview");
+            
+            CustomerOverviewController.setUser(currentUser);
+            CustomerOverviewController.setScreen(screen);
+            screen.change("CustomerOverview");
         } else {
             lblErrorMessage.setText("The highlighted fields can't be empty");
             firstName.setStyle("-fx-text-box-border: red;");
@@ -117,9 +120,9 @@ public class CustomerEditController implements Initializable {
     
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
     
     @FXML
@@ -176,22 +179,23 @@ public class CustomerEditController implements Initializable {
     
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws Exception {
-        LuggageOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageOverview", "Luggage Overview");
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
     
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws Exception {
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
     
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }
     
 }

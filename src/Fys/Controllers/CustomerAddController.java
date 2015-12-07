@@ -23,15 +23,18 @@ import javafx.scene.control.TextField;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class CustomerAddController implements Initializable {
+    private static Screen screen;
+    private static User currentUser;
     
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private TextField firstName, lastName, address, phone, email;
     @FXML private MenuButton ddwnGender;
     
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
     
@@ -73,9 +76,10 @@ public class CustomerAddController implements Initializable {
                 customer.setRegisterDate(new DateConverter().getCurrentDateInSqlFormat());
                 customer.setEmployeeId(currentUser.getId());
                 customer.insertCustomer(customer);
-                CustomerOverviewController.getUser(currentUser);
-                ((Node) event.getSource()).getScene().getWindow().hide();
-                SCREEN.change("CustomerOverview", "Customer Overview");
+                
+                CustomerOverviewController.setUser(currentUser);
+                CustomerOverviewController.setScreen(screen);
+                screen.change("CustomerOverview");
             } else {
                 lblErrorMessage.setText("Please select a gender");
             }
@@ -90,29 +94,30 @@ public class CustomerAddController implements Initializable {
     
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
     
-    //-- DO NOT TOUCH ANY CODE BELOW THIS COMMENT, DEFAULT BUTTON EVENTS --
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
-        LuggageOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageOverview", "Luggage Overview");
+        LuggageOverviewController.setUser(currentUser);
+        LuggageOverviewController.setScreen(screen);
+        screen.change("LuggageOverview");
     }
     
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
     
     @FXML
-    private void btnLogoutEvent(ActionEvent event) {
-        System.out.println("Log out");
+    private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        screen.change("Login");
     }
     
 }

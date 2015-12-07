@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -27,16 +26,19 @@ import javafx.scene.control.MenuButton;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class StatisticsTotalLuggageController implements Initializable {
-
+    private static Screen screen;
+    private static User currentUser;
+    
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private MenuButton ddwnLuggageType;
     @FXML private BarChart<String, Number> barChart;
     @FXML private DatePicker startDate, endDate;
-
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
     
-    public static void getUser(User user) {
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
+    
+    public static void setUser(User user) {
         currentUser = user;
     }
     
@@ -47,7 +49,7 @@ public class StatisticsTotalLuggageController implements Initializable {
 
     @FXML
     private void btnPrintStatisticsEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
-        
+        //TODO
     }
 
     @FXML
@@ -197,12 +199,11 @@ public class StatisticsTotalLuggageController implements Initializable {
         ddwnLuggageType.setPrefWidth(95);
     }
 
-    //-- DO NOT TOUCH ANY CODE BELOW THIS COMMENT. THESE ARE THE MENU BUTTONS. --
     @FXML
     private void btnLuggagePerEmployeeEvent(ActionEvent event) throws IOException {
-        StatisticsLuggagePerEmployeeController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("StatisticsLuggagePerEmployee", "Statistics - Employee");
+        StatisticsLuggagePerEmployeeController.setUser(currentUser);
+        StatisticsLuggagePerEmployeeController.setScreen(screen);
+        screen.change("StatisticsLuggagePerEmployee");
     }
 
     @FXML

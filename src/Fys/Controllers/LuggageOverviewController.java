@@ -33,17 +33,20 @@ import javafx.util.Callback;
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class LuggageOverviewController implements Initializable {
-
+    private static Screen screen;
+    private static User currentUser;
+    
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private TableView tblLuggage;
     @FXML private TableColumn colType, colBrand, colMaterial, colColor, colComment, colStatus, colAction;
     @FXML private MenuButton ddwnLuggageType;
     @FXML private TextField lblSearch;
     
-    private final Screen SCREEN = new Screen();
-    private static User currentUser;
+    public static void setScreen(Screen newScreen) {
+        screen = newScreen;
+    }
     
-    public static void getUser(User user) {
+    public static void setUser(User user) {
         currentUser = user;
     }
 
@@ -81,10 +84,11 @@ public class LuggageOverviewController implements Initializable {
                                             if (item != null) {
                                                 try {
                                                     Luggage editLuggage = new Luggage().getLuggageById(item.getId());
-                                                    LuggageEditController.getUser(currentUser);
+                                                    
+                                                    LuggageEditController.setUser(currentUser);
                                                     LuggageEditController.setLuggage(editLuggage);
-                                                    ((Node) event.getSource()).getScene().getWindow().hide();
-                                                    SCREEN.change("LuggageEdit", "Edit Luggage");
+                                                    LuggageEditController.setScreen(screen);
+                                                    screen.change("LuggageEdit");
                                                 } catch (Exception ex) {
                                                     Logger.getLogger(AccountOverviewController.class.getName()).log(Level.SEVERE, null, ex);
                                                 }
@@ -147,25 +151,25 @@ public class LuggageOverviewController implements Initializable {
         }
     }
 
-    //-- DO NOT TOUCH THESE BUTTONS BELOW, THEY ARE THE DEFAULT MENU ITEMS --
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("CustomerOverview", "Customer Overview");
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
 
     @FXML
     private void btnAddLuggageEvent(ActionEvent event) throws IOException {
-        LuggageAddController.getUser(currentUser);
-        ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("LuggageAdd", "Add Luggage");
+        LuggageAddController.setUser(currentUser);
+        LuggageAddController.setScreen(screen);
+        screen.change("LuggageAdd");
     }
 
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
-        SCREEN.change("Login", "Login");
+        screen.change("Login");
     }
 
 }
