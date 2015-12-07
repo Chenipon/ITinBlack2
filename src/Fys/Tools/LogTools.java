@@ -15,8 +15,19 @@ import java.util.logging.Logger;
 /**
  *
  * @author Jeffrey van der Lingen, IS106-2
+ * @author Javadoc: John Ghatas, IS106-2
  */
 public class LogTools {
+
+    /**
+     * This method grabs the Customer's register date.
+     * @see getCostumerRegisterDate()
+     * @param id
+     * @return
+     * @throws SQLException
+     * @throws ParseException
+     * @throws ClassNotFoundException
+     */
     public java.util.Date getCustomerRegisterDate(int id) throws SQLException, ParseException, ClassNotFoundException {
         String registerdate = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -29,6 +40,12 @@ public class LogTools {
         return (new DateConverter().convertSqlDateToJavaDate(registerdate));
     }
     
+    /**
+     * This method grabs the Employee who registered the Customer.
+     * @see getCustomerRegisterEmployee()
+     * @param id
+     * @return
+     */
     public String getCustomerRegisterEmployee(int id) {
         String username = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -45,6 +62,15 @@ public class LogTools {
         return username;
     }
     
+    /**
+     * This method grabs the date when the luggage is registered.
+     * @see getLuggageRegisterDate()
+     * @param id
+     * @return
+     * @throws SQLException
+     * @throws ParseException
+     * @throws ClassNotFoundException
+     */
     public java.util.Date getLuggageRegisterDate(int id) throws SQLException, ParseException, ClassNotFoundException {
         String registerdate = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -57,6 +83,14 @@ public class LogTools {
         return (new DateConverter().convertSqlDateToJavaDate(registerdate));
     }
 
+    /**
+     * This class grabs the luggage registerd per employee.
+     * @see getLuggageRegisterEmployee()
+     * @param id
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public String getLuggageRegisterEmployee(int id) throws SQLException, ClassNotFoundException {
         String username = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -69,6 +103,14 @@ public class LogTools {
         return username;
     }
     
+    /**
+     * This method checks if an element in the luggage has changed.
+     * @see checkLuggageChanged()
+     * @param editLuggage
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean checkLuggageChanged(Luggage editLuggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
@@ -91,6 +133,14 @@ public class LogTools {
         }
     }
     
+    /**
+     * This method logs whenever a piece of luggage has been changed by an employee.
+     * @see logLuggageChanged()
+     * @param editLuggage
+     * @param currentUser
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void logLuggageChanged(Luggage editLuggage, User currentUser) throws ClassNotFoundException, SQLException {
         StringBuilder sb = new StringBuilder(128);
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
