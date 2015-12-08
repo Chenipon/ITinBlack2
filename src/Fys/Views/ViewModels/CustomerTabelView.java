@@ -159,7 +159,7 @@ public class CustomerTabelView {
         ObservableList<CustomerTabelView> customers = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM customers");
+            ResultSet result = statement.executeQuery("SELECT * FROM customer");
             while (result.next()) {
                 CustomerTabelView foundCustomers = new CustomerTabelView();
                 foundCustomers.setId(result.getInt(1));
@@ -188,7 +188,7 @@ public class CustomerTabelView {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
-            result = statement.executeQuery("SELECT * FROM customers WHERE firstname LIKE '%"
+            result = statement.executeQuery("SELECT * FROM customer WHERE firstname LIKE '%"
                     + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%' OR address LIKE '%"
                     + searchTerm + "%' OR email LIKE '%" + searchTerm + "%'");
             while (result.next()) {

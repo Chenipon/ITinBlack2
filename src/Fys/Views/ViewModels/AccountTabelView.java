@@ -141,7 +141,7 @@ public class AccountTabelView {
         ObservableList<AccountTabelView> users = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM users");
+            ResultSet result = statement.executeQuery("SELECT * FROM user");
             while (result.next()) {
                 AccountTabelView foundUsers = new AccountTabelView();
                 Role role = new Role().getRoleById(result.getInt(6));
@@ -174,7 +174,7 @@ public class AccountTabelView {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
-            result = statement.executeQuery("SELECT * FROM users WHERE username LIKE '%" + searchTerm + "%' OR firstname LIKE '%" + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%'");
+            result = statement.executeQuery("SELECT * FROM user WHERE username LIKE '%" + searchTerm + "%' OR firstname LIKE '%" + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%'");
             while (result.next()) {
                 AccountTabelView foundUsers = new AccountTabelView();
                 Role role = new Role().getRoleById(result.getInt(6));

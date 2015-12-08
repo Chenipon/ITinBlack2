@@ -39,7 +39,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void btnLoginAction(ActionEvent event) throws Exception {
-        //try {
+        try {
             if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
                 User user = new User().getUserByUsername(txtUsername.getText());
                 if (user.getId() != 0) {
@@ -61,10 +61,10 @@ public class LoginController implements Initializable {
                 txtPassword.setStyle("-fx-text-box-border: red;");
                 lblError.setText("Username and/or password is not filled");
             }
-        //} catch (Exception e) {
-        //    lblError.setText("No connection with the database could be established");
-        //    btnLogin.setDisable(true);
-        //}
+        } catch (Exception e) {
+            lblError.setText("No connection with the database could be established");
+            btnLogin.setDisable(true);
+        }
     }
 
     public void loadScreen(User user) throws Exception {
