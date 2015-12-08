@@ -28,14 +28,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -230,14 +233,30 @@ public class LuggageEditController implements Initializable {
             material.setStyle("-fx-border-width: 0px;");
             color.setStyle("-fx-border-width: 0px;");
             
+            LogTools logTools = new LogTools();
             editLuggage.setType(type.getText());
+            if (logTools.checkLuggageChanged(editLuggage, "type")) {
+                logTools.logLuggageChanged(editLuggage, currentUser, "type");
+            }
             editLuggage.setBrand(brand.getText());
+            if (logTools.checkLuggageChanged(editLuggage, "brand")) {
+                logTools.logLuggageChanged(editLuggage, currentUser, "brand");
+            }
             editLuggage.setMaterial(material.getText());
+            if (logTools.checkLuggageChanged(editLuggage, "material")) {
+                logTools.logLuggageChanged(editLuggage, currentUser, "material");
+            }
             editLuggage.setColor(color.getText());
+            if (logTools.checkLuggageChanged(editLuggage, "color")) {
+                logTools.logLuggageChanged(editLuggage, currentUser, "color");
+            }
             editLuggage.setComment(comments.getText());
+            if (logTools.checkLuggageChanged(editLuggage, "comment")) {
+                logTools.logLuggageChanged(editLuggage, currentUser, "comment");
+            }
             editLuggage.setStatusId(new Status().getStatusByName(ddwnStatus.getText()).getId());
-            if (new LogTools().checkLuggageChanged(editLuggage)) {
-                new LogTools().logLuggageChanged(editLuggage, currentUser);
+            if (logTools.checkLuggageChanged(editLuggage, "status")) {
+                logTools.logLuggageChanged(editLuggage, currentUser, "status");
             }
             editLuggage.updateLuggage(editLuggage);
             
@@ -302,6 +321,16 @@ public class LuggageEditController implements Initializable {
         else {
             return null;
         }
+    }
+    
+    @FXML
+    private void btnShowHistoryEvent(ActionEvent event) throws IOException {
+        LogLuggageController.setLuggage(editLuggage);
+        Stage logStage = new Stage();
+        Scene logScene = new Scene(FXMLLoader.load(getClass().getResource("/Fys/Views/LogLuggage.fxml")));
+        logScene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
+        logStage.setScene(logScene);
+        logStage.show();
     }
     
     @FXML

@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -207,8 +208,10 @@ public class StatisticsTotalLuggageController implements Initializable {
     }
 
     @FXML
-    private void btnLogoutEvent(ActionEvent event) {
-        System.out.println("Log out");
+    private void btnLogoutEvent(ActionEvent event) throws IOException {
+        LoginController.setScreen(screen);
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        screen.change("Login");
     }
 
 }

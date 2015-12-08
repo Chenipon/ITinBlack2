@@ -95,7 +95,7 @@ public class LogTools {
         String username = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT username FROM users WHERE id=" + id);
+            ResultSet result = statement.executeQuery("SELECT username FROM user WHERE id=" + id);
             while (result.next()) {
                 username = result.getString(1);
             }
@@ -105,13 +105,14 @@ public class LogTools {
     
     /**
      * This method checks if an element in the luggage has changed.
+     * @param type
      * @see checkLuggageChanged()
      * @param editLuggage
      * @return
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public boolean checkLuggageChanged(Luggage editLuggage) throws ClassNotFoundException, SQLException {
+    public boolean checkLuggageChanged(Luggage editLuggage, String type) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM luggage WHERE id=" + editLuggage.getId());
@@ -124,25 +125,46 @@ public class LogTools {
                 dbLuggage.setComment(result.getString(6));
                 dbLuggage.setStatusId(result.getInt(8));
             }
-            return (!dbLuggage.getType().equals(editLuggage.getType()) || 
-                    !dbLuggage.getBrand().equals(editLuggage.getBrand()) || 
-                    !dbLuggage.getMaterial().equals(editLuggage.getMaterial()) || 
-                    !dbLuggage.getColor().equals(editLuggage.getColor()) ||
-                    !dbLuggage.getComment().equals(editLuggage.getComment()) ||
-                    dbLuggage.getStatusId() != editLuggage.getStatusId());
+            switch (type) {
+                case("type"): {
+                    return !dbLuggage.getType().equals(editLuggage.getType());
+                }
+                case("brand"): {
+                    return !dbLuggage.getBrand().equals(editLuggage.getBrand());
+                }
+                case("material"): {
+                    return !dbLuggage.getMaterial().equals(editLuggage.getMaterial());
+                }
+                case("color"): {
+                    return !dbLuggage.getColor().equals(editLuggage.getColor());
+                }
+                case("comment"): {
+                    if (dbLuggage.getComment() != null && editLuggage.getComment() != null) {
+                        return !dbLuggage.getComment().equals(editLuggage.getComment());
+                    } else {
+                        return false;
+                    }
+                }
+                case("status"): {
+                    return (dbLuggage.getStatusId() != editLuggage.getStatusId());
+                }
+                default: {
+                    return false;
+                }
+            }
         }
     }
     
     /**
      * This method logs whenever a piece of luggage has been changed by an employee.
-     * @see logLuggageChanged()
      * @param editLuggage
      * @param currentUser
+     * @param type
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public void logLuggageChanged(Luggage editLuggage, User currentUser) throws ClassNotFoundException, SQLException {
-        StringBuilder sb = new StringBuilder(128);
+    public void logLuggageChanged(Luggage editLuggage, User currentUser, String type) throws ClassNotFoundException, SQLException {
+        String change = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM luggage WHERE id=" + editLuggage.getId());
@@ -155,33 +177,40 @@ public class LogTools {
                 dbLuggage.setComment(result.getString(6));
                 dbLuggage.setStatusId(result.getInt(8));
             }
-            if (!dbLuggage.getType().equals(editLuggage.getType())) {
-                sb.append("Type: ").append(dbLuggage.getType()).append(" was changed to: ").append(editLuggage.getType()).append("\n");
+            if (type.equals("type") && !dbLuggage.getType().equals(editLuggage.getType())) {
+                change = ("Type: " + dbLuggage.getType() + " was changed to: " + editLuggage.getType());
             }
-            if (!dbLuggage.getBrand().equals(editLuggage.getBrand())) {
-                sb.append("Brand: ").append(dbLuggage.getBrand()).append(" was changed to: ").append(editLuggage.getBrand()).append("\n");
+            if (type.equals("brand") && !dbLuggage.getBrand().equals(editLuggage.getBrand())) {
+                change = ("Brand: " + dbLuggage.getBrand() + " was changed to: " + editLuggage.getBrand());
             }
-            if (!dbLuggage.getMaterial().equals(editLuggage.getMaterial())) {
-                sb.append("Material: ").append(dbLuggage.getMaterial()).append(" was changed to: ").append(editLuggage.getMaterial()).append("\n");
+            if (type.equals("material") && !dbLuggage.getMaterial().equals(editLuggage.getMaterial())) {
+                change = ("Material: " + dbLuggage.getMaterial() + " was changed to: " + editLuggage.getMaterial());
             }
-            if (!dbLuggage.getColor().equals(editLuggage.getColor())) {
-                sb.append("Color: ").append(dbLuggage.getColor()).append(" was changed to: ").append(editLuggage.getColor()).append("\n");
+            if (type.equals("color") && !dbLuggage.getColor().equals(editLuggage.getColor())) {
+                change = ("Color: " + dbLuggage.getColor() + " was changed to: " + editLuggage.getColor());
             }
-//            if (!dbLuggage.getComment().equals(editLuggage.getComment())) {
-//                sb.append("Comment: \"").append(dbLuggage.getComment()).append("\" was changed to: \"").append(editLuggage.getComment()).append("\"\n");
-//            }
-            if (dbLuggage.getStatusId() != (editLuggage.getStatusId())) {
-                sb.append("Status: ").append(new Status().getStatusById(dbLuggage.getStatusId()).getStatusName()).append(" was changed to: ").append(new Status().getStatusById(editLuggage.getStatusId()).getStatusName()).append("\n");
+            if (!dbLuggage.getComment().equals(editLuggage.getComment())) {
+                if (editLuggage.getComment().equals("")) {
+                    change = ("Comment: \"" + dbLuggage.getComment() + "\" was removed");
+                } else if (dbLuggage.getComment().equals("")) {
+                    change = ("Comment: \"" + editLuggage.getComment() + "\" was added");
+                } else {
+                    change = ("Comment: \"" + dbLuggage.getComment() + "\" was changed to: \"" + editLuggage.getComment() + "\"");
+                }
+            }
+            if (type.equals("status") && dbLuggage.getStatusId() != (editLuggage.getStatusId())) {
+                change = ("Status: " + (new Status().getStatusById(dbLuggage.getStatusId()).getStatusName())) + 
+                        " was changed to: " + (new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
             }
             db.close();
         }
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO log (logdate,employeeid,logtext) VALUES (?,?,?)");
+            String query = ("INSERT INTO logluggage (logdate,luggageid,employeeid,logtext) VALUES (?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, (new DateConverter().convertJavaDateToSqlDate(new java.util.Date())));
-            preparedStatement.setInt(2, currentUser.getId());
-            String test = sb.toString();
-            preparedStatement.setString(3, test);
+            preparedStatement.setInt(2, editLuggage.getId());
+            preparedStatement.setInt(3, currentUser.getId());
+            preparedStatement.setString(4, change);
             preparedStatement.executeUpdate();
             db.close();
         }

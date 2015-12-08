@@ -159,6 +159,7 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Label>
+                  <Button fx:id="btnShowHistory" layoutX="26.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnShowHistoryEvent" prefHeight="25.0" prefWidth="132.0" styleClass="btnRed" text="Show History" />
                </children></AnchorPane>
         </items>
       </SplitPane>
