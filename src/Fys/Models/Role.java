@@ -44,14 +44,14 @@ public class Role {
     public void insertRole(Role role) throws ClassNotFoundException, SQLException {
         Connection db = new ConnectMysqlServer().dbConnect();
         Statement statement = db.createStatement();
-        statement.executeQuery("INSERT INTO roles (rolename) VALUES (" + role.getRoleName() + ")");
+        statement.executeQuery("INSERT INTO role (rolename) VALUES (" + role.getRoleName() + ")");
         db.close();
     }
 
     public Role getRoleById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM roles WHERE id=" + id);
+            ResultSet result = statement.executeQuery("SELECT * FROM role WHERE id=" + id);
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.roleName = result.getString(2);
@@ -64,7 +64,7 @@ public class Role {
         ObservableList<Role> roleList = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM roles");
+            ResultSet result = statement.executeQuery("SELECT * FROM role");
             while (result.next()) {
                 Role addRole = new Role();
                 addRole.id = result.getInt(1);
@@ -78,7 +78,7 @@ public class Role {
     public Role getRoleByName(String name) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM roles WHERE rolename='" + name + "'");
+            ResultSet result = statement.executeQuery("SELECT * FROM role WHERE rolename='" + name + "'");
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.roleName = result.getString(2);
