@@ -58,7 +58,7 @@ public class Connection {
     
     public void insertConnection(Connection connection) throws ClassNotFoundException, SQLException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO connections (luggageid,customerid,connectiondate) VALUES (?,?,?)");
+            String query = ("INSERT INTO connection (luggageid,customerid,connectiondate) VALUES (?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setInt(1, connection.getLuggageId());
             preparedStatement.setInt(2, connection.getCustomerId());
@@ -69,7 +69,7 @@ public class Connection {
     
     public void updateConnection(Connection connection) throws ClassNotFoundException, SQLException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("UPDATE connections SET luggageid=?,customerid=?,connectiondate=? WHERE id=" + connection.getId());
+            String query = ("UPDATE connection SET luggageid=?,customerid=?,connectiondate=? WHERE id=" + connection.getId());
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setInt(1, connection.getLuggageId());
             preparedStatement.setInt(2, connection.getCustomerId());
@@ -80,7 +80,7 @@ public class Connection {
     
     public void deleteConnection(Connection connection) throws ClassNotFoundException, SQLException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = "DELETE FROM connections WHERE id= ?";
+            String query = "DELETE FROM connection WHERE id= ?";
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setInt(1, connection.getId());
             preparedStatement.execute();
@@ -90,7 +90,7 @@ public class Connection {
     public Connection getConnectionByLuggageId(int luggageId) throws SQLException, ClassNotFoundException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM connections WHERE luggageid=" + luggageId);
+            ResultSet result = statement.executeQuery("SELECT * FROM connection WHERE luggageid=" + luggageId);
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.luggageId = result.getInt(2);
@@ -104,7 +104,7 @@ public class Connection {
     public Connection getConnectionByCustomerId(int customerId) throws SQLException, ClassNotFoundException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM connections WHERE customerid=" + customerId);
+            ResultSet result = statement.executeQuery("SELECT * FROM connection WHERE customerid=" + customerId);
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.luggageId = result.getInt(2);

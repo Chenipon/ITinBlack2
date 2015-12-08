@@ -109,7 +109,7 @@ public class User {
 
     public void insertUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO users (username,password,firstname,lastname,roleid,registerdate,active) VALUES (?,?,?,?,?,?,?)");
+            String query = ("INSERT INTO user (username,password,firstname,lastname,roleid,registerdate,active) VALUES (?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, user.username);
             preparedStatement.setString(2, user.password);
@@ -124,7 +124,7 @@ public class User {
     
     public void updateUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("UPDATE users SET username = ?, password=?,firstname=?,lastname=?,roleId=?,registerDate=?,active=? WHERE id=" + user.getId());
+            String query = ("UPDATE user SET username = ?, password=?,firstname=?,lastname=?,roleId=?,registerDate=?,active=? WHERE id=" + user.getId());
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, user.username);
             preparedStatement.setString(2, user.password);
@@ -140,7 +140,7 @@ public class User {
     public User getUserById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("select * from users where id=" + id);
+            ResultSet result = statement.executeQuery("SELECT * FROM user WHERE id=" + id);
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.username = result.getString(2);
@@ -159,7 +159,7 @@ public class User {
     public User getUserByUsername(String username) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("select * from users where username='" + username + "'");
+            ResultSet result = statement.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.username = result.getString(2);

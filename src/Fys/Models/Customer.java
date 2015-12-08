@@ -108,7 +108,7 @@ public class Customer {
 
     public void insertCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO customers (firstname,lastname,gender,phone,address,email,registerdate,employeeid) VALUES (?,?,?,?,?,?,?,?)");
+            String query = ("INSERT INTO customer (firstname,lastname,gender,phone,address,email,registerdate,employeeid) VALUES (?,?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, customer.firstName);
             preparedStatement.setString(2, customer.lastName);
@@ -124,7 +124,7 @@ public class Customer {
     
     public void updateCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = "UPDATE customers SET firstname = ?,lastname = ?,gender = ?,phone = ?,address = ?,email = ? WHERE id=" + customer.getId();
+            String query = "UPDATE customer SET firstname = ?,lastname = ?,gender = ?,phone = ?,address = ?,email = ? WHERE id=" + customer.getId();
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, customer.firstName);
             preparedStatement.setString(2, customer.lastName);
@@ -139,7 +139,7 @@ public class Customer {
     public Customer getCustomerById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM customers WHERE id=" + id);
+            ResultSet result = statement.executeQuery("SELECT * FROM customer WHERE id=" + id);
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.firstName = result.getString(2);

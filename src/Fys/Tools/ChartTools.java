@@ -42,7 +42,7 @@ public class ChartTools {
         int connectedLuggage = 0;
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT id FROM connections WHERE connectiondate LIKE '"
+            ResultSet result = statement.executeQuery("SELECT id FROM connection WHERE connectiondate LIKE '"
                     + date.toString() + "%'");
             while (result.next()) {
                 connectedLuggage++;
