@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import Fys.Views.ViewModels.LuggageTabelView;
+import java.sql.SQLException;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -89,7 +90,7 @@ public class LuggageOverviewController implements Initializable {
                                                     LuggageEditController.setLuggage(editLuggage);
                                                     LuggageEditController.setScreen(screen);
                                                     screen.change("LuggageEdit");
-                                                } catch (Exception ex) {
+                                                } catch (ClassNotFoundException | SQLException | IOException ex) {
                                                     Logger.getLogger(AccountOverviewController.class.getName()).log(Level.SEVERE, null, ex);
                                                 }
                                             }

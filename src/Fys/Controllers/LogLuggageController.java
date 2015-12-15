@@ -36,9 +36,9 @@ public class LogLuggageController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colDate.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("date"));
+        colDate.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("registerdate"));
         colEmployee.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("employee"));
-        colLogEntry.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("logentry"));
+        colLogEntry.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("change"));
         try {
             tblLuggageLog.setItems(getLogList());
         } catch (Exception ex) {

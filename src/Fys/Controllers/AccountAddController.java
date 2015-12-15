@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
@@ -28,7 +29,8 @@ public class AccountAddController implements Initializable {
 
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private MenuButton ddwnUserRole;
-    @FXML private TextField username, password, firstName, lastName;
+    @FXML private TextField username, firstName, lastName;
+    @FXML private PasswordField password;
     
     public static void setScreen(Screen newScreen) {
         screen = newScreen;

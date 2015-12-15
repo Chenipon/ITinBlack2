@@ -17,13 +17,13 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage - Overview">
+                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage - Overview" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="14.462890625">
                      <font>
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="lblSearch" layoutX="24.0" layoutY="123.0" prefHeight="25.0" prefWidth="204.0" promptText="Search term..." />
-                  <MenuButton fx:id="ddwnLuggageType" layoutX="236.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Luggage Type">
+                  <TextField fx:id="lblSearch" layoutX="24.0" layoutY="123.0" prefHeight="25.0" prefWidth="204.0" promptText="Search term..." AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="123.0" />
+                  <MenuButton fx:id="ddwnLuggageType" layoutX="236.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Luggage Type" AnchorPane.leftAnchor="236.0" AnchorPane.topAnchor="123.0">
                      <items>
                       <MenuItem fx:id="ddwnLuggageLost" mnemonicParsing="false" onAction="#ddwnLuggageLostEvent" text="Lost" />
                       <MenuItem fx:id="ddwnLuggageFound" mnemonicParsing="false" onAction="#ddwnLuggageFoundEvent" text="Found" />
@@ -31,9 +31,9 @@
                         <MenuItem fx:id="ddwnLuggageAll" mnemonicParsing="false" onAction="#ddwnLuggageAllEvent" text="All" />
                      </items>
                   </MenuButton>
-                  <Button fx:id="btnSearchLuggage" layoutX="360.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnSearchLuggageEvent" styleClass="btnRed" text="Search" />
-                  <Button fx:id="btnAddLuggage" layoutX="672.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddLuggageEvent" styleClass="btnRed" text="+ Add Luggage" />
-                  <TableView fx:id="tblLuggage" layoutX="24.0" layoutY="187.0" prefHeight="463.0" prefWidth="745.0">
+                  <Button fx:id="btnSearchLuggage" layoutX="360.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnSearchLuggageEvent" styleClass="btnRed" text="Search" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="123.0" />
+                  <Button fx:id="btnAddLuggage" layoutX="672.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddLuggageEvent" styleClass="btnRed" text="+ Add Luggage" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="123.0" />
+                  <TableView fx:id="tblLuggage" layoutX="24.0" layoutY="187.0" prefHeight="463.0" prefWidth="745.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="187.0">
                     <columns>
                       <TableColumn fx:id="colType" editable="false" prefWidth="86.33334350585938" text="Type" />
                       <TableColumn fx:id="colBrand" prefWidth="105.33334350585938" text="Brand" />
@@ -41,7 +41,7 @@
                         <TableColumn fx:id="colMaterial" prefWidth="89.0" text="Material" />
                         <TableColumn fx:id="colComment" prefWidth="255.0" text="Comments" />
                         <TableColumn fx:id="colStatus" prefWidth="78.0" text="Status" />
-                        <TableColumn fx:id="colAction" prefWidth="59.0" />
+                        <TableColumn fx:id="colAction" prefWidth="64.0" />
                     </columns>
                   </TableView>
                   <Label fx:id="lblErrorMessage" layoutX="422.0" layoutY="128.0" prefHeight="15.0" prefWidth="185.0" textFill="RED">

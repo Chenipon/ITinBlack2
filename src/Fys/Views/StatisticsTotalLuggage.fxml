@@ -39,9 +39,9 @@
                         <MenuItem fx:id="ddwnAllLuggage" mnemonicParsing="false" onAction="#ddwnAllLuggageEvent" text="All" />
                     </items>
                   </MenuButton>
-                  <Button fx:id="btnFilter" layoutX="385.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
-                  <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Print Statistics" />
-                  <BarChart fx:id="barChart" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0">
+                  <Button fx:id="btnFilter" layoutX="509.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
+                  <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Print Statistics" AnchorPane.rightAnchor="24.0" />
+                  <BarChart fx:id="barChart" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -49,11 +49,18 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </BarChart>
-                  <Label fx:id="lblErrorMessage" layoutX="441.0" layoutY="140.0" prefHeight="17.0" prefWidth="221.0" textFill="RED">
+                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="172.0" prefHeight="15.0" prefWidth="221.0" textFill="RED">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
+                  <MenuButton fx:id="ddwnInterval" layoutX="383.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Select Interval">
+                     <items>
+                        <MenuItem fx:id="ddwnIntervalDay" mnemonicParsing="false" onAction="#ddwnIntervalDayEvent" text="Day" />
+                        <MenuItem fx:id="ddwnIntervalMonth" mnemonicParsing="false" onAction="#ddwnIntervalMonthEvent" text="Month" />
+                        <MenuItem fx:id="ddwnIntervalYear" mnemonicParsing="false" onAction="#ddwnIntervalYearEvent" text="Year" />
+                     </items>
+                  </MenuButton>
                </children>
             </AnchorPane>
         </items>

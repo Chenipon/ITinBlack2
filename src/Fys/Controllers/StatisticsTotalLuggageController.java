@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,25 +25,30 @@ import javafx.scene.control.MenuButton;
  * FXML Controller class. This class controls the Account Overview screen
  * including it's features.
  *
- * @author Jeffrey van der Lingen, IS106-2
+ * @author Jeffrey van der Lingen, Daan Befort, IS106-2
  */
 public class StatisticsTotalLuggageController implements Initializable {
+
     private static Screen screen;
     private static User currentUser;
-    
-    @FXML private Label lblUsername, lblErrorMessage;
-    @FXML private MenuButton ddwnLuggageType;
-    @FXML private BarChart<String, Number> barChart;
-    @FXML private DatePicker startDate, endDate;
-    
+
+    @FXML
+    private Label lblUsername, lblErrorMessage;
+    @FXML
+    private MenuButton ddwnLuggageType, ddwnInterval;
+    @FXML
+    private BarChart<String, Number> barChart;
+    @FXML
+    private DatePicker startDate, endDate;
+
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
-    
+
     public static void setUser(User user) {
         currentUser = user;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
@@ -59,6 +65,24 @@ public class StatisticsTotalLuggageController implements Initializable {
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
             if (end.isAfter(start)) {
+                int interval;
+                switch (ddwnInterval.getText()) {
+                    case ("Day"): {
+                        interval = 1;
+                        break;
+                    }
+                    case ("Month"): {
+                        interval = 2;
+                        break;
+                    }
+                    case ("Year"): {
+                        interval = 3;
+                        break;
+                    }
+                    default: {
+                        interval = 0;
+                    }
+                }
                 switch (ddwnLuggageType.getText()) {
                     case ("Lost"): {
                         lblErrorMessage.setText("");
@@ -69,15 +93,13 @@ public class StatisticsTotalLuggageController implements Initializable {
                         barChart.setTitle("Total Luggage reported as \"Lost\"");
                         xAxis.setLabel("Date");
                         yAxis.setLabel("Amount");
-                        
+
                         XYChart.Series lostLuggage = new XYChart.Series();
                         lostLuggage.setName("Lost Luggage");
-                        LocalDate iterateDate = start;
-                        while(!(iterateDate.equals(end))) {
-                            lostLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getLostLuggage(iterateDate)));
-                            iterateDate = iterateDate.plusDays(1);
+                        ObservableList<ChartTools> lostLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 1);
+                        for (int i = 0; i < lostLuggageList.size(); i++) {
+                            lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
                         }
-                        lostLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getLostLuggage(iterateDate)));
                         barChart.getData().addAll(lostLuggage);
                         break;
                     }
@@ -90,15 +112,13 @@ public class StatisticsTotalLuggageController implements Initializable {
                         barChart.setTitle("Total Luggage reported as \"Found\"");
                         xAxis.setLabel("Date");
                         yAxis.setLabel("Amount");
-                        
+
                         XYChart.Series foundLuggage = new XYChart.Series();
                         foundLuggage.setName("Found Luggage");
-                        LocalDate iterateDate = start;
-                        while(!(iterateDate.equals(end))) {
-                            foundLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getFoundLuggage(iterateDate)));
-                            iterateDate = iterateDate.plusDays(1);
+                        ObservableList<ChartTools> foundLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 2);
+                        for (int i = 0; i < foundLuggageList.size(); i++) {
+                            foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
                         }
-                        foundLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getFoundLuggage(iterateDate)));
                         barChart.getData().addAll(foundLuggage);
                         break;
                     }
@@ -111,15 +131,13 @@ public class StatisticsTotalLuggageController implements Initializable {
                         barChart.setTitle("Total Luggage reported as \"Connected\"");
                         xAxis.setLabel("Date");
                         yAxis.setLabel("Amount");
-                        
+
                         XYChart.Series connectedLuggage = new XYChart.Series();
                         connectedLuggage.setName("Connected Luggage");
-                        LocalDate iterateDate = start;
-                        while(!(iterateDate.equals(end))) {
-                            connectedLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getConnectedLuggage(iterateDate)));
-                            iterateDate = iterateDate.plusDays(1);
+                        ObservableList<ChartTools> connectedLuggageList = chartTools.getConnectedLuggage(start, end, interval);
+                        for (int i = 0; i < connectedLuggageList.size(); i++) {
+                            connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
                         }
-                        connectedLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getConnectedLuggage(iterateDate)));
                         barChart.getData().addAll(connectedLuggage);
                         break;
                     }
@@ -132,36 +150,30 @@ public class StatisticsTotalLuggageController implements Initializable {
                         barChart.setTitle("Total Luggage reported");
                         xAxis.setLabel("Date");
                         yAxis.setLabel("Amount");
-                        
+
                         XYChart.Series lostLuggage = new XYChart.Series();
                         lostLuggage.setName("Lost Luggage");
-                        LocalDate iterateDate = start;
-                        while(!(iterateDate.equals(end))) {
-                            lostLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getLostLuggage(iterateDate)));
-                            iterateDate = iterateDate.plusDays(1);
+                        ObservableList<ChartTools> lostLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 1);
+                        for (int i = 0; i < lostLuggageList.size(); i++) {
+                            lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
                         }
-                        lostLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getLostLuggage(iterateDate)));
-                        
+
                         XYChart.Series foundLuggage = new XYChart.Series();
                         foundLuggage.setName("Found Luggage");
-                        iterateDate = start;
-                        while(!(iterateDate.equals(end))) {
-                            foundLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getFoundLuggage(iterateDate)));
-                            iterateDate = iterateDate.plusDays(1);
+                        ObservableList<ChartTools> foundLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 2);
+                        for (int i = 0; i < foundLuggageList.size(); i++) {
+                            foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
                         }
-                        foundLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getFoundLuggage(iterateDate)));
-                        
+
                         XYChart.Series connectedLuggage = new XYChart.Series();
                         connectedLuggage.setName("Connected Luggage");
-                        iterateDate = start;
-                        while(!(iterateDate.equals(end))) {
-                            connectedLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getConnectedLuggage(iterateDate)));
-                            iterateDate = iterateDate.plusDays(1);
+                        ObservableList<ChartTools> connectedLuggageList = chartTools.getConnectedLuggage(start, end, interval);
+                        for (int i = 0; i < connectedLuggageList.size(); i++) {
+                            connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
                         }
-                        connectedLuggage.getData().add(new XYChart.Data(iterateDate.toString(), chartTools.getConnectedLuggage(iterateDate)));
-                        
+
                         barChart.getData().addAll(lostLuggage, foundLuggage, connectedLuggage);
-                        break;    
+                        break;
                     }
                     default: {
                         lblErrorMessage.setText("Please select a luggage type");
@@ -198,6 +210,24 @@ public class StatisticsTotalLuggageController implements Initializable {
     private void ddwnAllLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("All");
         ddwnLuggageType.setPrefWidth(95);
+    }
+
+    @FXML
+    private void ddwnIntervalDayEvent(ActionEvent event) {
+        ddwnInterval.setText("Day");
+        ddwnInterval.setPrefWidth(110);
+    }
+
+    @FXML
+    private void ddwnIntervalMonthEvent(ActionEvent event) {
+        ddwnInterval.setText("Month");
+        ddwnInterval.setPrefWidth(110);
+    }
+
+    @FXML
+    private void ddwnIntervalYearEvent(ActionEvent event) {
+        ddwnInterval.setText("Year");
+        ddwnInterval.setPrefWidth(110);
     }
 
     @FXML

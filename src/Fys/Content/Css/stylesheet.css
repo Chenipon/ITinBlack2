@@ -44,8 +44,9 @@
     -fx-bar-fill: #C62828; 
 }
 .default-color1.chart-bar {
-    -fx-bar-fill: #F44336; 
+    -fx-bar-fill: #EF9A9A; 
 }
 .default-color2.chart-bar {
-    -fx-bar-fill: #EF9A9A; 
+    -fx-bar-fill: #8BC34A
+; 
 }

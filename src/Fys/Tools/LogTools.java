@@ -13,26 +13,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * This class is a tool to assist with the logging of certain activities of certain
+ * types such as change information about a Customer or Luggage object. All data
+ * is being stored in the Database that contains the logs of these types.
  * @author Jeffrey van der Lingen, IS106-2
- * @author Javadoc: John Ghatas, IS106-2
  */
 public class LogTools {
 
     /**
-     * This method grabs the Customer's register date.
-     * @see getCostumerRegisterDate()
-     * @param id
-     * @return
-     * @throws SQLException
-     * @throws ParseException
-     * @throws ClassNotFoundException
+     * The method getCustomerRegisterDate(int id) grabs the Customers register date.
+     * @param id the id of a registered Customer.
+     * @return java.util.Date format of the register date of the Customer;
+     * @throws SQLException when the Database gives errors
+     * @throws ParseException when the date can't be parsed correctly
+     * @throws ClassNotFoundException when the Database class can't be found
      */
     public java.util.Date getCustomerRegisterDate(int id) throws SQLException, ParseException, ClassNotFoundException {
         String registerdate = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT registerdate FROM customers WHERE id=" + id);
+            ResultSet result = statement.executeQuery("SELECT registerdate FROM customer WHERE id=" + id);
             while (result.next()) {
                 registerdate = result.getString(1);
             }
@@ -41,23 +41,21 @@ public class LogTools {
     }
     
     /**
-     * This method grabs the Employee who registered the Customer.
-     * @see getCustomerRegisterEmployee()
-     * @param id
-     * @return
+     * The method getCustomerRegisterEmployee(int id) grabs the username of the
+     * Employee who registered the Customer.
+     * @param id the id of the Employee that is provided in the Customer Object.
+     * @return the username of the Employee who registered the Customer.
      */
     public String getCustomerRegisterEmployee(int id) {
         String username = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT username FROM users WHERE id=" + id);
+            ResultSet result = statement.executeQuery("SELECT username FROM user WHERE id=" + id);
             while (result.next()) {
                 username = result.getString(1);
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LogTools.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            
         }
         return username;
     }

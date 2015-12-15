@@ -322,13 +322,15 @@ public class LuggageEditController implements Initializable {
             return null;
         }
     }
-    
+    //hoi
     @FXML
     private void btnShowHistoryEvent(ActionEvent event) throws IOException {
         LogLuggageController.setLuggage(editLuggage);
         Stage logStage = new Stage();
         Scene logScene = new Scene(FXMLLoader.load(getClass().getResource("/Fys/Views/LogLuggage.fxml")));
         logScene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
+        logStage.setTitle("Corendon Lost Luggage System");
+        logStage.getIcons().add(new javafx.scene.image.Image("/Fys/Content/Image/corendonicon.png"));
         logStage.setScene(logScene);
         logStage.show();
     }

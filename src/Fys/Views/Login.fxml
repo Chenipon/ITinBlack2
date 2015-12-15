@@ -11,11 +11,11 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.LoginController">
    <top>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
          <children>
             <AnchorPane layoutY="160.0" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #991818;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <Text fx:id="lblLogin" fill="WHITE" layoutX="254.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="92.443359375" AnchorPane.bottomAnchor="5.06640625" AnchorPane.topAnchor="3.65234375">
+                  <Text fx:id="lblLogin" fill="WHITE" layoutX="1.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.bottomAnchor="5.06640625" AnchorPane.topAnchor="2.93359375">
                      <font>
                         <Font name="Arial" size="28.0" />
                      </font>

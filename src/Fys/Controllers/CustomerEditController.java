@@ -5,6 +5,7 @@ import Fys.Models.User;
 import Fys.Tools.LogTools;
 import Fys.Tools.Screen;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
@@ -31,6 +32,7 @@ import javafx.scene.control.TextField;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -126,7 +128,7 @@ public class CustomerEditController implements Initializable {
     }
     
     @FXML
-    private void btnPrintProofEvent(ActionEvent event) throws Exception {
+    private void btnPrintProofEvent(ActionEvent event) {
         try{
             Document document = new Document();
         String fileName = "/temporaryPrintFileCustomer.pdf";
@@ -160,7 +162,7 @@ public class CustomerEditController implements Initializable {
         DocPrintJob printJob = choosePrinter().createPrintJob();
         
         printJob.print(printedDocument, new HashPrintRequestAttributeSet());
-        } catch(Exception ex) {
+        } catch(IOException | DocumentException | PrintException ex) {
             System.out.println(ex.toString());
             lblErrorMessage.setText("Somthing went wrong, your request is not printed.");
         }

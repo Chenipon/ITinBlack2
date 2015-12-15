@@ -6,34 +6,23 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.LogLuggageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B71C1C;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.LogLuggageController">
    <children>
-      <AnchorPane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #991818;">
+      <AnchorPane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #991818;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Text fill="WHITE" layoutX="167.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage History">
+            <Text fill="WHITE" layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage History" wrappingWidth="261.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="325.0">
                <font>
                   <Font name="Arial Bold" size="32.0" />
                </font>
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="70.0" prefWidth="155.0" style="-fx-background-color: #FFFFFF;">
-         <children>
-            <ImageView fitHeight="89.0" fitWidth="144.0" layoutX="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Content/Image/corendonlogo.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutY="69.0" prefHeight="308.0" prefWidth="600.0" style="-fx-background-color: #B71C1C;" />
-      <AnchorPane layoutY="377.0" prefHeight="24.0" prefWidth="600.0" style="-fx-background-color: #991818;" />
-      <TableView layoutX="10.0" layoutY="79.0" prefHeight="298.0" prefWidth="580.0">
+      <AnchorPane layoutY="377.0" prefHeight="24.0" prefWidth="600.0" style="-fx-background-color: #991818;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <TableView fx:id="tblLuggageLog" focusTraversable="false" layoutX="10.0" layoutY="79.0" prefHeight="298.0" prefWidth="580.0" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="79.0">
         <columns>
-          <TableColumn fx:id="colDate" prefWidth="75.0" text="Date" />
-          <TableColumn fx:id="colEmployee" prefWidth="75.0" text="Employee" />
-            <TableColumn fx:id="colLogEntry" prefWidth="449.0" text="Log Entry" />
+          <TableColumn fx:id="colDate" prefWidth="126.0" text="Date" />
+          <TableColumn fx:id="colEmployee" prefWidth="91.0" text="Employee" />
+            <TableColumn fx:id="colLogEntry" minWidth="142.0" prefWidth="362.0" text="Log Entry" />
         </columns>
       </TableView>
    </children>
