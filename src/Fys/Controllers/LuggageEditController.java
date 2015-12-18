@@ -48,47 +48,50 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 
 /**
- * FXML Controller class. This class controls the Edit Luggage screen including 
+ * FXML Controller class. This class controls the Edit Luggage screen including
  * it's features.
  *
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class LuggageEditController implements Initializable {
+
     private static Screen screen;
     private static User currentUser;
     private static Luggage editLuggage;
     private static Customer connectedCustomer;
     private static Connection connection;
-    
-    @FXML private Label lblUsername, lblErrorMessage, lblFirstName, lblLastName, 
+
+    @FXML private Label lblUsername, lblErrorMessage, lblFirstName, lblLastName,
             lblGender, lblPhone, lblAddress, lblEmail, lblRegisterDate, lblRegisterEmployee;
     @FXML private TextField type, brand, material, color;
     @FXML private TextArea comments;
     @FXML private MenuButton ddwnStatus;
     @FXML private Button btnSelectCustomer;
     @FXML private AnchorPane paneCustomer;
-    
+
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
-    
+
     public static void setUser(User user) {
         currentUser = user;
     }
-    
+
     public static void setLuggage(Luggage luggage) {
         editLuggage = luggage;
     }
-    
+
     public static void setCustomer(Customer customer) {
         connectedCustomer = customer;
     }
-    
-    /** initialize(URL url, ResourceBundle rb) executes before the FXML gets
+
+    /**
+     * initialize(URL url, ResourceBundle rb) executes before the FXML gets
      * loaded and initialized. This method is used to initialize all text and
      * information before being displayed.
+     *
      * @param url
-     * @param rb 
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -98,15 +101,15 @@ public class LuggageEditController implements Initializable {
         material.setText(editLuggage.getMaterial());
         color.setText(editLuggage.getColor());
         comments.setText(editLuggage.getComment());
-        
-        try { 
+
+        try {
             ddwnStatus.setText(new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
             lblRegisterDate.setText(new LogTools().getLuggageRegisterDate(editLuggage.getId()).toString());
             lblRegisterEmployee.setText((new LogTools().getLuggageRegisterEmployee(editLuggage.getEmployeeId())));
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             /* if there is a Connection of Luggage and Customer registered in the database,
              * initialize this Connection.
@@ -123,9 +126,9 @@ public class LuggageEditController implements Initializable {
             if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer == null) {
                 connectedCustomer = new Customer().getCustomerById(connection.getCustomerId());
                 setLabelText();
-            /* else if the Customer has been initialized, display the text from this 
-             * initialized Customer.
-             */
+                /* else if the Customer has been initialized, display the text from this 
+                 * initialized Customer.
+                 */
             } else if (connectedCustomer != null) {
                 setLabelText();
             }
@@ -142,9 +145,10 @@ public class LuggageEditController implements Initializable {
             paneCustomer.setVisible(false);
             btnSelectCustomer.setVisible(false);
         }
-    } 
-    
-    /** setLabelText() fills the labels displaying the Customer information, when
+    }
+
+    /**
+     * setLabelText() fills the labels displaying the Customer information, when
      * a connectedCustomer has been found.
      */
     public void setLabelText() {
@@ -155,10 +159,11 @@ public class LuggageEditController implements Initializable {
         lblAddress.setText(connectedCustomer.getAddress());
         lblEmail.setText(connectedCustomer.getEmail());
     }
-    
-    /** ddwnStatusLostEvent() replaces the text in the Status
-     * dropdown with "Lost" and sets the width to the default one of 200. Also
-     * disables the "Select Customer" button if visable.
+
+    /**
+     * ddwnStatusLostEvent() replaces the text in the Status dropdown with
+     * "Lost" and sets the width to the default one of 200. Also disables the
+     * "Select Customer" button if visable.
      */
     @FXML
     private void ddwnStatusLostEvent() {
@@ -166,11 +171,12 @@ public class LuggageEditController implements Initializable {
         btnSelectCustomer.setVisible(false);
         ddwnStatus.setPrefWidth(200);
     }
-    
-    /** ddwnStatusFoundEvent() replaces the text in the Status
-     * dropdown with "Found" and sets the width to the default one of 200. Also
-     * disables the "Select Customer" button if visable.
-     */    
+
+    /**
+     * ddwnStatusFoundEvent() replaces the text in the Status dropdown with
+     * "Found" and sets the width to the default one of 200. Also disables the
+     * "Select Customer" button if visable.
+     */
     @FXML
     private void ddwnStatusFoundEvent() {
         ddwnStatus.setText("Found");
@@ -178,21 +184,18 @@ public class LuggageEditController implements Initializable {
         ddwnStatus.setPrefWidth(200);
     }
 
-    /** ddwnStatusConnectedEvent() replaces the text in the Status
-     * dropdown with "Lost" and sets the width to the default one of 200. Also
-     * enables the "Select Customer" button.
-     */    
+    /**
+     * ddwnStatusConnectedEvent() replaces the text in the Status dropdown with
+     * "Lost" and sets the width to the default one of 200. Also enables the
+     * "Select Customer" button.
+     */
     @FXML
     private void ddwnStatusConnectedEvent() {
         ddwnStatus.setText("Connected");
         btnSelectCustomer.setVisible(true);
         ddwnStatus.setPrefWidth(200);
     }
-    
-    /** btnSelectCustomerEvent(ActionEvent event) switches screen to the 
-     * LuggageSelectCustomer FXML screen. Also sends the Luggage and User objects
-     * to the controller of the LuggageSelectCustomer FXML screen.
-     */     
+
     @FXML
     private void btnSelectCustomerEvent(ActionEvent event) throws IOException {
         LuggageSelectCustomerController.setUser(currentUser);
@@ -200,21 +203,24 @@ public class LuggageEditController implements Initializable {
         LuggageSelectCustomerController.setScreen(screen);
         screen.change("LuggageSelectCustomer");
     }
-    
+
     @FXML
-    private void btnSaveChangesEvent(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
-        if (!(type.getText().equals("") || brand.getText().equals("") || 
-                material.getText().equals("") || color.getText().equals(""))) {
+    private void btnSaveChangesEvent(ActionEvent event) throws IOException,
+            ClassNotFoundException, SQLException {
+        if (!(type.getText().equals("") || brand.getText().equals("")
+                || material.getText().equals("") || color.getText().equals(""))) {
             if (ddwnStatus.getText().equals("Connected") && connectedCustomer == null) {
                 lblErrorMessage.setText("Please select a customer to connect to the luggage before saving");
                 return;
             }
             if (ddwnStatus.getText().equals("Connected")) {
-                if (editLuggage.checkIfLuggageIsConnected(editLuggage) && (connectedCustomer.getId() != connection.getCustomerId())) {
+                if (editLuggage.checkIfLuggageIsConnected(editLuggage)
+                        && (connectedCustomer.getId() != connection.getCustomerId())) {
                     connection.setCustomerId(connectedCustomer.getId());
                     connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
                     connection.updateConnection(connection);
-                } else if (editLuggage.checkIfLuggageIsConnected(editLuggage) && connectedCustomer.getId() == connection.getCustomerId()) {
+                } else if (editLuggage.checkIfLuggageIsConnected(editLuggage)
+                        && connectedCustomer.getId() == connection.getCustomerId()) {
                     System.out.println("USER HAS NOT BEEN CHANGED");
                 } else {
                     connection = new Connection();
@@ -232,7 +238,7 @@ public class LuggageEditController implements Initializable {
             brand.setStyle("-fx-border-width: 0px;");
             material.setStyle("-fx-border-width: 0px;");
             color.setStyle("-fx-border-width: 0px;");
-            
+
             LogTools logTools = new LogTools();
             editLuggage.setType(type.getText());
             if (logTools.checkLuggageChanged(editLuggage, "type")) {
@@ -259,7 +265,7 @@ public class LuggageEditController implements Initializable {
                 logTools.logLuggageChanged(editLuggage, currentUser, "status");
             }
             editLuggage.updateLuggage(editLuggage);
-            
+
             connectedCustomer = null;
             LuggageOverviewController.setUser(currentUser);
             LuggageOverviewController.setScreen(screen);
@@ -272,57 +278,58 @@ public class LuggageEditController implements Initializable {
             color.setStyle("-fx-text-box-border: red;");
         }
     }
-    
+
     @FXML
     private void btnPrintProofEvent(ActionEvent event) {
         try {
             Document document = new Document();
-        String fileName = "/temporaryPrintFileLuggage.pdf";
-        File fileLocation = new File(new File("temp").getAbsolutePath());
-        Image corendonLogo = Image.getInstance("src/Fys/Content/Image/corendonlogo.jpg");
-        Font fontbold = FontFactory.getFont("Arial", 18, Font.BOLD);
-        if (!fileLocation.exists()) {
-            fileLocation.mkdir();
-            System.out.println("directory temp created");
-        }
-        
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileLocation.getAbsolutePath() + fileName));
-        document.open();
-        // step 4
-        corendonLogo.scalePercent(20f);
-        document.add(corendonLogo);
-        document.add(new Paragraph("Proof of registration: Luggage", fontbold));
-        document.add(new Paragraph("Type: " + editLuggage.getType()));
-        document.add(new Paragraph("Brand: " + editLuggage.getBrand()));
-        document.add(new Paragraph("Color: " + editLuggage.getColor()));
-        document.add(new Paragraph("Material: " + editLuggage.getMaterial()));
-        document.add(new Paragraph("Status: " + editLuggage.getStatus().getStatusName()));
-        document.add(new Paragraph("Register date: " + editLuggage.getRegisterDate()));
-        
-        
-        // step 5
-        document.close();
-        
-        DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        Doc printedDocument = new SimpleDoc(new FileInputStream(fileLocation.getAbsolutePath() + fileName), docFlavor, null);  
-        DocPrintJob printJob = choosePrinter().createPrintJob();
-        
-        printJob.print(printedDocument, new HashPrintRequestAttributeSet());
-        } catch (IOException | DocumentException | PrintException ex){
+            String fileName = "/temporaryPrintFileLuggage.pdf";
+            File fileLocation = new File(new File("temp").getAbsolutePath());
+            Image corendonLogo = Image.getInstance("src/Fys/Content/Image/corendonlogo.jpg");
+            Font fontbold = FontFactory.getFont("Arial", 18, Font.BOLD);
+            if (!fileLocation.exists()) {
+                fileLocation.mkdir();
+                System.out.println("directory temp created");
+            }
+
+            PdfWriter writer = PdfWriter.getInstance(document,
+                    new FileOutputStream(fileLocation.getAbsolutePath() + fileName));
+            document.open();
+            // step 4
+            corendonLogo.scalePercent(20f);
+            document.add(corendonLogo);
+            document.add(new Paragraph("Proof of registration: Luggage", fontbold));
+            document.add(new Paragraph("Type: " + editLuggage.getType()));
+            document.add(new Paragraph("Brand: " + editLuggage.getBrand()));
+            document.add(new Paragraph("Color: " + editLuggage.getColor()));
+            document.add(new Paragraph("Material: " + editLuggage.getMaterial()));
+            document.add(new Paragraph("Status: " + editLuggage.getStatus().getStatusName()));
+            document.add(new Paragraph("Register date: " + editLuggage.getRegisterDate()));
+
+            // step 5
+            document.close();
+
+            DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            Doc printedDocument = new SimpleDoc(new FileInputStream(fileLocation.getAbsolutePath()
+                    + fileName), docFlavor, null);
+            DocPrintJob printJob = choosePrinter().createPrintJob();
+
+            printJob.print(printedDocument, new HashPrintRequestAttributeSet());
+        } catch (IOException | DocumentException | PrintException ex) {
             System.out.println(ex.toString());
             lblErrorMessage.setText("Somthing went wrong, your request is not printed.");
         }
     }
-    public static PrintService choosePrinter(){
+
+    public static PrintService choosePrinter() {
         PrinterJob printJob = PrinterJob.getPrinterJob();
-        if(printJob.printDialog()) {
-        return printJob.getPrintService();          
-        }
-        else {
+        if (printJob.printDialog()) {
+            return printJob.getPrintService();
+        } else {
             return null;
         }
     }
-    //hoi
+
     @FXML
     private void btnShowHistoryEvent(ActionEvent event) throws IOException {
         LogLuggageController.setLuggage(editLuggage);
@@ -334,7 +341,7 @@ public class LuggageEditController implements Initializable {
         logStage.setScene(logScene);
         logStage.show();
     }
-    
+
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
@@ -342,7 +349,7 @@ public class LuggageEditController implements Initializable {
         LuggageOverviewController.setScreen(screen);
         screen.change("LuggageOverview");
     }
-    
+
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
@@ -350,7 +357,7 @@ public class LuggageEditController implements Initializable {
         LuggageOverviewController.setScreen(screen);
         screen.change("LuggageOverview");
     }
-    
+
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
@@ -358,12 +365,12 @@ public class LuggageEditController implements Initializable {
         CustomerOverviewController.setScreen(screen);
         screen.change("CustomerOverview");
     }
-    
+
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
         LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
         screen.change("Login");
-    }   
-    
+    }
+
 }
