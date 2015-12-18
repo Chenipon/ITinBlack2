@@ -1,5 +1,6 @@
 package Fys.Tools;
 
+import Fys.Models.Customer;
 import Fys.Models.Luggage;
 import Fys.Models.Status;
 import Fys.Models.User;
@@ -104,7 +105,6 @@ public class LogTools {
     /**
      * This method checks if an element in the luggage has changed.
      * @param type
-     * @see checkLuggageChanged()
      * @param editLuggage
      * @return
      * @throws ClassNotFoundException
@@ -207,6 +207,107 @@ public class LogTools {
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, (new DateConverter().convertJavaDateToSqlDate(new java.util.Date())));
             preparedStatement.setInt(2, editLuggage.getId());
+            preparedStatement.setInt(3, currentUser.getId());
+            preparedStatement.setString(4, change);
+            preparedStatement.executeUpdate();
+            db.close();
+        }
+    }
+    
+    /**
+     * This method checks if an element of the Customer object has changed.
+     * @param type The type of a Customer value
+     * @param editCustomer The Customer object that might have been edited
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public boolean checkCustomerChanged(Customer editCustomer, String type) throws ClassNotFoundException, SQLException {
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            Statement statement = db.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM customer WHERE id=" + editCustomer.getId());
+            Customer dbCustomer = new Customer();
+            while (result.next()) {
+                dbCustomer.setFirstName(result.getString(2));
+                dbCustomer.setLastName(result.getString(3));
+                dbCustomer.setGender(result.getString(4));
+                dbCustomer.setPhone(result.getString(5));
+                dbCustomer.setAddress(result.getString(6));
+                dbCustomer.setEmail(result.getString(7));
+            }
+            switch (type) {
+                case("firstName"): {
+                    return !dbCustomer.getFirstName().equals(editCustomer.getFirstName());
+                }
+                case("lastName"): {
+                    return !dbCustomer.getLastName().equals(editCustomer.getLastName());
+                }
+                case("gender"): {
+                    return !dbCustomer.getGender().equals(editCustomer.getGender());
+                }
+                case("phone"): {
+                    return !dbCustomer.getPhone().equals(editCustomer.getPhone());
+                }
+                case("address"): {
+                    return !dbCustomer.getAddress().equals(editCustomer.getAddress());
+                }
+                case("email"): {
+                    return !dbCustomer.getEmail().equals(editCustomer.getEmail());
+                }
+                default: {
+                    return false;
+                }
+            }
+        }
+    }
+    
+    /**
+     * This method logs the changes that have been made to a Customer if a value was changed.
+     * @param editCustomer The Customer to check next to the one registered in the Database.
+     * @param currentUser The current user that is editing the Customer, needed to get the ID of this user.
+     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public void logCustomerChanged(Customer editCustomer, User currentUser, String type) throws ClassNotFoundException, SQLException {
+        String change = "";
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            Statement statement = db.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM customer WHERE id=" + editCustomer.getId());
+            Customer dbCustomer = new Customer();
+            while (result.next()) {
+                dbCustomer.setFirstName(result.getString(2));
+                dbCustomer.setLastName(result.getString(3));
+                dbCustomer.setGender(result.getString(4));
+                dbCustomer.setPhone(result.getString(5));
+                dbCustomer.setAddress(result.getString(6));
+                dbCustomer.setEmail(result.getString(7));
+            }
+            if (type.equals("firstName") && !dbCustomer.getFirstName().equals(editCustomer.getFirstName())) {
+                change = ("First name: " + dbCustomer.getFirstName() + " was changed to: " + editCustomer.getFirstName());
+            }
+            if (type.equals("lastName") && !dbCustomer.getLastName().equals(editCustomer.getLastName())) {
+                change = ("Last name: " + dbCustomer.getLastName() + " was changed to: " + editCustomer.getLastName());
+            }
+            if (type.equals("gender") && !dbCustomer.getGender().equals(editCustomer.getGender())) {
+                change = ("Gender: " + dbCustomer.getGender() + " was changed to: " + editCustomer.getGender());
+            }
+            if (type.equals("phone") && !dbCustomer.getPhone().equals(editCustomer.getPhone())) {
+                change = ("Phone number: " + dbCustomer.getPhone() + " was changed to: " + editCustomer.getPhone());
+            }
+            if (type.equals("address") && !dbCustomer.getAddress().equals(editCustomer.getAddress())) {
+                change = ("Address: " + dbCustomer.getAddress() + " was changed to: " + editCustomer.getAddress());
+            }
+            if (type.equals("email") && !dbCustomer.getEmail().equals(editCustomer.getEmail())) {
+                change = ("Email: " + dbCustomer.getEmail() + " was changed to: " + editCustomer.getEmail());
+            }
+            db.close();
+        }
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            String query = ("INSERT INTO logcustomer (logdate,customerid,employeeid,logtext) VALUES (?,?,?,?)");
+            PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
+            preparedStatement.setString(1, (new DateConverter().convertJavaDateToSqlDate(new java.util.Date())));
+            preparedStatement.setInt(2, editCustomer.getId());
             preparedStatement.setInt(3, currentUser.getId());
             preparedStatement.setString(4, change);
             preparedStatement.executeUpdate();

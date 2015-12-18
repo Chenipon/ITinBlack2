@@ -24,11 +24,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -101,12 +104,32 @@ public class CustomerEditController implements Initializable {
             firstName.setStyle("-fx-border-width: 0px;");
             lastName.setStyle("-fx-border-width: 0px;");
             phone.setStyle("-fx-border-width: 0px;");
+            
+            LogTools logTools = new LogTools();
             editCustomer.setFirstName(firstName.getText());
+            if (logTools.checkCustomerChanged(editCustomer, "firstName")) {
+                logTools.logCustomerChanged(editCustomer, currentUser, "firstName");
+            }
             editCustomer.setLastName(lastName.getText());
+            if (logTools.checkCustomerChanged(editCustomer, "lastName")) {
+                logTools.logCustomerChanged(editCustomer, currentUser, "lastName");
+            }
             editCustomer.setGender(ddwnGender.getText());
+            if (logTools.checkCustomerChanged(editCustomer, "gender")) {
+                logTools.logCustomerChanged(editCustomer, currentUser, "gender");
+            }
             editCustomer.setPhone(phone.getText());
+            if (logTools.checkCustomerChanged(editCustomer, "phone")) {
+                logTools.logCustomerChanged(editCustomer, currentUser, "phone");
+            }
             editCustomer.setAddress(address.getText());
+            if (logTools.checkCustomerChanged(editCustomer, "address")) {
+                logTools.logCustomerChanged(editCustomer, currentUser, "address");
+            }
             editCustomer.setEmail(email.getText());
+            if (logTools.checkCustomerChanged(editCustomer, "email")) {
+                logTools.logCustomerChanged(editCustomer, currentUser, "email");
+            }
             editCustomer.updateCustomer(editCustomer);
             
             CustomerOverviewController.setUser(currentUser);
@@ -120,11 +143,18 @@ public class CustomerEditController implements Initializable {
         }
     }
     
+    
+    
     @FXML
-    private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
-        CustomerOverviewController.setUser(currentUser);
-        CustomerOverviewController.setScreen(screen);
-        screen.change("CustomerOverview");
+    private void btnHistoryEvent(ActionEvent event) throws Exception {
+        LogCustomerController.setCustomer(editCustomer);
+        Stage logStage = new Stage();
+        Scene logScene = new Scene(FXMLLoader.load(getClass().getResource("/Fys/Views/LogCustomer.fxml")));
+        logScene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
+        logStage.setTitle("Corendon Lost Luggage System");
+        logStage.getIcons().add(new javafx.scene.image.Image("/Fys/Content/Image/corendonicon.png"));
+        logStage.setScene(logScene);
+        logStage.show();
     }
     
     @FXML
@@ -177,6 +207,13 @@ public class CustomerEditController implements Initializable {
         else {
             return null;
         }
+    }
+    
+    @FXML
+    private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
+        CustomerOverviewController.setUser(currentUser);
+        CustomerOverviewController.setScreen(screen);
+        screen.change("CustomerOverview");
     }
     
     @FXML

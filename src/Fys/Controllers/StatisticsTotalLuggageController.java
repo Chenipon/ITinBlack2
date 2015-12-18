@@ -32,14 +32,10 @@ public class StatisticsTotalLuggageController implements Initializable {
     private static Screen screen;
     private static User currentUser;
 
-    @FXML
-    private Label lblUsername, lblErrorMessage;
-    @FXML
-    private MenuButton ddwnLuggageType, ddwnInterval;
-    @FXML
-    private BarChart<String, Number> barChart;
-    @FXML
-    private DatePicker startDate, endDate;
+    @FXML private Label lblUsername, lblErrorMessage;
+    @FXML private MenuButton ddwnLuggageType, ddwnInterval;
+    @FXML private BarChart<String, Number> barChart;
+    @FXML private DatePicker startDate, endDate;
 
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
@@ -61,7 +57,9 @@ public class StatisticsTotalLuggageController implements Initializable {
 
     @FXML
     private void btnFilterEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
+        barChart.getData().clear();
         if (startDate.getValue() != null || endDate.getValue() != null) {
+            ChartTools chartTools = new ChartTools();
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
             if (end.isAfter(start)) {
@@ -86,8 +84,6 @@ public class StatisticsTotalLuggageController implements Initializable {
                 switch (ddwnLuggageType.getText()) {
                     case ("Lost"): {
                         lblErrorMessage.setText("");
-                        barChart.getData().clear();
-                        ChartTools chartTools = new ChartTools();
                         final CategoryAxis xAxis = new CategoryAxis();
                         final NumberAxis yAxis = new NumberAxis();
                         barChart.setTitle("Total Luggage reported as \"Lost\"");
@@ -105,8 +101,6 @@ public class StatisticsTotalLuggageController implements Initializable {
                     }
                     case ("Found"): {
                         lblErrorMessage.setText("");
-                        barChart.getData().clear();
-                        ChartTools chartTools = new ChartTools();
                         final CategoryAxis xAxis = new CategoryAxis();
                         final NumberAxis yAxis = new NumberAxis();
                         barChart.setTitle("Total Luggage reported as \"Found\"");
@@ -124,8 +118,6 @@ public class StatisticsTotalLuggageController implements Initializable {
                     }
                     case ("Connected"): {
                         lblErrorMessage.setText("");
-                        barChart.getData().clear();
-                        ChartTools chartTools = new ChartTools();
                         final CategoryAxis xAxis = new CategoryAxis();
                         final NumberAxis yAxis = new NumberAxis();
                         barChart.setTitle("Total Luggage reported as \"Connected\"");
@@ -143,8 +135,6 @@ public class StatisticsTotalLuggageController implements Initializable {
                     }
                     case ("All"): {
                         lblErrorMessage.setText("");
-                        barChart.getData().clear();
-                        ChartTools chartTools = new ChartTools();
                         final CategoryAxis xAxis = new CategoryAxis();
                         final NumberAxis yAxis = new NumberAxis();
                         barChart.setTitle("Total Luggage reported");

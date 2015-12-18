@@ -35,9 +35,10 @@ public class ChartTools {
     }
 
     public ObservableList<ChartTools> getLostOrFoundLuggage(LocalDate startDate, LocalDate endDate, int interval, int type) throws SQLException, ClassNotFoundException {
-        ObservableList<ChartTools> lostLuggage = FXCollections.observableArrayList();
+        ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             switch (interval) {
+                /* Luggage per day */
                 case (1): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal "
@@ -63,10 +64,11 @@ public class ChartTools {
                             }
                         }
                         iterateDate = iterateDate.plusDays(1);
-                        lostLuggage.add(chartTools);
+                        luggageData.add(chartTools);
                     }
                     break;
                 }
+                /* Luggage per month */
                 case (2): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
@@ -98,10 +100,11 @@ public class ChartTools {
                         }
                         iterateDate = iterateDate.plusMonths(1);
                         stringIterateDate = iterateDate.getYear() + " - " + iterateDate.getMonth().getValue();
-                        lostLuggage.add(chartTools);
+                        luggageData.add(chartTools);
                     }
                     break;
                 }
+                /* Luggage per year */
                 case (3): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
@@ -131,7 +134,7 @@ public class ChartTools {
                             }
                         }
                         iterateYear = iterateYear + 1;
-                        lostLuggage.add(chartTools);
+                        luggageData.add(chartTools);
                     }
                     break;
                 }
@@ -139,13 +142,14 @@ public class ChartTools {
             }
 
         }
-        return lostLuggage;
+        return luggageData;
     }
 
     public ObservableList<ChartTools> getConnectedLuggage(LocalDate startDate, LocalDate endDate, int interval) throws SQLException, ClassNotFoundException {
-        ObservableList<ChartTools> lostLuggage = FXCollections.observableArrayList();
+        ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             switch (interval) {
+                /* Connections per day */
                 case (1): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT connectiondate, DATE_FORMAT(connectiondate, '%Y-%m-%d') AS date, COUNT(connectiondate) AS aantal "
@@ -170,10 +174,11 @@ public class ChartTools {
                             }
                         }
                         iterateDate = iterateDate.plusDays(1);
-                        lostLuggage.add(chartTools);
+                        luggageData.add(chartTools);
                     }
                     break;
                 }
+                /* Connections per month */
                 case (2): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT connectiondate, MONTH(connectiondate) AS month, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal "
@@ -204,10 +209,11 @@ public class ChartTools {
                         }
                         iterateDate = iterateDate.plusMonths(1);
                         stringIterateDate = iterateDate.getYear() + " - " + iterateDate.getMonth().getValue();
-                        lostLuggage.add(chartTools);
+                        luggageData.add(chartTools);
                     }
                     break;
                 }
+                /* Connections per year */
                 case (3): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT connectiondate, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal "
@@ -236,7 +242,7 @@ public class ChartTools {
                             }
                         }
                         iterateYear = iterateYear + 1;
-                        lostLuggage.add(chartTools);
+                        luggageData.add(chartTools);
                     }
                     break;
                 }
@@ -244,6 +250,6 @@ public class ChartTools {
             }
 
         }
-        return lostLuggage;
+        return luggageData;
     }
 }

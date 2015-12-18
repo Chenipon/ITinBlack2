@@ -1,6 +1,6 @@
 package Fys.Views.ViewModels;
 
-import Fys.Models.Luggage;
+import Fys.Models.Customer;
 import Fys.Models.User;
 import Fys.Tools.ConnectMysqlServer;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
  * luggage.
  * @author Jeffrey van der Lingen, IS106-2
  */
-public class LogLuggageTabelView {
+public class LogCustomerTabelView {
 
     private int id;
     private String employee;
@@ -71,17 +71,17 @@ public class LogLuggageTabelView {
         this.employee = employee;
     }
 
-    public ObservableList<LogLuggageTabelView> getLogList(Luggage luggage) throws Exception {
-        ObservableList<LogLuggageTabelView> logEntry = FXCollections.observableArrayList();
+    public ObservableList<LogCustomerTabelView> getLogList(Customer customer) throws Exception {
+        ObservableList<LogCustomerTabelView> logEntry = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM logluggage WHERE luggageid=" + luggage.getId() + " ORDER BY logdate DESC");
+            ResultSet result = statement.executeQuery("SELECT * FROM logcustomer WHERE customerid=" + customer.getId() + " ORDER BY logdate DESC");
             while (result.next()) {
-                LogLuggageTabelView logLuggage = new LogLuggageTabelView();
-                logLuggage.setRegisterdate(result.getString(2));
-                logLuggage.setEmployee(new User().getUserById(result.getInt(4)).getUsername());
-                logLuggage.setChange(result.getString(5));
-                logEntry.add(logLuggage);
+                LogCustomerTabelView logCustomer = new LogCustomerTabelView();
+                logCustomer.setRegisterdate(result.getString(2));
+                logCustomer.setEmployee(new User().getUserById(result.getInt(4)).getUsername());
+                logCustomer.setChange(result.getString(5));
+                logEntry.add(logCustomer);
             }
         }
         return logEntry;
