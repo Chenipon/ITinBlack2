@@ -40,8 +40,8 @@
                     </items>
                   </MenuButton>
                   <Button fx:id="btnFilter" layoutX="509.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
-                  <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Print Statistics" AnchorPane.rightAnchor="24.0" />
-                  <BarChart fx:id="barChart" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
+                  <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" />
+                  <BarChart fx:id="barChart" animated="false" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -49,7 +49,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </BarChart>
-                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="172.0" prefHeight="15.0" prefWidth="221.0" textFill="RED">
+                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="172.0" prefHeight="15.0" prefWidth="750.0" textFill="RED" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>

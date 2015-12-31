@@ -193,7 +193,6 @@ public class CustomerEditController implements Initializable {
         } catch(IOException | DocumentException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     @FXML
