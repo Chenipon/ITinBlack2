@@ -279,16 +279,13 @@ public class LuggageEditController implements Initializable {
             /* Create new FileChooser */
             FileChooser fileChooser = new FileChooser();
             fileChooser.setInitialFileName("Proof of Registration - luggage" + editLuggage.getId());
-            
-            /* Create File Extention */
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf");
-            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf"));
             
             /* Create a new File by selecting a save directory */
             File pdfFile = fileChooser.showSaveDialog(new Stage());
             
             /* Check if a directory has been selected. If not, return out of the method */
-            if (pdfFile == null){
+            if (pdfFile == null) {
                 return;
             }
             
@@ -296,8 +293,7 @@ public class LuggageEditController implements Initializable {
             Document document = new Document();
             
             /* Create the FileOutputStream */
-            FileOutputStream fileOutput = new FileOutputStream(pdfFile);
-            PdfWriter.getInstance(document, fileOutput);
+            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
             
             /* Initialize the image and the bold font */
             Image corendonLogo = Image.getInstance("src/Fys/Content/Image/corendonlogo.jpg");
