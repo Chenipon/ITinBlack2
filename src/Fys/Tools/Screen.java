@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 /**
  * This class handles quick changing of screens without having to define this
- * method over and over again at every event.
+ * method over and over again at every screen switch event.
  *
  * @author Jeffrey van der Lingen, IS106-2
  */
@@ -40,6 +40,15 @@ public class Screen {
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/Fys/Views/"
                 + fxmlName + ".fxml")));
         scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
+        if (fxmlName.equals("Login")) {
+            stage.setMinWidth(616);
+            stage.setMinHeight(438);
+            stage.setWidth(616);
+            stage.setHeight(438);
+        } else {
+            stage.setMinWidth(1016);
+            stage.setMinHeight(738);
+        }
         stage.setScene(scene);
         stage.show();
     }

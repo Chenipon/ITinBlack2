@@ -18,20 +18,20 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics - Total Luggage">
+                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics - Total Luggage" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="14.462890625">
                      <font>
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Text>
-                  <Text layoutX="24.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Total Luggage statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected. A start and end date can also be specified to get a specific timerange. Press &quot;Print Statistics&quot; to print the current chart." wrappingWidth="321.486328125" />
-                  <Text layoutX="142.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                  <Text layoutX="24.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Total Luggage statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected. A start and end date can also be specified to get a specific timerange. Press &quot;Print Statistics&quot; to print the current chart." wrappingWidth="321.486328125" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="51.05078125" />
+                  <Text layoutX="142.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="138.515625">
                      <font>
                         <Font name="Arial" size="16.0" />
                      </font>
                   </Text>
-                  <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" />
-                  <DatePicker fx:id="endDate" layoutX="156.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" />
-                  <MenuButton fx:id="ddwnLuggageType" layoutX="277.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type">
+                  <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="136.0" />
+                  <DatePicker fx:id="endDate" layoutX="156.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" AnchorPane.leftAnchor="156.0" AnchorPane.topAnchor="136.0" />
+                  <MenuButton fx:id="ddwnLuggageType" layoutX="399.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type" AnchorPane.leftAnchor="399.0" AnchorPane.topAnchor="136.0">
                     <items>
                       <MenuItem fx:id="ddwnLostLuggage" mnemonicParsing="false" onAction="#ddwnLostLuggageEvent" text="Lost" />
                       <MenuItem fx:id="ddwnFoundLuggage" mnemonicParsing="false" onAction="#ddwnFoundLuggageEvent" text="Found" />
@@ -39,9 +39,9 @@
                         <MenuItem fx:id="ddwnAllLuggage" mnemonicParsing="false" onAction="#ddwnAllLuggageEvent" text="All" />
                     </items>
                   </MenuButton>
-                  <Button fx:id="btnFilter" layoutX="509.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
-                  <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" />
-                  <BarChart fx:id="barChart" animated="false" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
+                  <Button fx:id="btnFilter" layoutX="506.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" AnchorPane.leftAnchor="506.0" AnchorPane.topAnchor="136.0" />
+                  <Button fx:id="btnPrintStatistics" layoutX="645.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="136.0" />
+                  <BarChart fx:id="barChart" animated="false" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="181.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -54,7 +54,7 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <MenuButton fx:id="ddwnInterval" layoutX="383.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Select Interval">
+                  <MenuButton fx:id="ddwnInterval" layoutX="277.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Select Interval" AnchorPane.leftAnchor="277.0" AnchorPane.topAnchor="136.0">
                      <items>
                         <MenuItem fx:id="ddwnIntervalDay" mnemonicParsing="false" onAction="#ddwnIntervalDayEvent" text="Day" />
                         <MenuItem fx:id="ddwnIntervalMonth" mnemonicParsing="false" onAction="#ddwnIntervalMonthEvent" text="Month" />

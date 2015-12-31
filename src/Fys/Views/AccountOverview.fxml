@@ -17,15 +17,15 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TextField fx:id="lblSearch" layoutX="24.0" layoutY="123.0" prefHeight="25.0" prefWidth="204.0" promptText="Search term..." />
-                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accounts - Overview">
+                  <TextField fx:id="lblSearch" layoutX="24.0" layoutY="123.0" prefHeight="25.0" prefWidth="204.0" promptText="Search term..." AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="123.0" />
+                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accounts - Overview" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="14.462890625">
                      <font>
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Text>
-                  <Button fx:id="btnSearchAccount" layoutX="236.0" layoutY="122.0" mnemonicParsing="false" onAction="#btnSearchAccountEvent" styleClass="btnRed" text="Search" />
-                  <Button fx:id="btnAddAccount" layoutX="672.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddAccountEvent" styleClass="btnRed" text="+ Add Account" />
-                  <TableView fx:id="tblUsers" layoutX="24.0" layoutY="187.0" prefHeight="463.0" prefWidth="745.0">
+                  <Button fx:id="btnSearchAccount" layoutX="236.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnSearchAccountEvent" styleClass="btnRed" text="Search" AnchorPane.leftAnchor="236.0" AnchorPane.topAnchor="123.0" />
+                  <Button fx:id="btnAddAccount" layoutX="516.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddAccountEvent" styleClass="btnRed" text="+ Add Account" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="123.0" />
+                  <TableView fx:id="tblUsers" layoutX="24.0" layoutY="187.0" prefHeight="463.0" prefWidth="745.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="187.0">
                     <columns>
                       <TableColumn fx:id="columnUsername" prefWidth="116.0" text="Username" />
                         <TableColumn fx:id="columnFirstname" minWidth="8.0" prefWidth="139.0" text="First Name" />
