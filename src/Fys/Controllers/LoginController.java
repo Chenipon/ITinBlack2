@@ -62,9 +62,7 @@ public class LoginController implements Initializable {
                 lblError.setText("Username and/or password is not filled");
             }
         } catch (Exception e) {
-            //lblError.setText("No connection with the database could be established");
-            lblError.setText(e.toString());
-            System.out.println(e.toString());
+            lblError.setText("No connection with the database could be established");
             btnLogin.setDisable(true);
         }
     }
@@ -74,7 +72,7 @@ public class LoginController implements Initializable {
             case (1): {
                 AccountOverviewController.setUser(user);
                 AccountOverviewController.setScreen(screen);
-                screen.change("LuggageOverview");
+                screen.change("AccountOverview");
                 break;
             }
             case (2): {

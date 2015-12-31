@@ -11,9 +11,7 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.print.PrinterJob;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -31,14 +29,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
 
 /**
  * FXML Controller class. This class controls the Customer Edit screen including it's
@@ -159,54 +151,53 @@ public class CustomerEditController implements Initializable {
     
     @FXML
     private void btnPrintProofEvent(ActionEvent event) {
-        try{
+        try {
+            /* Create new FileChooser */
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialFileName("Proof of Registration - customer" + editCustomer.getId());
+            
+            /* Create File Extention */
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf");
+            fileChooser.getExtensionFilters().add(extFilter);
+            
+            /* Create a new File by selecting a save directory */
+            File pdfFile = fileChooser.showSaveDialog(new Stage());
+            
+            /* Check if a directory has been selected. If not, return out of the method */
+            if (pdfFile == null){
+                return;
+            }
+            
+            /* Create new Document */
             Document document = new Document();
-        String fileName = "/temporaryPrintFileCustomer.pdf";
-        File fileLocation = new File(new File("temp").getAbsolutePath());
-        Image corendonLogo = Image.getInstance("src/Fys/Content/Image/corendonlogo.jpg");
-        Font fontbold = FontFactory.getFont("Arial", 18, Font.BOLD);
-        if (!fileLocation.exists()) {
-            fileLocation.mkdir();
-            System.out.println("directory temp created");
+            
+            /* Create the FileOutputStream */
+            FileOutputStream fileOutput = new FileOutputStream(pdfFile);
+            PdfWriter.getInstance(document, fileOutput);
+            
+            /* Initialize the image and the bold font */
+            Image corendonLogo = Image.getInstance("src/Fys/Content/Image/corendonlogo.jpg");
+            Font fontbold = FontFactory.getFont("Arial", 18, Font.BOLD);
+            
+            /* Write to the Document */
+            document.open();
+            corendonLogo.scalePercent(20f);
+            document.add(corendonLogo);
+            document.add(new Paragraph("Proof of registration: Customer", fontbold));
+            document.add(new Paragraph("Name: " + editCustomer.getFirstName() + " " + editCustomer.getLastName()));
+            document.add(new Paragraph("Gender: " + editCustomer.getGender()));
+            document.add(new Paragraph("Phone: " + editCustomer.getPhone()));
+            document.add(new Paragraph("Address: " + editCustomer.getAddress()));
+            document.add(new Paragraph("Email: " + editCustomer.getEmail()));
+            document.add(new Paragraph("Register date: " + editCustomer.getRegisterDate()));
+            document.close();
+            
+            /* Display success of file save */
+            lblErrorMessage.setText("Successfully saved the Proof of Registration document");
+        } catch(IOException | DocumentException ex) {
+            Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileLocation.getAbsolutePath() + fileName));
-        document.open();
-        // step 4
-        corendonLogo.scalePercent(20f);
-        document.add(corendonLogo);
-        document.add(new Paragraph("Proof of registration: Customer", fontbold));
-        document.add(new Paragraph("Name: " + editCustomer.getFirstName() + " " + editCustomer.getLastName()));
-        document.add(new Paragraph("Gender: " + editCustomer.getGender()));
-        document.add(new Paragraph("Phone: " + editCustomer.getPhone()));
-        document.add(new Paragraph("Address: " + editCustomer.getAddress()));
-        document.add(new Paragraph("Email: " + editCustomer.getEmail()));
-        document.add(new Paragraph("Register date: " + editCustomer.getRegisterDate()));
-        
-        
-        // step 5
-        document.close();
-        
-        DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        Doc printedDocument = new SimpleDoc(new FileInputStream(fileLocation.getAbsolutePath() + fileName), docFlavor, null);  
-        DocPrintJob printJob = choosePrinter().createPrintJob();
-        
-        printJob.print(printedDocument, new HashPrintRequestAttributeSet());
-        } catch(IOException | DocumentException | PrintException ex) {
-            System.out.println(ex.toString());
-            lblErrorMessage.setText("Somthing went wrong, your request is not printed.");
-        }
-        
-    }
-    
-    public static PrintService choosePrinter(){
-        PrinterJob printJob = PrinterJob.getPrinterJob();
-        if(printJob.printDialog()) {
-        return printJob.getPrintService();          
-        }
-        else {
-            return null;
-        }
     }
     
     @FXML

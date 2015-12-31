@@ -197,6 +197,14 @@ public class Luggage {
      * format a Java Date to a MySQL Date, see the method convertJavaDateToSqlDate(Date date).
      */
     public void setRegisterDate(String registerDate) {
+        /* 
+         * For a strange reason, MySQL adds ".0" after the date. 
+         * This is being manually removed here by using a String splitter 
+         */
+        if (registerDate.contains(".")) {
+            String[] split = registerDate.split("\\.");
+            registerDate = split[0];
+        }
         this.registerDate = registerDate;
     }
     
@@ -318,7 +326,7 @@ public class Luggage {
                 this.material = result.getString(4);
                 this.color = result.getString(5);
                 this.comment = result.getString(6);
-                this.registerDate = result.getString(7);
+                this.setRegisterDate(result.getString(7)); //Fix the .0 issue by calling on the .setRegisterDate method here.
                 this.statusId = result.getInt(8);
                 this.employeeId = result.getInt(10);
                 this.status = new Status().getStatusById(this.statusId);

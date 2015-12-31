@@ -95,6 +95,14 @@ public class Customer {
     }
 
     public void setRegisterDate(String registerDate) {
+        /* 
+         * For a strange reason, MySQL adds ".0" after the date. 
+         * This is being manually removed here by using a String splitter 
+         */
+        if (registerDate.contains(".")) {
+            String[] split = registerDate.split("\\.");
+            registerDate = split[0];
+        }
         this.registerDate = registerDate;
     }
     
@@ -148,7 +156,7 @@ public class Customer {
                 this.phone = result.getString(5);
                 this.address = result.getString(6);
                 this.email = result.getString(7);
-                this.registerDate = result.getString(8);
+                this.setRegisterDate(result.getString(8)); //Fix the .0 issue by calling on the .setRegisterDate method here.
                 this.employeeId = result.getInt(9);
             }
         }
