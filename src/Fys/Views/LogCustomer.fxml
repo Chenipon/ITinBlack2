@@ -15,6 +15,7 @@
                   <Font name="Arial Bold" size="32.0" />
                </font>
             </Text>
+            <Button fx:id="btnCloseWindow" layoutX="492.0" layoutY="42.0" mnemonicParsing="false" onAction="#btnCloseWindowEvent" styleClass="btnWhite" text="Close Window" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutY="377.0" prefHeight="24.0" prefWidth="600.0" style="-fx-background-color: #991818;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />

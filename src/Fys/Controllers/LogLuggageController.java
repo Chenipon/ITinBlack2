@@ -8,11 +8,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class. This class controls the Edit Luggage screen including 
@@ -22,12 +24,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class LogLuggageController implements Initializable {
     private static Luggage luggage;
+    private static Stage stage;
     
     @FXML private TableView tblLuggageLog;
     @FXML private TableColumn colDate, colEmployee, colLogEntry;
     
     public static void setLuggage(Luggage editLuggage) {
         luggage = editLuggage;
+    }
+    
+    public static void setStage(Stage newStage) {
+        stage = newStage;
     }
     
     /** initialize(URL url, ResourceBundle rb) executes before the FXML gets
@@ -49,6 +56,11 @@ public class LogLuggageController implements Initializable {
     public ObservableList<LogLuggageTabelView> getLogList() throws Exception{
         ObservableList<LogLuggageTabelView> logList= new LogLuggageTabelView().getLogList(luggage);
         return logList;
+    }
+    
+    @FXML
+    public void btnCloseWindowEvent(ActionEvent event) {
+        stage.close();
     }
     
 }

@@ -141,6 +141,7 @@ public class CustomerEditController implements Initializable {
     private void btnHistoryEvent(ActionEvent event) throws Exception {
         LogCustomerController.setCustomer(editCustomer);
         Stage logStage = new Stage();
+        LogCustomerController.setStage(logStage);
         Scene logScene = new Scene(FXMLLoader.load(getClass().getResource("/Fys/Views/LogCustomer.fxml")));
         logScene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
         logStage.setTitle("Corendon Lost Luggage System");
