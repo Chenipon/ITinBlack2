@@ -187,13 +187,15 @@ public class LogTools {
             if (type.equals("color") && !dbLuggage.getColor().equals(editLuggage.getColor())) {
                 change = ("Color: " + dbLuggage.getColor() + " was changed to: " + editLuggage.getColor());
             }
-            if (!dbLuggage.getComment().equals(editLuggage.getComment())) {
-                if (editLuggage.getComment().equals("")) {
-                    change = ("Comment: \"" + dbLuggage.getComment() + "\" was removed");
-                } else if (dbLuggage.getComment().equals("")) {
-                    change = ("Comment: \"" + editLuggage.getComment() + "\" was added");
-                } else {
-                    change = ("Comment: \"" + dbLuggage.getComment() + "\" was changed to: \"" + editLuggage.getComment() + "\"");
+            if (editLuggage.getComment() != null) {
+                if (!dbLuggage.getComment().equals(editLuggage.getComment())) {
+                    if (editLuggage.getComment().equals("")) {
+                        change = ("Comment: \"" + dbLuggage.getComment() + "\" was removed");
+                    } else if (dbLuggage.getComment().equals("")) {
+                        change = ("Comment: \"" + editLuggage.getComment() + "\" was added");
+                    } else {
+                        change = ("Comment: \"" + dbLuggage.getComment() + "\" was changed to: \"" + editLuggage.getComment() + "\"");
+                    }
                 }
             }
             if (type.equals("status") && dbLuggage.getStatusId() != (editLuggage.getStatusId())) {

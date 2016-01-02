@@ -23,7 +23,7 @@
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Text>
-                  <Text layoutX="24.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Total Luggage statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected. A start and end date can also be specified to get a specific timerange. Press &quot;Print Statistics&quot; to print the current chart." wrappingWidth="321.486328125" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="51.05078125" />
+                  <Text layoutX="24.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Total Luggage statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected. A start and end date can also be specified to get a specific timerange. Press &quot;Save Statistics to PDF&quot; to save the current chart to a PDF file." wrappingWidth="333.486328125" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="51.0" />
                   <Text layoutX="142.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="138.515625">
                      <font>
                         <Font name="Arial" size="16.0" />
@@ -39,16 +39,44 @@
                         <MenuItem fx:id="ddwnAllLuggage" mnemonicParsing="false" onAction="#ddwnAllLuggageEvent" text="All" />
                     </items>
                   </MenuButton>
-                  <Button fx:id="btnFilter" layoutX="506.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" AnchorPane.leftAnchor="506.0" AnchorPane.topAnchor="136.0" />
-                  <Button fx:id="btnPrintStatistics" layoutX="645.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="136.0" />
-                  <BarChart fx:id="barChart" animated="false" layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="181.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </BarChart>
+                  <Button fx:id="btnFilter" layoutX="731.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="136.0" />
+                  <Button fx:id="btnPrintStatistics" layoutX="645.0" layoutY="31.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="31.0" />
+                  <AnchorPane fx:id="charts" layoutX="54.0" layoutY="210.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="181.0">
+                     <children>
+                        <BarChart fx:id="barChart" animated="false" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                        <AreaChart fx:id="areaChart" animated="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </AreaChart>
+                        <LineChart fx:id="lineChart" animated="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <ScatterChart fx:id="scatterChart" animated="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </ScatterChart>
+                     </children>
+                  </AnchorPane>
                   <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="172.0" prefHeight="15.0" prefWidth="750.0" textFill="RED" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
@@ -60,6 +88,14 @@
                         <MenuItem fx:id="ddwnIntervalMonth" mnemonicParsing="false" onAction="#ddwnIntervalMonthEvent" text="Month" />
                         <MenuItem fx:id="ddwnIntervalYear" mnemonicParsing="false" onAction="#ddwnIntervalYearEvent" text="Year" />
                      </items>
+                  </MenuButton>
+                  <MenuButton fx:id="ddwnChartType" layoutX="505.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Select Graph Type" AnchorPane.leftAnchor="505.0" AnchorPane.topAnchor="136.0">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeAreaChartEvent" text="Area Chart" />
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeBarChartEvent" text="Bar Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeLineChartEvent" text="Line Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeScatterChartEvent" text="Scatter Chart" />
+                    </items>
                   </MenuButton>
                </children>
             </AnchorPane>

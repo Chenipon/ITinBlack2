@@ -30,8 +30,9 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -40,12 +41,13 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Fys.Tools.ChartTools;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class. This class controls the Account Overview screen
  * including it's features.
  *
- * @author Jeffrey van der Lingen, Daan Befort, IS106-2
+ * @author Jeffrey van der Lingen, Daan Befort, John Ghatas, IS106-2
  */
 public class StatisticsTotalLuggageController implements Initializable {
 
@@ -53,12 +55,14 @@ public class StatisticsTotalLuggageController implements Initializable {
     private static User currentUser;
 
     @FXML private Label lblUsername, lblErrorMessage;
-    @FXML private MenuButton ddwnLuggageType, ddwnInterval, ddwnChart;
+    @FXML private MenuButton ddwnLuggageType, ddwnInterval, ddwnChartType;
     @FXML private BarChart<String, Number> barChart;
+    @FXML private AreaChart<String, Number> areaChart;
+    @FXML private LineChart<String, Number> lineChart;
+    @FXML private ScatterChart<String, Number> scatterChart;
     @FXML private DatePicker startDate, endDate;
     @FXML private Button btnPrintStatistics;
-    @FXML private PieChart pieChart;
-    @FXML private AreaChart<String, Number> areaChart;
+    @FXML private AnchorPane charts;
 
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
@@ -71,6 +75,7 @@ public class StatisticsTotalLuggageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
+        areaChart.setVisible(false); //Disable the Area Chart.
         btnPrintStatistics.setDisable(true); //Disable the "Save Statistics" button; No graph yet.
     }
 
@@ -102,7 +107,7 @@ public class StatisticsTotalLuggageController implements Initializable {
             Font fontbold = FontFactory.getFont("Arial", 18, Font.BOLD);
 
             /* Create a snapshot of the graph */
-            WritableImage writableImage = barChart.snapshot(new SnapshotParameters(), null);
+            WritableImage writableImage = charts.snapshot(new SnapshotParameters(), null);
             BufferedImage bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
             com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(bufferedImage, null);
             image.scalePercent(((document.getPageSize().getWidth() - document.leftMargin()
@@ -116,7 +121,7 @@ public class StatisticsTotalLuggageController implements Initializable {
             document.close();
 
             /* Display success of file save */
-            lblErrorMessage.setText("Successfully saved the Proof of Registration document");
+            lblErrorMessage.setText("Successfully saved this graph to a PDF file");
         } catch (IOException | DocumentException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -125,225 +130,87 @@ public class StatisticsTotalLuggageController implements Initializable {
     @FXML
     private void btnFilterEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
         if (startDate.getValue() != null || endDate.getValue() != null) {
-            ChartTools chartTools = new ChartTools();
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
             if (end.isAfter(start)) {
-                btnPrintStatistics.setDisable(false); //Enable the "Save Statistics" button
-                int interval;
-                switch (ddwnInterval.getText()) {
-                    case ("Day"): {
-                        interval = 1;
-                        break;
-                    }
-                    case ("Month"): {
-                        interval = 2;
-                        break;
-                    }
-                    case ("Year"): {
-                        interval = 3;
-                        break;
-                    }
-                    default: {
-                        interval = 0;
-                    }
-                }
-
-                switch (ddwnChart.getText()) {
-                    case ("AreaChart"): {
-                        areaChart.getData().clear();
-                        switch (ddwnLuggageType.getText()) {
-                            case ("Lost"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                areaChart.setTitle("Total Luggage reported as \"Lost\"");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
-
-                                XYChart.Series lostLuggage = new XYChart.Series();
-                                lostLuggage.setName("Lost Luggage");
-                                ObservableList<ChartTools> lostLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 1);
-                                for (int i = 0; i < lostLuggageList.size(); i++) {
-                                    lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
+                if (!ddwnInterval.getText().equals("Select Interval")) {
+                    if (!ddwnLuggageType.getText().equals("Select Type")) {
+                        if (!ddwnChartType.getText().equals("Select Graph Type")) {
+                            btnPrintStatistics.setDisable(false); //Enable the "Save Statistics" button
+                            int interval, graphType;
+                            switch (ddwnInterval.getText()) {
+                                case ("Day"): {
+                                    interval = 1;
+                                    break;
                                 }
-                                areaChart.getData().add(lostLuggage);
-                                break;
+                                case ("Month"): {
+                                    interval = 2;
+                                    break;
+                                }
+                                case ("Year"): {
+                                    interval = 3;
+                                    break;
+                                }
+                                default: {
+                                    interval = 0;
+                                }
                             }
-                            case ("Found"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                areaChart.setTitle("Total Luggage reported as \"Found\"");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
-
-                                XYChart.Series foundLuggage = new XYChart.Series();
-                                foundLuggage.setName("Found Luggage");
-                                ObservableList<ChartTools> foundLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 2);
-                                for (int i = 0; i < foundLuggageList.size(); i++) {
-                                    foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
+                            switch (ddwnChartType.getText()) {
+                                case ("Bar Chart"): {
+                                    graphType = 1;
+                                    barChart.setVisible(true);
+                                    areaChart.setVisible(false);
+                                    lineChart.setVisible(false);
+                                    scatterChart.setVisible(false);
+                                    break;
                                 }
-                                areaChart.getData().addAll(foundLuggage);
-                                break;
+                                case ("Area Chart"): {
+                                    graphType = 2;
+                                    areaChart.setVisible(true);
+                                    barChart.setVisible(false);
+                                    lineChart.setVisible(false);
+                                    scatterChart.setVisible(false);
+                                    break;
+                                }
+                                case ("Line Chart"): {
+                                    graphType = 3;
+                                    lineChart.setVisible(true);
+                                    areaChart.setVisible(false);
+                                    barChart.setVisible(false);
+                                    scatterChart.setVisible(false);
+                                    break;
+                                }
+                                case ("Scatter Chart"): {
+                                    graphType = 4;
+                                    scatterChart.setVisible(true);
+                                    lineChart.setVisible(false);
+                                    areaChart.setVisible(false);
+                                    barChart.setVisible(false);
+                                    break;
+                                }
+                                default: {
+                                    graphType = 0;
+                                }
                             }
-                            case ("Connected"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                areaChart.setTitle("Total Luggage reported as \"Connected\"");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
 
-                                XYChart.Series connectedLuggage = new XYChart.Series();
-                                connectedLuggage.setName("Connected Luggage");
-                                ObservableList<ChartTools> connectedLuggageList = chartTools.getConnectedLuggage(start, end, interval);
-                                for (int i = 0; i < connectedLuggageList.size(); i++) {
-                                    connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
-                                }
-                                areaChart.getData().addAll(connectedLuggage);
-                                break;
+                            areaChart.getData().clear();
+                            barChart.getData().clear();
+                            lineChart.getData().clear();
+                            scatterChart.getData().clear();
+                            lblErrorMessage.setText("");
+                            if (ddwnLuggageType.getText().equals("All")) {
+                                fillGraphAllTypes(graphType, start, end, interval);
+                            } else {
+                                fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval);
                             }
-                            case ("All"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                areaChart.setTitle("Total Luggage reported");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
-
-                                /* Lost luggage */
-                                XYChart.Series lostLuggage = new XYChart.Series();
-                                lostLuggage.setName("Lost Luggage");
-                                ObservableList<ChartTools> lostLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 1);
-                                for (int i = 0; i < lostLuggageList.size(); i++) {
-                                    lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
-                                }
-
-                                /* Found luggage */
-                                XYChart.Series foundLuggage = new XYChart.Series();
-                                foundLuggage.setName("Found Luggage");
-                                ObservableList<ChartTools> foundLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 2);
-                                for (int i = 0; i < foundLuggageList.size(); i++) {
-                                    foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
-                                }
-
-                                /* Connected luggage */
-                                XYChart.Series connectedLuggage = new XYChart.Series();
-                                connectedLuggage.setName("Connected Luggage");
-                                ObservableList<ChartTools> connectedLuggageList = chartTools.getConnectedLuggage(start, end, interval);
-                                for (int i = 0; i < connectedLuggageList.size(); i++) {
-                                    connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
-                                }
-
-                                areaChart.getData().addAll(lostLuggage, foundLuggage, connectedLuggage);
-                                break;
-                            }
-                            default: {
-                                lblErrorMessage.setText("Please select a luggage type");
-                                break;
-                            }
+                        } else {
+                            lblErrorMessage.setText("Please select a type of graphs");
                         }
+                    } else {
+                        lblErrorMessage.setText("Please select a type of luggage");
                     }
-                    case ("Bar Chart"): {
-                        barChart.getData().clear();
-                        switch (ddwnLuggageType.getText()) {
-                            case ("Lost"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                barChart.setTitle("Total Luggage reported as \"Lost\"");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
-
-                                XYChart.Series lostLuggage = new XYChart.Series();
-                                lostLuggage.setName("Lost Luggage");
-                                ObservableList<ChartTools> lostLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 1);
-                                for (int i = 0; i < lostLuggageList.size(); i++) {
-                                    lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
-                                }
-                                barChart.getData().addAll(lostLuggage);
-                                break;
-                            }
-                            case ("Found"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                barChart.setTitle("Total Luggage reported as \"Found\"");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
-
-                                XYChart.Series foundLuggage = new XYChart.Series();
-                                foundLuggage.setName("Found Luggage");
-                                ObservableList<ChartTools> foundLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 2);
-                                for (int i = 0; i < foundLuggageList.size(); i++) {
-                                    foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
-                                }
-                                barChart.getData().addAll(foundLuggage);
-                                break;
-                            }
-                            case ("Connected"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                barChart.setTitle("Total Luggage reported as \"Connected\"");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
-
-                                XYChart.Series connectedLuggage = new XYChart.Series();
-                                connectedLuggage.setName("Connected Luggage");
-                                ObservableList<ChartTools> connectedLuggageList = chartTools.getConnectedLuggage(start, end, interval);
-                                for (int i = 0; i < connectedLuggageList.size(); i++) {
-                                    connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
-                                }
-                                barChart.getData().addAll(connectedLuggage);
-                                break;
-                            }
-                            case ("All"): {
-                                lblErrorMessage.setText("");
-                                final CategoryAxis xAxis = new CategoryAxis();
-                                final NumberAxis yAxis = new NumberAxis();
-                                barChart.setTitle("Total Luggage reported");
-                                xAxis.setLabel("Date");
-                                yAxis.setLabel("Amount");
-
-                                /* Lost luggage */
-                                XYChart.Series lostLuggage = new XYChart.Series();
-                                lostLuggage.setName("Lost Luggage");
-                                ObservableList<ChartTools> lostLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 1);
-                                for (int i = 0; i < lostLuggageList.size(); i++) {
-                                    lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
-                                }
-
-                                /* Found luggage */
-                                XYChart.Series foundLuggage = new XYChart.Series();
-                                foundLuggage.setName("Found Luggage");
-                                ObservableList<ChartTools> foundLuggageList = chartTools.getLostOrFoundLuggage(start, end, interval, 2);
-                                for (int i = 0; i < foundLuggageList.size(); i++) {
-                                    foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
-                                }
-
-                                /* Connected luggage */
-                                XYChart.Series connectedLuggage = new XYChart.Series();
-                                connectedLuggage.setName("Connected Luggage");
-                                ObservableList<ChartTools> connectedLuggageList = chartTools.getConnectedLuggage(start, end, interval);
-                                for (int i = 0; i < connectedLuggageList.size(); i++) {
-                                    connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
-                                }
-
-                                barChart.getData().addAll(lostLuggage, foundLuggage, connectedLuggage);
-                                break;
-                            }
-                            default: {
-                                lblErrorMessage.setText("Please select a luggage type");
-                                break;
-                            }
-                        }
-                    }
-                    default: {
-                        lblErrorMessage.setText("Please select a chart type");
-                        break;
-                    }
+                } else {
+                    lblErrorMessage.setText("Please select an interval");
                 }
             } else {
                 lblErrorMessage.setText("Start Date can't be after End Date");
@@ -394,6 +261,29 @@ public class StatisticsTotalLuggageController implements Initializable {
         ddwnInterval.setText("Year");
         ddwnInterval.setPrefWidth(110);
     }
+    
+    @FXML
+    private void ddwnChartTypeBarChartEvent(ActionEvent event) {
+        ddwnChartType.setText("Bar Chart");
+        ddwnChartType.setPrefWidth(140);
+    }
+
+    @FXML
+    private void ddwnChartTypeAreaChartEvent(ActionEvent event) {
+        ddwnChartType.setText("Area Chart");
+        ddwnChartType.setPrefWidth(140);
+    }
+    
+    @FXML
+    private void ddwnChartTypeLineChartEvent(ActionEvent event) {
+        ddwnChartType.setText("Line Chart");
+        ddwnChartType.setPrefWidth(140);
+    }
+    @FXML
+    private void ddwnChartTypeScatterChartEvent(ActionEvent event) {
+        ddwnChartType.setText("Scatter Chart");
+        ddwnChartType.setPrefWidth(140);
+    }
 
     @FXML
     private void btnLuggagePerEmployeeEvent(ActionEvent event) throws IOException {
@@ -407,6 +297,119 @@ public class StatisticsTotalLuggageController implements Initializable {
         LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
         screen.change("Login");
+    }
+
+    private void fillGraphSingleType(String luggageType, int graphType, LocalDate start, LocalDate end, int interval) throws SQLException, ClassNotFoundException {
+        ObservableList<ChartTools> observableList;
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        XYChart.Series series = new XYChart.Series();
+
+        xAxis.setLabel("Date");
+        yAxis.setLabel("Amount");
+
+        switch (luggageType) {
+            case ("Lost"): {
+                observableList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 1);
+                for (int i = 0; i < observableList.size(); i++) {
+                    series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
+                }
+                break;
+            }
+            case ("Found"): {
+                observableList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 2);
+                for (int i = 0; i < observableList.size(); i++) {
+                    series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
+                }
+                break;
+            }
+            case ("Connected"): {
+                observableList = new ChartTools().getConnectedLuggage(start, end, interval);
+                for (int i = 0; i < observableList.size(); i++) {
+                    series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
+                }
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        series.setName(luggageType + " Luggage");
+
+        switch (graphType) {
+            case (1): {
+                barChart.setTitle("Total Luggage reported as \"" + luggageType + "\"");
+                barChart.getData().add(series);
+                break;
+            }
+            case (2): {
+                areaChart.setTitle("Total Luggage reported as \"" + luggageType + "\"");
+                areaChart.getData().add(series);
+                break;
+            }
+            case (3): {
+                lineChart.setTitle("Total Luggage reported as \"" + luggageType + "\"");
+                lineChart.getData().add(series);
+            }
+            case (4): {
+                scatterChart.setTitle("Total Luggage reported as \"" + luggageType + "\"");
+                scatterChart.getData().add(series);
+            }
+            default: {
+                break;
+            }
+        }
+
+    }
+
+    private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end, int interval) throws SQLException, ClassNotFoundException {
+        /* Lost luggage */
+        XYChart.Series lostLuggage = new XYChart.Series();
+        lostLuggage.setName("Lost Luggage");
+        ObservableList<ChartTools> lostLuggageList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 1);
+        for (int i = 0; i < lostLuggageList.size(); i++) {
+            lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
+        }
+
+        /* Found luggage */
+        XYChart.Series foundLuggage = new XYChart.Series();
+        foundLuggage.setName("Found Luggage");
+        ObservableList<ChartTools> foundLuggageList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 2);
+        for (int i = 0; i < foundLuggageList.size(); i++) {
+            foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
+        }
+
+        /* Connected luggage */
+        XYChart.Series connectedLuggage = new XYChart.Series();
+        connectedLuggage.setName("Connected Luggage");
+        ObservableList<ChartTools> connectedLuggageList = new ChartTools().getConnectedLuggage(start, end, interval);
+        for (int i = 0; i < connectedLuggageList.size(); i++) {
+            connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
+        }
+
+        switch (graphType) {
+            case (1): {
+                barChart.setTitle("All Total Luggage reported");
+                barChart.getData().addAll(lostLuggage, foundLuggage, connectedLuggage);
+                break;
+            }
+            case (2): {
+                areaChart.setTitle("All Total Luggage reported");
+                areaChart.getData().addAll(lostLuggage, foundLuggage, connectedLuggage);
+                break;
+            }
+            case (3): {
+                lineChart.setTitle("All Total Luggage reported");
+                lineChart.getData().addAll(lostLuggage, foundLuggage, connectedLuggage);
+            }
+            case (4): {
+                scatterChart.setTitle("All Total Luggage reported");
+                scatterChart.getData().addAll(lostLuggage, foundLuggage, connectedLuggage);
+            }
+            default: {
+                break;
+            }
+        }
     }
 
 }
