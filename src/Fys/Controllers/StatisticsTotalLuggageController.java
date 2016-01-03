@@ -33,6 +33,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -41,6 +42,7 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Fys.Tools.ChartTools;
+import Fys.Tools.PieChartData;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -59,6 +61,7 @@ public class StatisticsTotalLuggageController implements Initializable {
     @FXML private BarChart<String, Number> barChart;
     @FXML private AreaChart<String, Number> areaChart;
     @FXML private LineChart<String, Number> lineChart;
+    @FXML private PieChart pieChart;
     @FXML private ScatterChart<String, Number> scatterChart;
     @FXML private DatePicker startDate, endDate;
     @FXML private Button btnPrintStatistics;
@@ -162,6 +165,7 @@ public class StatisticsTotalLuggageController implements Initializable {
                                     areaChart.setVisible(false);
                                     lineChart.setVisible(false);
                                     scatterChart.setVisible(false);
+                                    pieChart.setVisible(false);
                                     break;
                                 }
                                 case ("Area Chart"): {
@@ -170,6 +174,7 @@ public class StatisticsTotalLuggageController implements Initializable {
                                     barChart.setVisible(false);
                                     lineChart.setVisible(false);
                                     scatterChart.setVisible(false);
+                                    pieChart.setVisible(false);
                                     break;
                                 }
                                 case ("Line Chart"): {
@@ -178,11 +183,22 @@ public class StatisticsTotalLuggageController implements Initializable {
                                     areaChart.setVisible(false);
                                     barChart.setVisible(false);
                                     scatterChart.setVisible(false);
+                                    pieChart.setVisible(false);
                                     break;
                                 }
                                 case ("Scatter Chart"): {
                                     graphType = 4;
                                     scatterChart.setVisible(true);
+                                    lineChart.setVisible(false);
+                                    areaChart.setVisible(false);
+                                    barChart.setVisible(false);
+                                    pieChart.setVisible(false);
+                                    break;
+                                }
+                                case ("Pie Chart"): {
+                                    graphType = 5;
+                                    pieChart.setVisible(true);
+                                    scatterChart.setVisible(false);
                                     lineChart.setVisible(false);
                                     areaChart.setVisible(false);
                                     barChart.setVisible(false);
@@ -192,16 +208,21 @@ public class StatisticsTotalLuggageController implements Initializable {
                                     graphType = 0;
                                 }
                             }
-
+                            
+                            pieChart.getData().clear();
                             areaChart.getData().clear();
                             barChart.getData().clear();
                             lineChart.getData().clear();
                             scatterChart.getData().clear();
                             lblErrorMessage.setText("");
-                            if (ddwnLuggageType.getText().equals("All")) {
-                                fillGraphAllTypes(graphType, start, end, interval);
+                            if (graphType == 5) {
+                                fillPieChart(start, end, interval);
                             } else {
-                                fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval);
+                                if (ddwnLuggageType.getText().equals("All")) {
+                                    fillGraphAllTypes(graphType, start, end, interval);
+                                } else {
+                                    fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval);
+                                }
                             }
                         } else {
                             lblErrorMessage.setText("Please select a type of graphs");
@@ -279,9 +300,16 @@ public class StatisticsTotalLuggageController implements Initializable {
         ddwnChartType.setText("Line Chart");
         ddwnChartType.setPrefWidth(140);
     }
+    
     @FXML
     private void ddwnChartTypeScatterChartEvent(ActionEvent event) {
         ddwnChartType.setText("Scatter Chart");
+        ddwnChartType.setPrefWidth(140);
+    }
+    
+    @FXML
+    private void ddwnChartTypePieChartEvent(ActionEvent event) {
+        ddwnChartType.setText("Pie Chart");
         ddwnChartType.setPrefWidth(140);
     }
 
@@ -297,6 +325,21 @@ public class StatisticsTotalLuggageController implements Initializable {
         LoginController.setScreen(screen);
         ((Node) event.getSource()).getScene().getWindow().hide();
         screen.change("Login");
+    }
+    
+    private void fillPieChart(LocalDate start, LocalDate end, int interval) throws ClassNotFoundException, SQLException {
+        PieChartData pieChartData = new PieChartData();
+        pieChartData.getData(start, end, interval);
+        if (pieChartData.getLostLuggage() != 0) {
+            pieChart.getData().add(new PieChart.Data("Lost", pieChartData.getLostLuggage()));
+        }
+        if (pieChartData.getFoundLuggage() != 0) {
+            pieChart.getData().add(new PieChart.Data("Found", pieChartData.getFoundLuggage()));
+        }
+        if (pieChartData.getConnectedLuggage() != 0) {
+            pieChart.getData().add(new PieChart.Data("Connected", pieChartData.getConnectedLuggage()));
+        }
+        pieChart.setTitle("Total Luggage Reported");
     }
 
     private void fillGraphSingleType(String luggageType, int graphType, LocalDate start, LocalDate end, int interval) throws SQLException, ClassNotFoundException {

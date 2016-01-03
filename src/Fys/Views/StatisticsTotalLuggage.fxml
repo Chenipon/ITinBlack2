@@ -75,6 +75,7 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </ScatterChart>
+                        <PieChart fx:id="pieChart" animated="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="172.0" prefHeight="15.0" prefWidth="750.0" textFill="RED" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
@@ -95,6 +96,7 @@
                       <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeBarChartEvent" text="Bar Chart" />
                         <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeLineChartEvent" text="Line Chart" />
                         <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeScatterChartEvent" text="Scatter Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypePieChartEvent" text="Pie Chart" />
                     </items>
                   </MenuButton>
                </children>
