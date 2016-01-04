@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -106,6 +108,10 @@ public class User {
     public Role getRole() {
         return this.role;
     }
+    
+    public String fullName() {
+        return this.firstname + " " + this.lastname;
+    }
 
     public void insertUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -173,6 +179,27 @@ public class User {
             }
         }
         return this;
+    }
+    public ObservableList<User> getUsers() throws ClassNotFoundException, SQLException {
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            Statement statement = db.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM user");
+            while (result.next()) {
+                User addUser = new User();
+                addUser.setId(result.getInt(1));
+                addUser.setUsername(result.getString(2));
+                addUser.setPassword(result.getString(3));
+                addUser.setFirstname(result.getString(4));
+                addUser.setLastname(result.getString(5));
+                addUser.setRoleId(result.getInt(6));
+                addUser.setRegisterDate(result.getString(7));
+                addUser.setActive(result.getBoolean(8));
+                addUser.setRole(new Role().getRoleById(this.roleId));
+                userList.add(addUser);
+            }
+        }
+        return userList;
     }
 
 }

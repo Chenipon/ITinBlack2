@@ -46,9 +46,9 @@
                         <MenuItem fx:id="ddwnConnectedLuggage" mnemonicParsing="false" onAction="#ddwnConnectedLuggageEvent" text="Connected" />
                     </items>
                   </MenuButton>
-                  <MenuButton fx:id="ddwnSelectEmployee" layoutX="375.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Select Employee" />
                   <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" />
                   <DatePicker fx:id="endDate" layoutX="154.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" />
+                  <ComboBox fx:id="comboEmployee" layoutX="375.0" layoutY="136.0" prefHeight="26.0" prefWidth="133.0" promptText="Select employee" />
                </children></AnchorPane>
         </items>
       </SplitPane>
