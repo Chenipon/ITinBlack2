@@ -18,37 +18,46 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics - Luggage per Employee">
+                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics - Luggage per Employee" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="14.462890625">
                      <font>
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Text>
-                  <Text layoutX="24.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Luggage per Employee statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected per registered employee in the application. A start and end date can also be specified to get a specific timerange. Press &quot;Print Statistics&quot; to print the current chart." wrappingWidth="370.486328125" />
-                  <Text layoutX="142.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                  <Text layoutX="24.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Luggage per Employee statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected per registered employee in the application. A start and end date can also be specified to get a specific timerange. Press &quot;Print Statistics&quot; to print the current chart." wrappingWidth="370.486328125" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="53.05078125" />
+                  <Text layoutX="142.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="138.515625">
                      <font>
                         <Font name="Arial" size="16.0" />
                      </font>
                   </Text>
-                  <Button fx:id="btnFilter" layoutX="515.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" />
-                  <Button fx:id="btnPrintStatistics" layoutX="671.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Print Statistics" />
-                  <BarChart layoutX="24.0" layoutY="180.0" prefHeight="463.0" prefWidth="740.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </BarChart>
-                  <MenuButton fx:id="ddwnLuggageType" layoutX="272.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type">
+                  <Button fx:id="btnFilter" layoutX="515.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="136.0" />
+                  <Button fx:id="btnPrintStatistics" layoutX="645.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="31.0" />
+                  <AnchorPane fx:id="charts" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="181.0">
+                     <children>
+                        <BarChart prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </AnchorPane>
+                  <MenuButton fx:id="ddwnLuggageType" layoutX="272.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type" AnchorPane.leftAnchor="272.0" AnchorPane.topAnchor="136.0">
                     <items>
                       <MenuItem fx:id="ddwnLostLuggage" mnemonicParsing="false" onAction="#ddwnLostLuggageEvent" text="Lost" />
                       <MenuItem fx:id="ddwnFoundLuggage" mnemonicParsing="false" onAction="#ddwnFoundLuggageEvent" text="Found" />
                         <MenuItem fx:id="ddwnConnectedLuggage" mnemonicParsing="false" onAction="#ddwnConnectedLuggageEvent" text="Connected" />
                     </items>
                   </MenuButton>
-                  <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" />
-                  <DatePicker fx:id="endDate" layoutX="154.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" />
-                  <ComboBox fx:id="comboEmployee" layoutX="375.0" layoutY="136.0" prefHeight="26.0" prefWidth="133.0" promptText="Select employee" />
+                  <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="136.0" />
+                  <DatePicker fx:id="endDate" layoutX="154.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" AnchorPane.leftAnchor="154.0" AnchorPane.topAnchor="136.0" />
+                  <ComboBox fx:id="comboEmployee" layoutX="375.0" layoutY="136.0" prefHeight="26.0" prefWidth="133.0" promptText="Select Employee" AnchorPane.leftAnchor="375.0" AnchorPane.topAnchor="136.0" />
+                  <Label fx:id="lblErrorMessage" layoutX="-132.0" layoutY="172.0" prefHeight="15.0" prefWidth="750.0" textFill="RED" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
         </items>
       </SplitPane>

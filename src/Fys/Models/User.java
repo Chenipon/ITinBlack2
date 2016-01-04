@@ -184,7 +184,7 @@ public class User {
         ObservableList<User> userList = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM user");
+            ResultSet result = statement.executeQuery("SELECT * FROM user WHERE roleid=3");
             while (result.next()) {
                 User addUser = new User();
                 addUser.setId(result.getInt(1));

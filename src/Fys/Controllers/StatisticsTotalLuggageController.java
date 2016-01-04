@@ -83,7 +83,7 @@ public class StatisticsTotalLuggageController implements Initializable {
     }
 
     @FXML
-    private void btnPrintStatisticsEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
+    private void btnPrintStatisticsEvent(ActionEvent event) {
         try {
             /* Create new FileChooser */
             FileChooser fileChooser = new FileChooser();
