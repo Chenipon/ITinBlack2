@@ -21,36 +21,64 @@ import javafx.util.StringConverter;
 
 /**
  * FXML Controller class. This class controls the Edit Account screen including
- * it's features.
+ * it's features. The Edit Account screen is responsible for editing existing
+ * Users that have been added to the application.
  *
  * @author Daan Befort, IS106-2
  */
 public class AccountEditController implements Initializable {
+
     private static Screen screen;
     private static User currentUser;
     private static User editUser;
+    
+    @FXML private Label lblUsername, lblError;
+    @FXML private TextField txtUsername, txtPassword, txtFirstName, txtLastName;
+    @FXML private ComboBox comboRoles;
+    @FXML private CheckBox chckActive;
 
+    /**
+     * void setScreen(Screen newScreen) sets the Screen element for the
+     * Controller. This element contains the Stage object, used for switching
+     * scenes.
+     *
+     * @param newScreen is the new Screen object that needs to be set in this
+     * class.
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
-    
+
+    /**
+     * void setUser(User user) sets the user for the Controller. Ths is the
+     * curent User that is used to log into the application, and is being used
+     * for tracking of actions.
+     *
+     * @param user is the user that needs to be set in this class.
+     */
     public static void setUser(User user) {
         currentUser = user;
     }
 
+    /**
+     * void setEditUser(User user) sets the User object that is being edited in
+     * this screen. This is a different User object then the current logged in
+     * User.
+     *
+     * @param user is the user that is being edited.
+     */
     public static void setEditUser(User user) {
         editUser = user;
     }
 
-    @FXML private Label lblUsername;
-    @FXML private Label lblError;
-    @FXML private TextField txtUsername;
-    @FXML private TextField txtPassword;
-    @FXML private TextField txtFirstName;
-    @FXML private TextField txtLastName;
-    @FXML private ComboBox comboRoles;
-    @FXML private CheckBox chckActive;
-
+    /**
+     * void initialize(URL url, ResourceBundel rb) is the automatic
+     * initialization of the Controller when it's being fired due to a load of
+     * it's connected scene.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
@@ -84,6 +112,14 @@ public class AccountEditController implements Initializable {
         }
     }
 
+    /**
+     * void btnSaveChangesEvent(ActionEvent event) saves the changes made to
+     * editUser and returns to the Account Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     @FXML
     private void btnSaveChangesEvent(ActionEvent event) throws Exception {
         txtUsername.setStyle("-fx-border-width: 0px;");
@@ -126,7 +162,15 @@ public class AccountEditController implements Initializable {
         }
 
     }
-    
+
+    /**
+     * void btnBackToOverviewEvent(ActionEvent event) returns the user back to
+     * the Account Overview screen. This is the button next to the "Save
+     * Changes" button.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
         AccountOverviewController.setUser(currentUser);
@@ -134,6 +178,13 @@ public class AccountEditController implements Initializable {
         screen.change("AccountOverview");
     }
 
+    /**
+     * void btnAccountEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Account Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnAccountEvent(ActionEvent event) throws IOException {
         AccountOverviewController.setUser(currentUser);
@@ -141,6 +192,13 @@ public class AccountEditController implements Initializable {
         screen.change("AccountOverview");
     }
 
+    /**
+     * void btnLogoutEvent(ActionEvent event) logs the current User out of the
+     * application and displays the Login screen.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
         LoginController.setScreen(screen);
