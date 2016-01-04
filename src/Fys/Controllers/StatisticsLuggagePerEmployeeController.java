@@ -90,7 +90,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         try {
             /* Create new FileChooser */
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("Statistics - Total Luggage");
+            fileChooser.setInitialFileName("Statistics - Luggage per Employee");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf"));
 
             /* Create a new File by selecting a save directory */
@@ -122,7 +122,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             /* Write to the Document */
             document.open();
             document.add(corendonLogo);
-            document.add(new Paragraph("Statistics - Total Luggage", fontbold));
+            document.add(new Paragraph("Statistics - Luggage per Employee", fontbold));
             document.add(image);
             document.close();
 
@@ -135,6 +135,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
 
     @FXML
     private void btnFilterEvent(ActionEvent event) {
+        btnPrintStatistics.setDisable(false);
         System.out.println("Filter results");
     }
 
