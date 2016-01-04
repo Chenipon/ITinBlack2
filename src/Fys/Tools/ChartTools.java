@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author Jeffrey van der Lingen, IS106-2
+ * @author Jeffrey van der Lingen, Daan Befort, IS106-2
  */
 public class ChartTools {
 
