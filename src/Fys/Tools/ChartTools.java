@@ -110,7 +110,7 @@ public class ChartTools {
                     ResultSet result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
                             + "FROM luggage "
                             + "WHERE statusid = " + type + " GROUP BY YEAR(registerdate), statusid "
-                            + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('2015-11-22', '%y-%M-01') AND LAST_DAY('2015-12-12');");
+                            + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
@@ -218,7 +218,7 @@ public class ChartTools {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT connectiondate, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal "
                             + "FROM connection GROUP BY YEAR(connectiondate) "
-                            + "HAVING DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN DATE_FORMAT('2015-11-22', '%y-%M-01') AND LAST_DAY('2015-12-12');");
+                            + "HAVING DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
