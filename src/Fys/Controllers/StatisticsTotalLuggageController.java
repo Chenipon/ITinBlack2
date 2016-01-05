@@ -39,11 +39,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Fys.Tools.ChartTools;
 import Fys.Tools.PieChartData;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class. This class controls the Account Overview screen
@@ -136,9 +136,9 @@ public class StatisticsTotalLuggageController implements Initializable {
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
             if (end.isAfter(start)) {
-                if (!ddwnInterval.getText().equals("Select Interval")) {
-                    if (!ddwnLuggageType.getText().equals("Select Type")) {
-                        if (!ddwnChartType.getText().equals("Select Graph Type")) {
+                if (!ddwnInterval.getText().equals("Interval")) {
+                    if (!ddwnLuggageType.getText().equals("Type")) {
+                        if (!ddwnChartType.getText().equals("Graph Type")) {
                             btnPrintStatistics.setDisable(false); //Enable the "Save Statistics" button
                             int interval, graphType;
                             switch (ddwnInterval.getText()) {
@@ -244,73 +244,73 @@ public class StatisticsTotalLuggageController implements Initializable {
     @FXML
     private void ddwnLostLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Lost");
-        ddwnLuggageType.setPrefWidth(95);
+        ddwnLuggageType.setPrefWidth(74);
     }
 
     @FXML
     private void ddwnFoundLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Found");
-        ddwnLuggageType.setPrefWidth(95);
+        ddwnLuggageType.setPrefWidth(74);
     }
 
     @FXML
     private void ddwnConnectedLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Connected");
-        ddwnLuggageType.setPrefWidth(95);
+        ddwnLuggageType.setPrefWidth(74);
     }
 
     @FXML
     private void ddwnAllLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("All");
-        ddwnLuggageType.setPrefWidth(95);
+        ddwnLuggageType.setPrefWidth(74);
     }
 
     @FXML
     private void ddwnIntervalDayEvent(ActionEvent event) {
         ddwnInterval.setText("Day");
-        ddwnInterval.setPrefWidth(110);
+        ddwnInterval.setPrefWidth(74);
     }
 
     @FXML
     private void ddwnIntervalMonthEvent(ActionEvent event) {
         ddwnInterval.setText("Month");
-        ddwnInterval.setPrefWidth(110);
+        ddwnInterval.setPrefWidth(74);
     }
 
     @FXML
     private void ddwnIntervalYearEvent(ActionEvent event) {
         ddwnInterval.setText("Year");
-        ddwnInterval.setPrefWidth(110);
+        ddwnInterval.setPrefWidth(74);
     }
     
     @FXML
     private void ddwnChartTypeBarChartEvent(ActionEvent event) {
         ddwnChartType.setText("Bar Chart");
-        ddwnChartType.setPrefWidth(140);
+        ddwnChartType.setPrefWidth(115);
     }
 
     @FXML
     private void ddwnChartTypeAreaChartEvent(ActionEvent event) {
         ddwnChartType.setText("Area Chart");
-        ddwnChartType.setPrefWidth(140);
+        ddwnChartType.setPrefWidth(115);
     }
     
     @FXML
     private void ddwnChartTypeLineChartEvent(ActionEvent event) {
         ddwnChartType.setText("Line Chart");
-        ddwnChartType.setPrefWidth(140);
+        ddwnChartType.setPrefWidth(115);
     }
     
     @FXML
     private void ddwnChartTypeScatterChartEvent(ActionEvent event) {
         ddwnChartType.setText("Scatter Chart");
-        ddwnChartType.setPrefWidth(140);
+        ddwnChartType.setPrefWidth(115);
     }
     
     @FXML
     private void ddwnChartTypePieChartEvent(ActionEvent event) {
         ddwnChartType.setText("Pie Chart");
-        ddwnChartType.setPrefWidth(140);
+        ddwnChartType.setPrefWidth(115);
     }
 
     @FXML

@@ -17,14 +17,14 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage - Select Customer">
+                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Luggage - Select Customer" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="14.462890625">
                      <font>
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="lblSearch" layoutX="24.0" layoutY="111.0" prefHeight="25.0" prefWidth="254.0" promptText="Search term..." />
-                  <Button fx:id="btnSearchLuggage" layoutX="289.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnSearchCustomerEvent" styleClass="btnRed" text="Search" />
-                  <TableView fx:id="tblCustomers" layoutX="24.0" layoutY="153.0" prefHeight="497.0" prefWidth="745.0">
+                  <TextField fx:id="lblSearch" layoutX="24.0" layoutY="111.0" prefHeight="25.0" prefWidth="254.0" promptText="Search term..." AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="111.0" />
+                  <Button fx:id="btnSearchLuggage" layoutX="289.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnSearchCustomerEvent" styleClass="btnRed" text="Search" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="111.0" />
+                  <TableView fx:id="tblCustomers" layoutX="24.0" layoutY="153.0" prefHeight="497.0" prefWidth="745.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="153.0">
                     <columns>
                       <TableColumn fx:id="colFirstName" editable="false" prefWidth="101.0" text="First Name" />
                       <TableColumn fx:id="colLastName" prefWidth="127.0" text="Last Name" />
@@ -32,20 +32,20 @@
                         <TableColumn fx:id="colPhone" prefWidth="116.0" text="Phone Number" />
                         <TableColumn fx:id="colAddress" prefWidth="151.0" text="Home Address" />
                         <TableColumn fx:id="colEmail" prefWidth="129.0" text="Email" />
-                        <TableColumn fx:id="colAction" prefWidth="70.0" />
+                        <TableColumn fx:id="colAction" prefWidth="75.0" />
                     </columns>
                   </TableView>
-                  <Text layoutX="24.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a customer from the list below to attach to the piece of Luggage that is being displayed on the right." wrappingWidth="315.13671875" />
-                  <Label fx:id="lblType" layoutX="418.0" layoutY="40.0" prefHeight="17.0" prefWidth="210.0" />
-                  <Button fx:id="btnBackToEdit" layoutX="636.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnBackToEditEvent" prefHeight="25.0" prefWidth="133.0" styleClass="btnRed" text="Back to Edit Luggage" />
-                  <Text layoutX="418.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Luggage" wrappingWidth="156.08984375">
+                  <Text layoutX="24.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a customer from the list below to attach to the piece of Luggage that is being displayed on the right." wrappingWidth="315.13671875" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="64.0" />
+                  <Label fx:id="lblType" layoutX="418.0" layoutY="40.0" prefHeight="17.0" prefWidth="210.0" AnchorPane.leftAnchor="418.0" AnchorPane.topAnchor="40.0" />
+                  <Button fx:id="btnBackToEdit" layoutX="636.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnBackToEditEvent" prefHeight="25.0" prefWidth="133.0" styleClass="btnRed" text="Back to Edit Luggage" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="111.0" />
+                  <Text layoutX="418.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Luggage" wrappingWidth="156.08984375" AnchorPane.topAnchor="17.7998046875">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Text>
-                  <Label fx:id="lblBrand" layoutX="418.0" layoutY="57.0" prefHeight="17.0" prefWidth="210.0" />
-                  <Label fx:id="lblMaterial" layoutX="418.0" layoutY="74.0" prefHeight="17.0" prefWidth="210.0" />
-                  <Label fx:id="lblColor" layoutX="418.0" layoutY="91.0" prefHeight="17.0" prefWidth="210.0" />
+                  <Label fx:id="lblBrand" layoutX="418.0" layoutY="57.0" prefHeight="17.0" prefWidth="210.0" AnchorPane.leftAnchor="418.0" AnchorPane.topAnchor="57.0" />
+                  <Label fx:id="lblMaterial" layoutX="418.0" layoutY="74.0" prefHeight="17.0" prefWidth="210.0" AnchorPane.leftAnchor="418.0" AnchorPane.topAnchor="74.0" />
+                  <Label fx:id="lblColor" layoutX="418.0" layoutY="91.0" prefHeight="17.0" prefWidth="210.0" AnchorPane.leftAnchor="418.0" AnchorPane.topAnchor="91.0" />
                   <Text layoutX="381.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />

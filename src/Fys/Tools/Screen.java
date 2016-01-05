@@ -41,11 +41,13 @@ public class Screen {
                 + fxmlName + ".fxml")));
         scene.getStylesheets().add("/Fys/Content/Css/stylesheet.css");
         if (fxmlName.equals("Login")) {
+            stage.setResizable(false);
             stage.setMinWidth(616);
             stage.setMinHeight(438);
             stage.setWidth(616);
             stage.setHeight(438);
         } else {
+            stage.setResizable(true);
             stage.setMinWidth(1016);
             stage.setMinHeight(738);
         }

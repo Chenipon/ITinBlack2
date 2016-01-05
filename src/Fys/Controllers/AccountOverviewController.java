@@ -35,11 +35,15 @@ public class AccountOverviewController implements Initializable {
     private static Screen screen;
     private static User currentUser;
 
-    @FXML private Label lblUsername;
-    @FXML private TableView tblUsers;
-    @FXML private TableColumn columnUsername, columnFirstname, columnLastname,
+    @FXML
+    private Label lblUsername;
+    @FXML
+    private TableView tblUsers;
+    @FXML
+    private TableColumn columnUsername, columnFirstname, columnLastname,
             columnRole, columnActive, columnAction;
-    @FXML private TextField lblSearch;
+    @FXML
+    private TextField lblSearch;
 
     /**
      * void setScreen(Screen newScreen) sets the Screen element for the
@@ -75,12 +79,18 @@ public class AccountOverviewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        columnUsername.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("username"));
-        columnFirstname.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("firstname"));
-        columnLastname.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("lastname"));
-        columnRole.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("role"));
-        columnActive.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("active"));
-        columnAction.setCellValueFactory(new PropertyValueFactory<AccountTabelView, String>("username"));
+        columnUsername.setCellValueFactory(
+                new PropertyValueFactory<AccountTabelView, String>("username"));
+        columnFirstname.setCellValueFactory(
+                new PropertyValueFactory<AccountTabelView, String>("firstname"));
+        columnLastname.setCellValueFactory(
+                new PropertyValueFactory<AccountTabelView, String>("lastname"));
+        columnRole.setCellValueFactory(
+                new PropertyValueFactory<AccountTabelView, String>("role"));
+        columnActive.setCellValueFactory(
+                new PropertyValueFactory<AccountTabelView, String>("active"));
+        columnAction.setCellValueFactory(
+                new PropertyValueFactory<AccountTabelView, String>("username"));
         Callback<TableColumn<AccountTabelView, String>, TableCell<AccountTabelView, String>> printColumnCellFactory
                 = new Callback<TableColumn<AccountTabelView, String>, TableCell<AccountTabelView, String>>() {
 
@@ -100,17 +110,25 @@ public class AccountOverviewController implements Initializable {
 
                                         @Override
                                         public void handle(ActionEvent event) {
-                                            param.getTableView().getSelectionModel().select(getIndex());
-                                            AccountTabelView item = (AccountTabelView) tblUsers.getSelectionModel().getSelectedItem();
+                                            param.getTableView().getSelectionModel()
+                                            .select(getIndex());
+                                            AccountTabelView item = (AccountTabelView) tblUsers
+                                            .getSelectionModel().getSelectedItem();
                                             if (item != null) {
                                                 try {
-                                                    User editUser = new User().getUserById(item.getId());
-                                                    AccountEditController.setUser(currentUser);
-                                                    AccountEditController.setScreen(screen);
-                                                    AccountEditController.setEditUser(editUser);
+                                                    User editUser = new User()
+                                                    .getUserById(item.getId());
+                                                    AccountEditController
+                                                    .setUser(currentUser);
+                                                    AccountEditController
+                                                    .setScreen(screen);
+                                                    AccountEditController
+                                                    .setEditUser(editUser);
                                                     screen.change("AccountEdit");
                                                 } catch (Exception ex) {
-                                                    Logger.getLogger(AccountOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+                                                    Logger.getLogger(AccountOverviewController.class
+                                                            .getName()).log(Level.SEVERE,
+                                                            null, ex);
                                                 }
                                             }
                                         }
