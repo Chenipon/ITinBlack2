@@ -254,16 +254,18 @@ public class ChartTools {
         return luggageData;
     }
     
-    public ObservableList<ChartTools> getLostOrFoundLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, int type, User Employee) throws SQLException, ClassNotFoundException {
+    public ObservableList<ChartTools> getLostOrFoundLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, int type, User employee) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
+        int employeeId = employee.getId();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             switch (interval) {
                 /* Luggage per day */
                 case (1): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal "
-                            + "FROM luggage "
-                            + "WHERE statusid = " + type + " GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d'), statusid && employeeid =" + Employee.getId()
+                            + "FROM luggage"
+                            + "WHERE status= " + type + " AND employeeid=" + employeeId
+                            + "GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d')"
                             + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
@@ -292,8 +294,9 @@ public class ChartTools {
                 case (2): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
-                            + "FROM luggage "
-                            + "WHERE statusid = " + type + " GROUP BY MONTH(registerdate), YEAR(registerdate), statusid && employeeid =" + Employee.getId()
+                            + "FROM luggage"
+                            + "WHERE status= " + type + " AND employeeid=" + employeeId
+                            + "GROUP BY MONTH(registerdate), YEAR(registerdate)"
                             + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
@@ -329,7 +332,8 @@ public class ChartTools {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
                             + "FROM luggage "
-                            + "WHERE statusid = " + type + " GROUP BY YEAR(registerdate), statusid && employeeid =" + Employee.getId()
+                            + "WHERE status=" + type + " AND employeeid=" + employeeId
+                            + "GROUP BY YEAR(registerdate)"
                             + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
@@ -361,6 +365,8 @@ public class ChartTools {
 
             }
 
+        } catch(Exception ex){
+            System.out.println(ex.toString());
         }
         return luggageData;
     }
