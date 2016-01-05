@@ -265,66 +265,73 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
     @FXML
     private void ddwnLostLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Lost");
-        ddwnLuggageType.setPrefWidth(95);
+        ddwnLuggageType.setPrefWidth(100);
     }
 
     @FXML
     private void ddwnFoundLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Found");
-        ddwnLuggageType.setPrefWidth(95);
+        ddwnLuggageType.setPrefWidth(100);
     }
 
     @FXML
     private void ddwnConnectedLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Connected");
-        ddwnLuggageType.setPrefWidth(95);
+        ddwnLuggageType.setPrefWidth(100);
     }
+    
+    @FXML
+    private void ddwnAllLuggageEvent(ActionEvent event) {
+        ddwnLuggageType.setText("All");
+        ddwnLuggageType.setPrefWidth(100);
+    }
+    
     @FXML
     private void ddwnIntervalDayEvent(ActionEvent event) {
         ddwnInterval.setText("Day");
-        ddwnInterval.setPrefWidth(95);
+        ddwnInterval.setPrefWidth(75);
     }
 
     @FXML
     private void ddwnIntervalMonthEvent(ActionEvent event) {
         ddwnInterval.setText("Month");
-        ddwnInterval.setPrefWidth(95);
+        ddwnInterval.setPrefWidth(75);
     }
 
     @FXML
     private void ddwnIntervalYearEvent(ActionEvent event) {
         ddwnInterval.setText("Year");
-        ddwnInterval.setPrefWidth(95);
+        ddwnInterval.setPrefWidth(75);
     }
     
     @FXML
     private void ddwnChartTypeBarChartEvent(ActionEvent event) {
         ddwnChartType.setText("Bar Chart");
-        ddwnChartType.setPrefWidth(110);
+        ddwnChartType.setPrefWidth(115);
     }
 
     @FXML
     private void ddwnChartTypeAreaChartEvent(ActionEvent event) {
         ddwnChartType.setText("Area Chart");
-        ddwnChartType.setPrefWidth(110);
+        ddwnChartType.setPrefWidth(115);
     }
     
     @FXML
     private void ddwnChartTypeLineChartEvent(ActionEvent event) {
         ddwnChartType.setText("Line Chart");
-        ddwnChartType.setPrefWidth(110);
+        ddwnChartType.setPrefWidth(115);
     }
     
     @FXML
     private void ddwnChartTypeScatterChartEvent(ActionEvent event) {
         ddwnChartType.setText("Scatter Chart");
-        ddwnChartType.setPrefWidth(110);
+        ddwnChartType.setPrefWidth(115);
     }
     
     @FXML
     private void ddwnChartTypePieChartEvent(ActionEvent event) {
         ddwnChartType.setText("Pie Chart");
-        ddwnChartType.setPrefWidth(110);
+        ddwnChartType.setPrefWidth(115);
     }
 
     private void fillPieChart(LocalDate start, LocalDate end, int interval) throws ClassNotFoundException, SQLException {

@@ -244,43 +244,43 @@ public class StatisticsTotalLuggageController implements Initializable {
     @FXML
     private void ddwnLostLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Lost");
-        ddwnLuggageType.setPrefWidth(74);
+        ddwnLuggageType.setPrefWidth(100);
     }
 
     @FXML
     private void ddwnFoundLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Found");
-        ddwnLuggageType.setPrefWidth(74);
+        ddwnLuggageType.setPrefWidth(100);
     }
 
     @FXML
     private void ddwnConnectedLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Connected");
-        ddwnLuggageType.setPrefWidth(74);
+        ddwnLuggageType.setPrefWidth(100);
     }
 
     @FXML
     private void ddwnAllLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("All");
-        ddwnLuggageType.setPrefWidth(74);
+        ddwnLuggageType.setPrefWidth(100);
     }
 
     @FXML
     private void ddwnIntervalDayEvent(ActionEvent event) {
         ddwnInterval.setText("Day");
-        ddwnInterval.setPrefWidth(74);
+        ddwnInterval.setPrefWidth(75);
     }
 
     @FXML
     private void ddwnIntervalMonthEvent(ActionEvent event) {
         ddwnInterval.setText("Month");
-        ddwnInterval.setPrefWidth(74);
+        ddwnInterval.setPrefWidth(75);
     }
 
     @FXML
     private void ddwnIntervalYearEvent(ActionEvent event) {
         ddwnInterval.setText("Year");
-        ddwnInterval.setPrefWidth(74);
+        ddwnInterval.setPrefWidth(75);
     }
     
     @FXML
