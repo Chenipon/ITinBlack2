@@ -41,9 +41,34 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </BarChart>
+                        <AreaChart fx:id="areaChart" animated="false" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </AreaChart>
+                        <LineChart fx:id="lineChart" animated="false" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </LineChart>
+                        <ScatterChart fx:id="scatterChart" animated="false" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </ScatterChart>
+                        <PieChart fx:id="pieChart" animated="false" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                  <MenuButton fx:id="ddwnLuggageType" layoutX="272.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type" AnchorPane.leftAnchor="272.0" AnchorPane.topAnchor="136.0">
+                  <MenuButton fx:id="ddwnLuggageType" layoutX="385.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select Type" AnchorPane.leftAnchor="385.0" AnchorPane.topAnchor="136.0">
                     <items>
                       <MenuItem fx:id="ddwnLostLuggage" mnemonicParsing="false" onAction="#ddwnLostLuggageEvent" text="Lost" />
                       <MenuItem fx:id="ddwnFoundLuggage" mnemonicParsing="false" onAction="#ddwnFoundLuggageEvent" text="Found" />
@@ -52,12 +77,28 @@
                   </MenuButton>
                   <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="136.0" />
                   <DatePicker fx:id="endDate" layoutX="154.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" AnchorPane.leftAnchor="154.0" AnchorPane.topAnchor="136.0" />
-                  <ComboBox fx:id="comboEmployee" layoutX="375.0" layoutY="136.0" prefHeight="26.0" prefWidth="133.0" promptText="Select Employee" AnchorPane.leftAnchor="375.0" AnchorPane.topAnchor="136.0" />
+                  <ComboBox fx:id="comboEmployee" layoutX="487.0" layoutY="136.0" prefHeight="26.0" prefWidth="110.0" promptText="Select Employee" AnchorPane.leftAnchor="487.0" AnchorPane.topAnchor="136.0" />
                   <Label fx:id="lblErrorMessage" layoutX="-132.0" layoutY="172.0" prefHeight="15.0" prefWidth="750.0" textFill="RED" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
+                  <MenuButton fx:id="ddwnChartType" layoutX="605.0" layoutY="136.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Select Graph Type">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeAreaChartEvent" text="Area Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeBarChartEvent" text="Bar Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeLineChartEvent" text="Line Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeScatterChartEvent" text="Scatter Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypePieChartEvent" text="Pie Chart" />
+                     </items>
+                  </MenuButton>
+                  <MenuButton fx:id="ddwnInterval" layoutX="279.0" layoutY="136.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Select Interval">
+                     <items>
+                        <MenuItem fx:id="ddwnIntervalDay" mnemonicParsing="false" onAction="#ddwnIntervalDayEvent" text="Day" />
+                        <MenuItem fx:id="ddwnIntervalMonth" mnemonicParsing="false" onAction="#ddwnIntervalMonthEvent" text="Month" />
+                        <MenuItem fx:id="ddwnIntervalYear" mnemonicParsing="false" onAction="#ddwnIntervalYearEvent" text="Year" />
+                     </items>
+                  </MenuButton>
                </children></AnchorPane>
         </items>
       </SplitPane>

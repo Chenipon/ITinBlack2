@@ -180,7 +180,7 @@ public class User {
         }
         return this;
     }
-    public ObservableList<User> getUsers() throws ClassNotFoundException, SQLException {
+    public ObservableList<User> getEmployees() throws ClassNotFoundException, SQLException {
         ObservableList<User> userList = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
