@@ -104,7 +104,8 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
 
     @FXML
     private void btnFilterEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
-        if (startDate.getValue() != null || endDate.getValue() != null) {
+        if (startDate.getValue() != null || endDate.getValue() != null || !comboEmployee.getSelectionModel().isEmpty()) {
+            User employee = (User) comboEmployee.getSelectionModel().getSelectedItem();
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
             if (end.isAfter(start)) {
@@ -191,9 +192,9 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
                                 fillPieChart(start, end, interval);
                             } else {
                                 if (ddwnLuggageType.getText().equals("All")) {
-                                    fillGraphAllTypes(graphType, start, end, interval);
+                                    fillGraphAllTypes(graphType, start, end, interval, employee);
                                 } else {
-                                    fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval);
+                                    fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval, employee);
                                 }
                             }
                         } else {
@@ -209,7 +210,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
                 lblErrorMessage.setText("Start Date can't be after End Date");
             }
         } else {
-            lblErrorMessage.setText("Please specify date(s)");
+            lblErrorMessage.setText("Please specify date(s) and/or employee");
         }
     }
     
@@ -341,32 +342,31 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         pieChart.setTitle("Total Luggage Reported");
     }
 
-    private void fillGraphSingleType(String luggageType, int graphType, LocalDate start, LocalDate end, int interval) throws SQLException, ClassNotFoundException {
+    private void fillGraphSingleType(String luggageType, int graphType, LocalDate start, LocalDate end, int interval, User employee) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> observableList;
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         XYChart.Series series = new XYChart.Series();
-
         xAxis.setLabel("Date");
         yAxis.setLabel("Amount");
 
         switch (luggageType) {
             case ("Lost"): {
-                observableList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 1);
+                observableList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee);
                 for (int i = 0; i < observableList.size(); i++) {
                     series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
                 }
                 break;
             }
             case ("Found"): {
-                observableList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 2);
+                observableList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 2, employee);
                 for (int i = 0; i < observableList.size(); i++) {
                     series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
                 }
                 break;
             }
             case ("Connected"): {
-                observableList = new ChartTools().getConnectedLuggage(start, end, interval);
+                observableList = new ChartTools().getConnectedLuggagePerEmployee(start, end, interval, employee);
                 for (int i = 0; i < observableList.size(); i++) {
                     series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
                 }
@@ -404,11 +404,11 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
 
     }
 
-    private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end, int interval) throws SQLException, ClassNotFoundException {
+    private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end, int interval, User employee) throws SQLException, ClassNotFoundException {
         /* Lost luggage */
         XYChart.Series lostLuggage = new XYChart.Series();
         lostLuggage.setName("Lost Luggage");
-        ObservableList<ChartTools> lostLuggageList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 1);
+        ObservableList<ChartTools> lostLuggageList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee);
         for (int i = 0; i < lostLuggageList.size(); i++) {
             lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
         }
@@ -424,7 +424,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         /* Connected luggage */
         XYChart.Series connectedLuggage = new XYChart.Series();
         connectedLuggage.setName("Connected Luggage");
-        ObservableList<ChartTools> connectedLuggageList = new ChartTools().getConnectedLuggage(start, end, interval);
+        ObservableList<ChartTools> connectedLuggageList = new ChartTools().getConnectedLuggagePerEmployee(start, end, interval, employee);
         for (int i = 0; i < connectedLuggageList.size(); i++) {
             connectedLuggage.getData().add(new XYChart.Data(connectedLuggageList.get(i).getDate(), connectedLuggageList.get(i).getAmount()));
         }

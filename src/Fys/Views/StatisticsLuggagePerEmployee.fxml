@@ -33,7 +33,7 @@
                   <Button fx:id="btnPrintStatistics" layoutX="645.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="31.0" />
                   <AnchorPane fx:id="charts" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="181.0">
                      <children>
-                        <BarChart prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <BarChart fx:id="barChart" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
