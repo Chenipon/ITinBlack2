@@ -297,7 +297,7 @@ public class ChartTools {
                             + "FROM luggage "
                             + "WHERE statusid= " + type + " AND employeeid=" + employeeId
                             + " GROUP BY MONTH(registerdate), YEAR(registerdate) "
-                            + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
+                            + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%m-01') AND LAST_DAY('" + endDate + "');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
@@ -309,7 +309,6 @@ public class ChartTools {
                     String stringIterateDate = iterateDate.getYear() + " - " + iterateDate.getMonth().getValue();
                     endDate = endDate.plusMonths(1);
                     String stringEndDate = endDate.getYear() + " - " + endDate.getMonth().getValue();
-
                     while (!stringIterateDate.equals(stringEndDate)) {
                         ChartTools chartTools = new ChartTools();
                         chartTools.setDate(Integer.toString(iterateDate.getYear()) + " - " + iterateDate.getMonth());
@@ -413,7 +412,7 @@ public class ChartTools {
                 /* Connections per month */
                 case (2): {
                     Statement statement = db.createStatement();
-                        ResultSet result = statement.executeQuery("SELECT lug.employeeid, con.connectiondate, MONTH(connectiondate) AS month, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal " +
+                        ResultSet result = statement.executeQuery("SELECT con.connectiondate, MONTH(connectiondate) AS month, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal " +
                                         "FROM connection as con INNER JOIN luggage as lug on con.luggageid = lug.id " +
                                         "WHERE lug.employeeid = " + employeeId +
                                         " GROUP BY MONTH(connectiondate), YEAR(connectiondate) " +
