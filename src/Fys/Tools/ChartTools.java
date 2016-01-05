@@ -263,9 +263,9 @@ public class ChartTools {
                 case (1): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal "
-                            + "FROM luggage"
-                            + "WHERE status= " + type + " AND employeeid=" + employeeId
-                            + "GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d')"
+                            + "FROM luggage "
+                            + "WHERE statusid= " + type + " AND employeeid=" + employeeId
+                            + " GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d') "
                             + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
@@ -294,9 +294,9 @@ public class ChartTools {
                 case (2): {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
-                            + "FROM luggage"
-                            + "WHERE status= " + type + " AND employeeid=" + employeeId
-                            + "GROUP BY MONTH(registerdate), YEAR(registerdate)"
+                            + "FROM luggage "
+                            + "WHERE statusid= " + type + " AND employeeid=" + employeeId
+                            + " GROUP BY MONTH(registerdate), YEAR(registerdate) "
                             + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
@@ -332,8 +332,8 @@ public class ChartTools {
                     Statement statement = db.createStatement();
                     ResultSet result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
                             + "FROM luggage "
-                            + "WHERE status=" + type + " AND employeeid=" + employeeId
-                            + "GROUP BY YEAR(registerdate)"
+                            + "WHERE statusid=" + type + " AND employeeid=" + employeeId
+                            + " GROUP BY YEAR(registerdate) "
                             + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
@@ -371,17 +371,18 @@ public class ChartTools {
         return luggageData;
     }
 
-    public ObservableList<ChartTools> getConnectedLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, User Employee) throws SQLException, ClassNotFoundException {
+    public ObservableList<ChartTools> getConnectedLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, User employee) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
+        int employeeId = employee.getId();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             switch (interval) {
                 /* Connections per day */
                 case (1): {
                     Statement statement = db.createStatement();
-                    String query =  "SELECT lug.employeeid, con.connectiondate, DATE_FORMAT(connectiondate, '%Y-%m-%d') AS date, COUNT(connectiondate) AS aantal" +
-                                    "FROM connection AS con INNER JOIN luggage AS lug ON con.luggageid = lug.id" +
-                                    "WHERE lug.employeeid = " + Employee.getId() +
-                                    "GROUP BY DATE_FORMAT(connectiondate, '%Y-%m-%d')" +
+                    String query =  "SELECT lug.employeeid, con.connectiondate, DATE_FORMAT(connectiondate, '%Y-%m-%d') AS date, COUNT(connectiondate) AS aantal " +
+                                    "FROM connection AS con INNER JOIN luggage AS lug ON con.luggageid = lug.id " +
+                                    "WHERE lug.employeeid = " + employeeId +
+                                    " GROUP BY DATE_FORMAT(connectiondate, '%Y-%m-%d') " +
                                     "HAVING DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "';";
                     ResultSet result = statement.executeQuery(query);
                     
@@ -412,12 +413,11 @@ public class ChartTools {
                 /* Connections per month */
                 case (2): {
                     Statement statement = db.createStatement();
-                    String query =  "SELECT lug.employeeid, con.connectiondate, MONTH(connectiondate) AS month, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal" +
-                                    "FROM connection as con INNER JOIN luggage as lug on con.luggageid = lug.id" +
-                                    "WHERE lug.employeeid = " + Employee.getId() +
-                                    "GROUP BY MONTH(connectiondate), YEAR(connectiondate) " +
-                                    "HAVING DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');";
-                    ResultSet result = statement.executeQuery(query);
+                        ResultSet result = statement.executeQuery("SELECT lug.employeeid, con.connectiondate, MONTH(connectiondate) AS month, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal " +
+                                        "FROM connection as con INNER JOIN luggage as lug on con.luggageid = lug.id " +
+                                        "WHERE lug.employeeid = " + employeeId +
+                                        " GROUP BY MONTH(connectiondate), YEAR(connectiondate) " +
+                                        "HAVING DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN DATE_FORMAT('"+ startDate +"', '%y-%M-01') AND LAST_DAY('"+ endDate +"');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
@@ -450,12 +450,11 @@ public class ChartTools {
                 /* Connections per year */
                 case (3): {
                     Statement statement = db.createStatement();
-                    String query =  "SELECT connectiondate, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal" +
-                                    "FROM connection AS con INNER JOIN luggage AS lug ON con.luggageid = lug.id" +
-                                    "WHERE lug.employeeid = " + Employee.getId() +
-                                    "GROUP BY YEAR(connectiondate) " +
-                                    "HAVING DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');";
-                    ResultSet result = statement.executeQuery(query);
+                    ResultSet result = statement.executeQuery("SELECT connectiondate, YEAR(connectiondate) AS year, COUNT(connectiondate) AS aantal " +
+                                        "FROM connection AS con INNER JOIN luggage AS lug ON con.luggageid = lug.id " +
+                                        "WHERE lug.employeeid = " + employeeId +
+                                        " GROUP BY YEAR(connectiondate) " +
+                                        "HAVING DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN DATE_FORMAT('"+ startDate +"', '%y-%M-01') AND LAST_DAY('"+ endDate +"');");
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
