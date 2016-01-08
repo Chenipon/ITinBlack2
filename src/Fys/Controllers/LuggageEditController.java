@@ -91,28 +91,15 @@ public class LuggageEditController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        lblUsername.setText(currentUser.getUsername());
-        type.setText(editLuggage.getType());
-        brand.setText(editLuggage.getBrand());
-        material.setText(editLuggage.getMaterial());
-        color.setText(editLuggage.getColor());
-        comments.setText(editLuggage.getComment());
-        
-        if (editLuggage.isResolved()) {
-            chckResolved.selectedProperty().set(true);
-        } else {
-            chckResolved.selectedProperty().set(false);
-        }
+        /* Initialize the Textfields */
+        setLuggageData();
 
         try {
+            /* Initialize the labels of the luggage history and the statusid */
             ddwnStatus.setText(new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
             lblRegisterDate.setText(new LogTools().getLuggageRegisterDate(editLuggage.getId()).toString());
             lblRegisterEmployee.setText((new LogTools().getLuggageRegisterEmployee(editLuggage.getEmployeeId())));
-        } catch (ClassNotFoundException | SQLException | ParseException ex) {
-            Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
+            /* Initialize the connection */
             /* if there is a Connection of Luggage and Customer registered in the database,
              * initialize this Connection.
              */
@@ -134,10 +121,10 @@ public class LuggageEditController implements Initializable {
             } else if (connectedCustomer != null) {
                 setLabelText();
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Enable the right buttons and panes on the scene based off their data.
+        /* Enable the right buttons and panes on the scene based off their data. */
         if (ddwnStatus.getText().equals("Connected")) {
             btnSelectCustomer.setVisible(true);
             if (connectedCustomer != null) {
@@ -160,6 +147,27 @@ public class LuggageEditController implements Initializable {
         lblPhone.setText(connectedCustomer.getPhone());
         lblAddress.setText(connectedCustomer.getAddress());
         lblEmail.setText(connectedCustomer.getEmail());
+    }
+    
+    /**
+     * setLuggageData() fills the textfields displaying the Luggage information 
+     * so that these fields can be edited. Also sets the checkbox displaying 
+     * whether or not the luggage has been resolved.
+     */
+    public void setLuggageData() {
+        /* Initialize textfields */
+        lblUsername.setText(currentUser.getUsername());
+        type.setText(editLuggage.getType());
+        brand.setText(editLuggage.getBrand());
+        material.setText(editLuggage.getMaterial());
+        color.setText(editLuggage.getColor());
+        comments.setText(editLuggage.getComment());
+        /* Initialize checkbox */
+        if (editLuggage.isResolved()) {
+            chckResolved.selectedProperty().set(true);
+        } else {
+            chckResolved.selectedProperty().set(false);
+        }
     }
 
     /**
