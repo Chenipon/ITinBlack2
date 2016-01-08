@@ -32,6 +32,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
@@ -62,6 +63,7 @@ public class LuggageEditController implements Initializable {
     @FXML private MenuButton ddwnStatus;
     @FXML private Button btnSelectCustomer;
     @FXML private AnchorPane paneCustomer;
+    @FXML private CheckBox chckResolved;
 
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
@@ -95,6 +97,12 @@ public class LuggageEditController implements Initializable {
         material.setText(editLuggage.getMaterial());
         color.setText(editLuggage.getColor());
         comments.setText(editLuggage.getComment());
+        
+        if (editLuggage.isResolved()) {
+            chckResolved.selectedProperty().set(true);
+        } else {
+            chckResolved.selectedProperty().set(false);
+        }
 
         try {
             ddwnStatus.setText(new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
@@ -215,7 +223,6 @@ public class LuggageEditController implements Initializable {
                     connection.updateConnection(connection);
                 } else if (editLuggage.checkIfLuggageIsConnected(editLuggage)
                         && connectedCustomer.getId() == connection.getCustomerId()) {
-                    System.out.println("USER HAS NOT BEEN CHANGED");
                 } else {
                     connection = new Connection();
                     connection.setCustomerId(connectedCustomer.getId());
@@ -258,6 +265,15 @@ public class LuggageEditController implements Initializable {
             if (logTools.checkLuggageChanged(editLuggage, "status")) {
                 logTools.logLuggageChanged(editLuggage, currentUser, "status");
             }
+            if (chckResolved.selectedProperty().getValue()) {
+                editLuggage.setResolved(true);
+            } else {
+                editLuggage.setResolved(false);
+            }
+            if (logTools.checkLuggageChanged(editLuggage, "resolved")) {
+                logTools.logLuggageChanged(editLuggage, currentUser, "resolved");
+            }
+            
             editLuggage.updateLuggage(editLuggage);
 
             connectedCustomer = null;

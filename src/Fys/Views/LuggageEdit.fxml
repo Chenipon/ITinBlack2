@@ -56,12 +56,12 @@
                   <TextField fx:id="brand" layoutX="116.0" layoutY="135.0" prefHeight="25.0" prefWidth="350.0" />
                   <TextField fx:id="material" layoutX="116.0" layoutY="166.0" prefHeight="25.0" prefWidth="350.0" />
                   <TextField fx:id="color" layoutX="116.0" layoutY="198.0" prefHeight="25.0" prefWidth="350.0" />
-                  <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Luggage Overview" textAlignment="CENTER" textOverrun="CLIP">
+                  <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="420.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Luggage Overview" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnSaveChanges" alignment="CENTER" layoutX="221.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnSaveChangesEvent" prefHeight="25.0" prefWidth="95.0" styleClass="btnRed" text="Save Changes" textAlignment="CENTER" textOverrun="CLIP">
+                  <Button fx:id="btnSaveChanges" alignment="CENTER" layoutX="221.0" layoutY="420.0" mnemonicParsing="false" onAction="#btnSaveChangesEvent" prefHeight="25.0" prefWidth="95.0" styleClass="btnRed" text="Save Changes" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
@@ -79,7 +79,7 @@
                         <MenuItem fx:id="ddwnStatusConnected" mnemonicParsing="false" onAction="#ddwnStatusConnectedEvent" text="Connected" />
                     </items>
                   </MenuButton>
-                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="427.0" prefHeight="17.0" prefWidth="442.0" textFill="RED">
+                  <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="451.0" prefHeight="17.0" prefWidth="442.0" textFill="RED">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
@@ -134,32 +134,42 @@
                         <Label fx:id="lblEmail" layoutX="101.0" layoutY="125.0" prefHeight="17.0" prefWidth="190.0" textFill="WHITE" />
                      </children>
                   </AnchorPane>
-                  <Text layoutX="24.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Information">
+                  <Text layoutX="24.0" layoutY="494.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Information">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
                   </Text>
-                  <Text layoutX="24.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register date">
+                  <Text layoutX="24.0" layoutY="524.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register date">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Text layoutX="24.0" layoutY="524.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registered by">
+                  <Text layoutX="24.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registered by">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Label fx:id="lblRegisterDate" layoutX="127.0" layoutY="486.0" prefHeight="17.0" prefWidth="193.0">
+                  <Label fx:id="lblRegisterDate" layoutX="127.0" layoutY="511.0" prefHeight="17.0" prefWidth="193.0">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblRegisterEmployee" layoutX="127.0" layoutY="511.0" prefHeight="17.0" prefWidth="193.0">
+                  <Label fx:id="lblRegisterEmployee" layoutX="127.0" layoutY="536.0" prefHeight="17.0" prefWidth="193.0">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnShowHistory" layoutX="24.0" layoutY="542.0" mnemonicParsing="false" onAction="#btnShowHistoryEvent" prefHeight="25.0" prefWidth="83.0" styleClass="btnRed" text="View History" />
+                  <Button fx:id="btnShowHistory" layoutX="24.0" layoutY="567.0" mnemonicParsing="false" onAction="#btnShowHistoryEvent" prefHeight="25.0" prefWidth="83.0" styleClass="btnRed" text="View History" />
+                  <CheckBox fx:id="chckResolved" layoutX="116.0" layoutY="392.0" mnemonicParsing="false" text="If this box is ticked, this piece of luggage has been returned to it's owner.">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </CheckBox>
+                  <Text layoutX="17.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resolved" AnchorPane.leftAnchor="24.0">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Text>
                </children></AnchorPane>
         </items>
       </SplitPane>

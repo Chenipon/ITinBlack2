@@ -25,6 +25,7 @@ public class Luggage {
     private String registerDate;
     private int employeeId;
     private Status status;
+    private boolean resolved;
 
     /**
      * public Luggage() creates an empty Luggage object, which stores the data
@@ -41,6 +42,7 @@ public class Luggage {
         this.registerDate = null;
         this.employeeId = 0;
         this.status = new Status();
+        this.resolved = false;
     }
     
     /**
@@ -65,7 +67,7 @@ public class Luggage {
         this.registerDate = null;
         this.employeeId = 0;
         this.status = new Status();
-        
+        this.resolved = false;
     }
 
     /**
@@ -242,6 +244,14 @@ public class Luggage {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public boolean isResolved() {
+        return resolved;
+    }
+
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
+    }
     
     /**
      * public void insertLuggage(Luggage luggage)
@@ -253,7 +263,7 @@ public class Luggage {
      */
     public void insertLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO luggage (type,brand,material,color,comments,registerdate,statusid,employeeid) VALUES (?,?,?,?,?,?,?,?)");
+            String query = ("INSERT INTO luggage (type,brand,material,color,comments,registerdate,statusid,employeeid,resolved) VALUES (?,?,?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, luggage.type);
             preparedStatement.setString(2, luggage.brand);
@@ -263,6 +273,7 @@ public class Luggage {
             preparedStatement.setString(6, luggage.registerDate);
             preparedStatement.setInt(7, luggage.statusId);
             preparedStatement.setInt(8, luggage.employeeId);
+            preparedStatement.setBoolean(9, luggage.resolved);
             preparedStatement.executeUpdate();
         }
     }
@@ -277,7 +288,7 @@ public class Luggage {
      */
     public void updateLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("UPDATE luggage SET type = ?,brand = ?,material = ?,color = ?,comments = ?,statusid = ? WHERE id=" + luggage.getId());
+            String query = ("UPDATE luggage SET type = ?,brand = ?,material = ?,color = ?,comments = ?,statusid = ?,resolved = ? WHERE id=" + luggage.getId());
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, luggage.type);
             preparedStatement.setString(2, luggage.brand);
@@ -285,6 +296,7 @@ public class Luggage {
             preparedStatement.setString(4, luggage.color);
             preparedStatement.setString(5, luggage.comment);
             preparedStatement.setInt(6, luggage.statusId);
+            preparedStatement.setBoolean(7, resolved);
             preparedStatement.executeUpdate();
         }
     }
@@ -330,6 +342,7 @@ public class Luggage {
                 this.statusId = result.getInt(8);
                 this.employeeId = result.getInt(10);
                 this.status = new Status().getStatusById(this.statusId);
+                this.resolved = result.getBoolean(11);
             }
         }
         return this;

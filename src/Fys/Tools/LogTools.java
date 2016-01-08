@@ -122,6 +122,7 @@ public class LogTools {
                 dbLuggage.setColor(result.getString(5));
                 dbLuggage.setComment(result.getString(6));
                 dbLuggage.setStatusId(result.getInt(8));
+                dbLuggage.setResolved(result.getBoolean(11));
             }
             switch (type) {
                 case("type"): {
@@ -145,6 +146,9 @@ public class LogTools {
                 }
                 case("status"): {
                     return (dbLuggage.getStatusId() != editLuggage.getStatusId());
+                }
+                case("resolved"): {
+                    return (dbLuggage.isResolved() != editLuggage.isResolved());
                 }
                 default: {
                     return false;
@@ -174,6 +178,7 @@ public class LogTools {
                 dbLuggage.setColor(result.getString(5));
                 dbLuggage.setComment(result.getString(6));
                 dbLuggage.setStatusId(result.getInt(8));
+                dbLuggage.setResolved(result.getBoolean(11));
             }
             if (type.equals("type") && !dbLuggage.getType().equals(editLuggage.getType())) {
                 change = ("Type: " + dbLuggage.getType() + " was changed to: " + editLuggage.getType());
@@ -198,9 +203,20 @@ public class LogTools {
                     }
                 }
             }
-            if (type.equals("status") && dbLuggage.getStatusId() != (editLuggage.getStatusId())) {
+            if (type.equals("status") && (dbLuggage.getStatusId() != editLuggage.getStatusId())) {
                 change = ("Status: " + (new Status().getStatusById(dbLuggage.getStatusId()).getStatusName())) + 
                         " was changed to: " + (new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
+            }
+            System.out.println(dbLuggage.isResolved() != editLuggage.isResolved());
+            System.out.println(dbLuggage.isResolved() + " != " + editLuggage.isResolved());
+            if (type.equals("resolved") && (dbLuggage.isResolved() != editLuggage.isResolved())) {
+                System.out.println(editLuggage.isResolved());
+                if (editLuggage.isResolved()) {
+                    change = ("Luggage has been marked as \"Resolved\"");
+                } else {
+                    change = ("Luggage has been marked as \"Unresolved\"");
+                }
+                System.out.println(change);
             }
             db.close();
         }
