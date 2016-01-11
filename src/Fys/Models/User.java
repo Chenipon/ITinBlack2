@@ -26,6 +26,9 @@ public class User {
 
     private Role role;
 
+    /**
+     *
+     */
     public User() {
         this.username = "";
         this.password = "";
@@ -37,82 +40,164 @@ public class User {
         this.role = new Role();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     *
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirstname() {
         return firstname;
     }
 
+    /**
+     *
+     * @param firstname
+     */
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLastname() {
         return lastname;
     }
 
+    /**
+     *
+     * @param lastname
+     */
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRoleId() {
         return roleId;
     }
 
+    /**
+     *
+     * @param roleId
+     */
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRegisterDate() {
         return registerDate;
     }
 
+    /**
+     *
+     * @param registerDate
+     */
     public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     *
+     * @param active
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     *
+     * @param role
+     */
     public void setRole(Role role) {
         this.role = role;
     }
 
+    /**
+     *
+     * @return
+     */
     public Role getRole() {
         return this.role;
     }
     
+    /**
+     *
+     * @return
+     */
     public String fullName() {
         return this.firstname + " " + this.lastname;
     }
 
+    /**
+     *
+     * @param user
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void insertUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             String query = ("INSERT INTO user (username,password,firstname,lastname,roleid,registerdate,active) VALUES (?,?,?,?,?,?,?)");
@@ -128,6 +213,12 @@ public class User {
         }
     }
     
+    /**
+     *
+     * @param user
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void updateUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             String query = ("UPDATE user SET username = ?, password=?,firstname=?,lastname=?,roleId=?,registerDate=?,active=? WHERE id=" + user.getId());
@@ -143,6 +234,13 @@ public class User {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public User getUserById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
@@ -162,6 +260,13 @@ public class User {
         return this;
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public User getUserByUsername(String username) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
@@ -180,6 +285,13 @@ public class User {
         }
         return this;
     }
+
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public ObservableList<User> getEmployees() throws ClassNotFoundException, SQLException {
         ObservableList<User> userList = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {

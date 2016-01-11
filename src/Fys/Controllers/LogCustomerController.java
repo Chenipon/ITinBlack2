@@ -29,10 +29,22 @@ public class LogCustomerController implements Initializable {
     @FXML private TableView tblCustomerLog;
     @FXML private TableColumn colDate, colEmployee, colLogEntry;
     
+    /**
+     * void setCustomer(Customer customer) sets the customer for the Controller.
+     * This sets the customer information that is needed for this controller.
+     *
+     * @param editCustomer is the user that needs to be set in this class.
+     */
     public static void setCustomer(Customer editCustomer) {
         customer = editCustomer;
     }
     
+    /**
+     * void setStage(Stage newStage) sets the stage for the Controller.
+     * This sets a new scene which is requested by the user.
+     *
+     * @param newStage is the stage that needs to be set in this class.
+     */
     public static void setStage(Stage newStage) {
         stage = newStage;
     }
@@ -53,11 +65,26 @@ public class LogCustomerController implements Initializable {
         }
     }
     
+    /**
+     * ObservableList<LogCustomerTabelView> getLogList() returns an ObservableList
+     * that can be used in the TableView.
+     *
+     * @return an ObservableList containing the information that is added into
+     * the TableView.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     public ObservableList<LogCustomerTabelView> getLogList() throws Exception{
         ObservableList<LogCustomerTabelView> logList= new LogCustomerTabelView().getLogList(customer);
         return logList;
     }
     
+    /**
+     * void btnCloseWindowEvent(ActionEvent event) closes the new stage and returns
+     * to the main window of the application. 
+     * 
+     * @param event
+     */
     @FXML
     public void btnCloseWindowEvent(ActionEvent event) {
         stage.close();

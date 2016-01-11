@@ -33,10 +33,18 @@ public class LuggageAddController implements Initializable {
     @FXML private TextField luggageType, luggageBrand, luggageMaterial, luggageColor;
     @FXML private TextArea luggageComments;
     
+    /**
+     *
+     * @param newScreen
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
     
+    /**
+     *
+     * @param user
+     */
     public static void setUser(User user) {
         currentUser = user;
     }

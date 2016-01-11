@@ -16,12 +16,23 @@ public class PieChartData {
     private int foundLuggage;
     private int connectedLuggage;
 
+    /**
+     *
+     */
     public PieChartData() {
         this.lostLuggage = 0;
         this.foundLuggage = 0;
         this.connectedLuggage = 0;
     }
 
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @param interval
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void getData(LocalDate startDate, LocalDate endDate, int interval) throws ClassNotFoundException, SQLException {
         switch (interval) {
             case (1): {
@@ -111,14 +122,26 @@ public class PieChartData {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLostLuggage() {
         return lostLuggage;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getFoundLuggage() {
         return foundLuggage;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getConnectedLuggage() {
         return connectedLuggage;
     }

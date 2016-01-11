@@ -23,6 +23,10 @@ public class Startup extends Application {
         SCREEN.change("Login");
     }
     
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

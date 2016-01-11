@@ -67,10 +67,18 @@ public class StatisticsTotalLuggageController implements Initializable {
     @FXML private Button btnPrintStatistics;
     @FXML private AnchorPane charts;
 
+    /**
+     *
+     * @param newScreen
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
 
+    /**
+     *
+     * @param user
+     */
     public static void setUser(User user) {
         currentUser = user;
     }

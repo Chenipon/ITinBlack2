@@ -29,14 +29,39 @@ public class LoginController implements Initializable {
     @FXML private Label lblError;
     @FXML private Button btnLogin;
     
+    /**
+     * void setScreen(Screen newScreen) sets the Screen element for the
+     * Controller. This element contains the Stage object, used for switching
+     * scenes.
+     *
+     * @param newScreen is the new Screen object that needs to be set in this
+     * class.
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
     
+    /**
+     * void initialize(URL url, ResourceBundel rb) is the automatic
+     * initialization of the Controller when it's being fired due to a load of
+     * it's connected scene.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-
+    
+    /**
+     * void btnLoginAction(ActionEvent event) compares the parameters with the 
+     * database rows to validate the user. With this the user is granted access
+     * to the application.
+     * 
+     * @param event The event that is being fired by clicking the button.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     @FXML
     private void btnLoginAction(ActionEvent event) throws Exception {
         try {
@@ -67,6 +92,14 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * void loadScreen(User user) decides what role to assign the user who is logging into the application.
+     * With the role a specific corresponding scene is set.
+     * 
+     * @param user is the user that needs to be set in this class.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     public void loadScreen(User user) throws Exception {
         switch (user.getRoleId()) {
             case (1): {

@@ -19,22 +19,48 @@ public class ChartTools {
     private String date;
     private int amount;
 
+    /**
+     *
+     * @return
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     *
+     * @param date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAmount() {
         return amount;
     }
 
+    /**
+     *
+     * @param amount
+     */
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @param interval
+     * @param type
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ObservableList<ChartTools> getLostOrFoundLuggage(LocalDate startDate, LocalDate endDate, int interval, int type) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -146,6 +172,15 @@ public class ChartTools {
         return luggageData;
     }
 
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @param interval
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ObservableList<ChartTools> getConnectedLuggage(LocalDate startDate, LocalDate endDate, int interval) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -254,6 +289,17 @@ public class ChartTools {
         return luggageData;
     }
     
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @param interval
+     * @param type
+     * @param employee
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ObservableList<ChartTools> getLostOrFoundLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, int type, User employee) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
         int employeeId = employee.getId();
@@ -370,6 +416,16 @@ public class ChartTools {
         return luggageData;
     }
 
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @param interval
+     * @param employee
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ObservableList<ChartTools> getConnectedLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, User employee) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
         int employeeId = employee.getId();

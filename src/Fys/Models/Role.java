@@ -17,30 +17,59 @@ public class Role {
     private int id;
     private String roleName;
 
+    /**
+     *
+     */
     public Role() {
         this.roleName = "";
     }
 
+    /**
+     *
+     * @param roleName
+     */
     public Role(String roleName) {
         this.roleName = roleName;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRoleName() {
         return roleName;
     }
 
+    /**
+     *
+     * @param roleName
+     */
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
 
+    /**
+     *
+     * @param role
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void insertRole(Role role) throws ClassNotFoundException, SQLException {
         Connection db = new ConnectMysqlServer().dbConnect();
         Statement statement = db.createStatement();
@@ -48,6 +77,13 @@ public class Role {
         db.close();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public Role getRoleById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
@@ -60,6 +96,11 @@ public class Role {
         return this;
     }
     
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     public ObservableList<Role> getRoles() throws Exception {
         ObservableList<Role> roleList = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -75,6 +116,13 @@ public class Role {
         return roleList;
     }
     
+    /**
+     *
+     * @param name
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public Role getRoleByName(String name) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();

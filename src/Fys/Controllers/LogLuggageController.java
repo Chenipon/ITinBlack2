@@ -29,10 +29,22 @@ public class LogLuggageController implements Initializable {
     @FXML private TableView tblLuggageLog;
     @FXML private TableColumn colDate, colEmployee, colLogEntry;
     
+    /**
+     * void setLuggage(Luggage editLuggage) sets the luggage for the Controller.
+     * This sets the luggage information that is needed for this controller.
+     *
+     * @param editLuggage is the luggage that needs to be set in this class.
+     */
     public static void setLuggage(Luggage editLuggage) {
         luggage = editLuggage;
     }
     
+    /**
+     * void setStage(Stage newStage) sets the stage for the Controller.
+     * This sets a new scene which is requested by the user.
+     *
+     * @param newStage is the stage that needs to be set in this class.
+     */
     public static void setStage(Stage newStage) {
         stage = newStage;
     }
@@ -53,11 +65,26 @@ public class LogLuggageController implements Initializable {
         }
     }
     
+    /**
+     * ObservableList<AccountTabelView> getCustomerList() returns an ObservableList
+     * that can be used in the TableView.
+     *
+     * @return an ObservableList containing the information that is added into
+     * the TableView.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     public ObservableList<LogLuggageTabelView> getLogList() throws Exception{
         ObservableList<LogLuggageTabelView> logList= new LogLuggageTabelView().getLogList(luggage);
         return logList;
     }
     
+    /**
+     * void btnCloseWindowEvent(ActionEvent event) closes the new stage and returns
+     * to the main window of the application. 
+     * 
+     * @param event
+     */
     @FXML
     public void btnCloseWindowEvent(ActionEvent event) {
         stage.close();

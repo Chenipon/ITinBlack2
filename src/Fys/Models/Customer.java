@@ -23,6 +23,9 @@ public class Customer {
     private String registerDate;
     private int employeeId;
 
+    /**
+     *
+     */
     public Customer() {
         this.firstName = "";
         this.lastName = "";
@@ -34,66 +37,130 @@ public class Customer {
         this.employeeId = 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     *
+     * @param firstName
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     *
+     * @param lastName
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getGender() {
         return gender;
     }
     
+    /**
+     *
+     * @param gender
+     */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     *
+     * @param phone
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     *
+     * @param address
+     */
     public void setAddress(String address) {
         this.address = address;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getEmail() {
         return email;
     }
     
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRegisterDate() {
         return registerDate;
     }
 
+    /**
+     *
+     * @param registerDate
+     */
     public void setRegisterDate(String registerDate) {
         /* 
          * For a strange reason, MySQL adds ".0" after the date. 
@@ -106,14 +173,28 @@ public class Customer {
         this.registerDate = registerDate;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getEmployeeId() {
         return employeeId;
     }
 
+    /**
+     *
+     * @param employeeId
+     */
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
+    /**
+     *
+     * @param customer
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void insertCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             String query = ("INSERT INTO customer (firstname,lastname,gender,phone,address,email,registerdate,employeeid) VALUES (?,?,?,?,?,?,?,?)");
@@ -130,6 +211,12 @@ public class Customer {
         }
     }
     
+    /**
+     *
+     * @param customer
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void updateCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             String query = "UPDATE customer SET firstname = ?,lastname = ?,gender = ?,phone = ?,address = ?,email = ? WHERE id=" + customer.getId();
@@ -144,6 +231,13 @@ public class Customer {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public Customer getCustomerById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();

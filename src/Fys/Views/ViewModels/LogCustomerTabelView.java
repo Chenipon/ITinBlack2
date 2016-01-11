@@ -39,10 +39,18 @@ public class LogCustomerTabelView {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRegisterdate() {
         return registerdate;
     }
 
+    /**
+     *
+     * @param registerdate
+     */
     public void setRegisterdate(String registerdate) {
         /* 
          * For a strange reason, MySQL adds ".0" after the date. 
@@ -55,22 +63,44 @@ public class LogCustomerTabelView {
         this.registerdate = registerdate;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getChange() {
         return change;
     }
 
+    /**
+     *
+     * @param change
+     */
     public void setChange(String change) {
         this.change = change;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmployee() {
         return employee;
     }
 
+    /**
+     *
+     * @param employee
+     */
     public void setEmployee(String employee) {
         this.employee = employee;
     }
 
+    /**
+     *
+     * @param customer
+     * @return
+     * @throws Exception
+     */
     public ObservableList<LogCustomerTabelView> getLogList(Customer customer) throws Exception {
         ObservableList<LogCustomerTabelView> logEntry = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {

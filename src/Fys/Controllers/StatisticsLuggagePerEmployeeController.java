@@ -70,10 +70,18 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
     @FXML private PieChart pieChart;
     @FXML private ScatterChart<String, Number> scatterChart;
 
+    /**
+     * 
+     * @param newScreen 
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
 
+    /**
+     *
+     * @param user
+     */
     public static void setUser(User user) {
         currentUser = user;
     }

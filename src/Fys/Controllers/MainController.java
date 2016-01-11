@@ -19,7 +19,14 @@ import javafx.scene.control.Label;
  */
 public class MainController implements Initializable {
 
+    /**
+     *
+     */
     public static User currentUser;
+
+    /**
+     *
+     */
     public static Screen screen;
 
     @FXML private Label lblUsername;
@@ -37,7 +44,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * void setUser(User user) sets the user for the Controller. Ths is the
+     * void setUser(User user) sets the user for the Controller. This is the
      * curent User that is used to log into the application, and is being used
      * for tracking of actions.
      *

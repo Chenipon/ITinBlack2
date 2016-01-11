@@ -47,18 +47,47 @@ public class CustomerEditController implements Initializable {
     @FXML private TextField firstName, lastName, phone, address, email;
     @FXML private MenuButton ddwnGender;
     
+    /**
+     * void setScreen(Screen newScreen) sets the Screen element for the
+     * Controller. This element contains the Stage object, used for switching
+     * scenes.
+     *
+     * @param newScreen is the new Screen object that needs to be set in this
+     * class.
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
     
+    /**
+     * void setUser(User user) sets the user for the Controller. This is the
+     * curent User that is used to log into the application, and is being used
+     * for tracking of actions.
+     *
+     * @param user is the user that needs to be set in this class.
+     */
     public static void setUser(User user) {
         currentUser = user;
     }
     
+    /**
+     * void setCustomer(Customer customer)  sets the customer for the Controller.
+     * This sets the customer information that is needed for this controller.
+     *
+     * @param customer is the user that needs to be set in this class.
+     */
     public static void setCustomer(Customer customer)   {
         editCustomer = customer;
     }
     
+    /**
+     * void initialize(URL url, ResourceBundel rb) is the automatic
+     * initialization of the Controller when it's being fired due to a load of
+     * it's connected scene.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         firstName.setText(editCustomer.getFirstName());
@@ -76,18 +105,42 @@ public class CustomerEditController implements Initializable {
         }
     }
     
+    /**
+     * void ddwnGenderMaleEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Male" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnGenderMaleEvent(ActionEvent event) {
         ddwnGender.setText("Male");
         ddwnGender.setPrefWidth(200);
     }
     
+    /**
+     * void ddwnGenderMaleEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Female" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnGenderFemaleEvent(ActionEvent event) {
         ddwnGender.setText("Female");
         ddwnGender.setPrefWidth(200);
     }
     
+    /**
+     * void btnSaveChangesEvent(ActionEvent event) saves the changes made to
+     * editCustomer and returns to the Customer Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws ClassNotFoundException when the class could not be found.
+     * @throws SQLException when no connection with the Database could be
+     * established.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnSaveChangesEvent(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
         if (!(firstName.getText().equals("") || lastName.getText().equals("") || 
@@ -135,8 +188,15 @@ public class CustomerEditController implements Initializable {
         }
     }
     
-    
-    
+    /**
+     * void btnHistoryEvent(ActionEvent event) changes the scene of the Stage
+     * to the history log scene. This scene is being used to add new customers into
+     * the database so that they can be notified when their luggage is found.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     @FXML
     private void btnHistoryEvent(ActionEvent event) throws Exception {
         LogCustomerController.setCustomer(editCustomer);
@@ -150,6 +210,12 @@ public class CustomerEditController implements Initializable {
         logStage.show();
     }
     
+    /**
+     * void btnHistoryEvent(ActionEvent event) opens the file explorer to save the proof as pdf.
+     * The saved document can be printed from the computer location.
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void btnPrintProofEvent(ActionEvent event) {
         try {
@@ -196,6 +262,14 @@ public class CustomerEditController implements Initializable {
         }
     }
     
+    /**
+     * void btnBackToOverviewEvent(ActionEvent event) returns the user back to
+     * the Customer Overview screen. This is the button next to the "Save
+     * Changes" button.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
         CustomerOverviewController.setUser(currentUser);
@@ -203,6 +277,13 @@ public class CustomerEditController implements Initializable {
         screen.change("CustomerOverview");
     }
     
+    /**
+     * void btnAccountEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Luggage Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws Exception {
         LuggageOverviewController.setUser(currentUser);
@@ -210,6 +291,13 @@ public class CustomerEditController implements Initializable {
         screen.change("LuggageOverview");
     }
     
+    /**
+     * void btnAccountEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Customer Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws Exception {
         CustomerOverviewController.setUser(currentUser);
@@ -217,6 +305,13 @@ public class CustomerEditController implements Initializable {
         screen.change("CustomerOverview");
     }
     
+    /**
+     * void btnLogoutEvent(ActionEvent event) logs the current User out of the
+     * application and displays the Login screen.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
         LoginController.setScreen(screen);
