@@ -31,7 +31,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -61,7 +60,6 @@ public class LuggageEditController implements Initializable {
     @FXML private TextField type, brand, material, color;
     @FXML private TextArea comments;
     @FXML private MenuButton ddwnStatus;
-    @FXML private Button btnSelectCustomer;
     @FXML private AnchorPane paneCustomer;
     @FXML private CheckBox chckResolved;
 
@@ -125,14 +123,10 @@ public class LuggageEditController implements Initializable {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
         /* Enable the right buttons and panes on the scene based off their data. */
-        if (ddwnStatus.getText().equals("Connected")) {
-            btnSelectCustomer.setVisible(true);
-            if (connectedCustomer != null) {
-                paneCustomer.setVisible(true);
-            }
+        if (connectedCustomer != null) {
+            paneCustomer.setVisible(true);
         } else {
             paneCustomer.setVisible(false);
-            btnSelectCustomer.setVisible(false);
         }
     }
 
@@ -178,7 +172,6 @@ public class LuggageEditController implements Initializable {
     @FXML
     private void ddwnStatusLostEvent() {
         ddwnStatus.setText("Lost");
-        btnSelectCustomer.setVisible(false);
         ddwnStatus.setPrefWidth(200);
     }
 
@@ -190,7 +183,6 @@ public class LuggageEditController implements Initializable {
     @FXML
     private void ddwnStatusFoundEvent() {
         ddwnStatus.setText("Found");
-        btnSelectCustomer.setVisible(false);
         ddwnStatus.setPrefWidth(200);
     }
 
@@ -202,7 +194,6 @@ public class LuggageEditController implements Initializable {
     @FXML
     private void ddwnStatusConnectedEvent() {
         ddwnStatus.setText("Connected");
-        btnSelectCustomer.setVisible(true);
         ddwnStatus.setPrefWidth(200);
     }
 
@@ -219,29 +210,29 @@ public class LuggageEditController implements Initializable {
             ClassNotFoundException, SQLException {
         if (!(type.getText().equals("") || brand.getText().equals("")
                 || material.getText().equals("") || color.getText().equals(""))) {
-            if (ddwnStatus.getText().equals("Connected") && connectedCustomer == null) {
+            if (chckResolved.selectedProperty().get() && connectedCustomer == null) {
                 lblErrorMessage.setText("Please select a customer to connect to the luggage before saving");
                 return;
             }
-            if (ddwnStatus.getText().equals("Connected")) {
-                if (editLuggage.checkIfLuggageIsConnected(editLuggage)
-                        && (connectedCustomer.getId() != connection.getCustomerId())) {
-                    connection.setCustomerId(connectedCustomer.getId());
-                    connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
-                    connection.updateConnection(connection);
-                } else if (editLuggage.checkIfLuggageIsConnected(editLuggage)
-                        && connectedCustomer.getId() == connection.getCustomerId()) {
-                } else {
-                    connection = new Connection();
-                    connection.setCustomerId(connectedCustomer.getId());
-                    connection.setLuggageId(editLuggage.getId());
-                    connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
-                    connection.insertConnection(connection);
-                }
-            } else if (editLuggage.checkIfLuggageIsConnected(editLuggage)) {
-                connectedCustomer = null;
-                connection.deleteConnection(connection);
+            
+            if (editLuggage.checkIfLuggageIsConnected(editLuggage)
+                    && (connectedCustomer.getId() != connection.getCustomerId())) {
+                connection.setCustomerId(connectedCustomer.getId());
+                //connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
+                connection.updateConnection(connection);
+                //Customer has changed
+            } else if (editLuggage.checkIfLuggageIsConnected(editLuggage)
+                    && connectedCustomer.getId() == connection.getCustomerId()) {
+                //Customer is not changed
+            } else {
+                connection = new Connection();
+                connection.setCustomerId(connectedCustomer.getId());
+                connection.setLuggageId(editLuggage.getId());
+                //connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
+                connection.insertConnection(connection);
+                //Luggage has not been connected yet
             }
+
             lblErrorMessage.setText("");
             type.setStyle("-fx-border-width: 0px;");
             brand.setStyle("-fx-border-width: 0px;");

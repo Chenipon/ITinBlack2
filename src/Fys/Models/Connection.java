@@ -15,13 +15,11 @@ public class Connection {
     int id;
     int luggageId;
     int customerId;
-    String connectionDate;
     
     public Connection() {
         id = 0;
         luggageId = 0;
         customerId = 0;
-        connectionDate = null;
     }
 
     public int getId() {
@@ -47,33 +45,23 @@ public class Connection {
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
-
-    public String getConnectionDate() {
-        return connectionDate;
-    }
-
-    public void setConnectionDate(String connectionDate) {
-        this.connectionDate = connectionDate;
-    }
     
     public void insertConnection(Connection connection) throws ClassNotFoundException, SQLException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO connection (luggageid,customerid,connectiondate) VALUES (?,?,?)");
+            String query = ("INSERT INTO connection (luggageid,customerid) VALUES (?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setInt(1, connection.getLuggageId());
             preparedStatement.setInt(2, connection.getCustomerId());
-            preparedStatement.setString(3, connection.getConnectionDate());
             preparedStatement.executeUpdate();
         }
     }
     
     public void updateConnection(Connection connection) throws ClassNotFoundException, SQLException {
         try (java.sql.Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("UPDATE connection SET luggageid=?,customerid=?,connectiondate=? WHERE id=" + connection.getId());
+            String query = ("UPDATE connection SET luggageid=?,customerid=? WHERE id=" + connection.getId());
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setInt(1, connection.getLuggageId());
             preparedStatement.setInt(2, connection.getCustomerId());
-            preparedStatement.setString(3, connection.getConnectionDate());
             preparedStatement.executeUpdate();
         }
     }
@@ -95,7 +83,6 @@ public class Connection {
                 this.id = result.getInt(1);
                 this.luggageId = result.getInt(2);
                 this.customerId = result.getInt(3);
-                this.connectionDate = result.getString(4);
             }
         }
         return this;
@@ -109,7 +96,6 @@ public class Connection {
                 this.id = result.getInt(1);
                 this.luggageId = result.getInt(2);
                 this.customerId = result.getInt(3);
-                this.connectionDate = result.getString(4);
             }
         }
         return this;
