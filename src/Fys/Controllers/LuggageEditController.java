@@ -31,6 +31,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -62,6 +63,7 @@ public class LuggageEditController implements Initializable {
     @FXML private MenuButton ddwnStatus;
     @FXML private AnchorPane paneCustomer;
     @FXML private CheckBox chckResolved;
+    @FXML private Button btnRemoveCustomer;
 
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
@@ -89,6 +91,9 @@ public class LuggageEditController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /* Initialize an empty Connection */
+        connection = null;
+        
         /* Initialize the Textfields */
         setLuggageData();
 
@@ -125,8 +130,10 @@ public class LuggageEditController implements Initializable {
         /* Enable the right buttons and panes on the scene based off their data. */
         if (connectedCustomer != null) {
             paneCustomer.setVisible(true);
+            btnRemoveCustomer.setVisible(true);
         } else {
             paneCustomer.setVisible(false);
+            btnRemoveCustomer.setVisible(false);
         }
     }
 
@@ -185,16 +192,16 @@ public class LuggageEditController implements Initializable {
         ddwnStatus.setText("Found");
         ddwnStatus.setPrefWidth(200);
     }
-
-    /**
-     * ddwnStatusConnectedEvent() replaces the text in the Status dropdown with
-     * "Lost" and sets the width to the default one of 200. Also enables the
-     * "Select Customer" button.
-     */
+    
     @FXML
-    private void ddwnStatusConnectedEvent() {
-        ddwnStatus.setText("Connected");
-        ddwnStatus.setPrefWidth(200);
+    private void btnRemoveCustomerEvent() throws ClassNotFoundException, SQLException {
+        if (editLuggage.checkIfLuggageIsConnected(editLuggage)) {
+            connection.deleteConnection(connection);
+        }
+        connection = null;
+        connectedCustomer = null;
+        paneCustomer.setVisible(false);
+        btnRemoveCustomer.setVisible(false);
     }
 
     @FXML
@@ -218,19 +225,14 @@ public class LuggageEditController implements Initializable {
             if (editLuggage.checkIfLuggageIsConnected(editLuggage)
                     && (connectedCustomer.getId() != connection.getCustomerId())) {
                 connection.setCustomerId(connectedCustomer.getId());
-                //connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
                 connection.updateConnection(connection);
-                //Customer has changed
-            } else if (editLuggage.checkIfLuggageIsConnected(editLuggage)
-                    && connectedCustomer.getId() == connection.getCustomerId()) {
-                //Customer is not changed
-            } else {
+                //Customer has been changed
+            } else if (connectedCustomer != null && connection == null) {
                 connection = new Connection();
                 connection.setCustomerId(connectedCustomer.getId());
                 connection.setLuggageId(editLuggage.getId());
-                //connection.setConnectionDate(new DateConverter().getCurrentDateInSqlFormat());
                 connection.insertConnection(connection);
-                //Luggage has not been connected yet
+                //No connection exists yet
             }
 
             lblErrorMessage.setText("");
@@ -273,8 +275,16 @@ public class LuggageEditController implements Initializable {
                 logTools.logLuggageChanged(editLuggage, currentUser, "resolved");
             }
             
+            if ((chckResolved.selectedProperty().get() != new Luggage().getLuggageById(editLuggage.getId()).isResolved())) {
+                if (chckResolved.selectedProperty().get()) {
+                    editLuggage.setResolveDate(new DateConverter().getCurrentDateInSqlFormat());
+                } else {
+                    editLuggage.setResolveDate(null);
+                }
+            }
+            
             editLuggage.updateLuggage(editLuggage);
-
+            
             connectedCustomer = null;
             LuggageOverviewController.setUser(currentUser);
             LuggageOverviewController.setScreen(screen);
@@ -331,15 +341,6 @@ public class LuggageEditController implements Initializable {
             lblErrorMessage.setText("Successfully saved the Proof of Registration document");
         } catch (IOException | DocumentException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public static PrintService choosePrinter() {
-        PrinterJob printJob = PrinterJob.getPrinterJob();
-        if (printJob.printDialog()) {
-            return printJob.getPrintService();
-        } else {
-            return null;
         }
     }
 

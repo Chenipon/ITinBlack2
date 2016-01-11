@@ -39,8 +39,8 @@ public class LuggageOverviewController implements Initializable {
     
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private TableView tblLuggage;
-    @FXML private TableColumn colType, colBrand, colMaterial, colColor, colComment, colStatus, colAction;
-    @FXML private MenuButton ddwnLuggageType;
+    @FXML private TableColumn colType, colBrand, colMaterial, colColor, colComment, colStatus, colResolved, colAction;
+    @FXML private MenuButton ddwnLuggageType, ddwnResolved;
     @FXML private TextField lblSearch;
     
     public static void setScreen(Screen newScreen) {
@@ -60,6 +60,7 @@ public class LuggageOverviewController implements Initializable {
         colColor.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("color"));
         colComment.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("comment"));
         colStatus.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("status"));
+        colResolved.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("resolved"));
         colAction.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("action"));
         Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView, String>> printColumnCellFactory
                 = new Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView, String>>() {
@@ -128,25 +129,43 @@ public class LuggageOverviewController implements Initializable {
         ddwnLuggageType.setText("Found");
         ddwnLuggageType.setPrefWidth(110);
     }
-
-    @FXML
-    private void ddwnLuggageConnectedEvent(ActionEvent event) {
-        ddwnLuggageType.setText("Connected");
-        ddwnLuggageType.setPrefWidth(110);
-    }
     
     @FXML
     private void ddwnLuggageAllEvent(ActionEvent event) {
         ddwnLuggageType.setText("All");
         ddwnLuggageType.setPrefWidth(110);
     }
+    
+    @FXML
+    private void ddwnResolvedFalseEvent(ActionEvent event) {
+        ddwnResolved.setText("False");
+        ddwnResolved.setPrefWidth(85);
+    }
+
+    @FXML
+    private void ddwnResolvedTrueEvent(ActionEvent event) {
+        ddwnResolved.setText("True");
+        ddwnResolved.setPrefWidth(85);
+    }
+    
+    @FXML
+    private void ddwnResolvedAllEvent(ActionEvent event) {
+        ddwnResolved.setText("All");
+        ddwnResolved.setPrefWidth(85);
+    }
 
     @FXML
     private void btnSearchLuggageEvent(ActionEvent event) throws Exception {
         if (!ddwnLuggageType.getText().equals("Luggage Type")) {
-            lblErrorMessage.setText("");
-            ObservableList<LuggageTabelView> luggageList = new LuggageTabelView().getLuggageList(lblSearch.getText(), ddwnLuggageType.getText());
-            tblLuggage.setItems(luggageList);
+            if (!ddwnResolved.getText().equals("Resolved")) {
+                lblErrorMessage.setText("");
+                ObservableList<LuggageTabelView> luggageList = new LuggageTabelView()
+                        .getLuggageList(lblSearch.getText(), ddwnLuggageType.getText(),
+                                ddwnResolved.getText());
+                tblLuggage.setItems(luggageList);
+            } else {
+                lblErrorMessage.setText("Please select a value from \"Resolved\"");
+            }
         } else {
             lblErrorMessage.setText("Select a luggage type");
         }

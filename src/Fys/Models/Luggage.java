@@ -355,8 +355,8 @@ public class Luggage {
                 this.statusId = result.getInt(8);
                 this.employeeId = result.getInt(10);
                 this.status = new Status().getStatusById(this.statusId);
-                this.resolved = result.getBoolean(11);
-                this.resolveDate = result.getString(12);
+                this.resolved = result.getBoolean(10);
+                this.resolveDate = result.getString(11);
             }
         }
         return this;

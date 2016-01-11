@@ -27,11 +27,17 @@
                      <items>
                       <MenuItem fx:id="ddwnLuggageLost" mnemonicParsing="false" onAction="#ddwnLuggageLostEvent" text="Lost" />
                       <MenuItem fx:id="ddwnLuggageFound" mnemonicParsing="false" onAction="#ddwnLuggageFoundEvent" text="Found" />
-                        <MenuItem fx:id="ddwnLuggageConnected" mnemonicParsing="false" onAction="#ddwnLuggageConnectedEvent" text="Connected" />
                         <MenuItem fx:id="ddwnLuggageAll" mnemonicParsing="false" onAction="#ddwnLuggageAllEvent" text="All" />
                      </items>
                   </MenuButton>
-                  <Button fx:id="btnSearchLuggage" layoutX="360.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnSearchLuggageEvent" styleClass="btnRed" text="Search" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="123.0" />
+                  <MenuButton fx:id="ddwnResolved" layoutX="357.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Resolved">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnResolvedTrueEvent" text="True" />
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnResolvedFalseEvent" text="False" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnResolvedAllEvent" text="All" />
+                    </items>
+                  </MenuButton>
+                  <Button fx:id="btnSearchLuggage" layoutX="454.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnSearchLuggageEvent" styleClass="btnRed" text="Search" AnchorPane.leftAnchor="454.0" AnchorPane.topAnchor="123.0" />
                   <Button fx:id="btnAddLuggage" layoutX="672.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddLuggageEvent" styleClass="btnRed" text="+ Add Luggage" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="123.0" />
                   <TableView fx:id="tblLuggage" layoutX="24.0" layoutY="187.0" prefHeight="463.0" prefWidth="745.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="187.0">
                     <columns>
@@ -39,12 +45,13 @@
                       <TableColumn fx:id="colBrand" prefWidth="105.33334350585938" text="Brand" />
                         <TableColumn fx:id="colColor" minWidth="8.0" prefWidth="63.0" text="Color" />
                         <TableColumn fx:id="colMaterial" prefWidth="86.0" text="Material" />
-                        <TableColumn fx:id="colComment" prefWidth="258.0" text="Comments" />
-                        <TableColumn fx:id="colStatus" prefWidth="76.0" text="Status" />
-                        <TableColumn fx:id="colAction" prefWidth="53.0" />
+                        <TableColumn fx:id="colComment" prefWidth="240.0" text="Comments" />
+                        <TableColumn fx:id="colStatus" prefWidth="55.0" text="Status" />
+                        <TableColumn fx:id="colResolved" minWidth="0.0" prefWidth="56.0" text="Resolved" />
+                        <TableColumn fx:id="colAction" prefWidth="56.0" resizable="false" />
                     </columns>
                   </TableView>
-                  <Label fx:id="lblErrorMessage" layoutX="422.0" layoutY="128.0" prefHeight="15.0" prefWidth="185.0" textFill="RED">
+                  <Label fx:id="lblErrorMessage" layoutX="236.0" layoutY="157.0" prefHeight="15.0" prefWidth="536.0" textFill="RED" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="157.0">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>

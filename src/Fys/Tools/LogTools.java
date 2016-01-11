@@ -207,16 +207,12 @@ public class LogTools {
                 change = ("Status: " + (new Status().getStatusById(dbLuggage.getStatusId()).getStatusName())) + 
                         " was changed to: " + (new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
             }
-            System.out.println(dbLuggage.isResolved() != editLuggage.isResolved());
-            System.out.println(dbLuggage.isResolved() + " != " + editLuggage.isResolved());
             if (type.equals("resolved") && (dbLuggage.isResolved() != editLuggage.isResolved())) {
-                System.out.println(editLuggage.isResolved());
                 if (editLuggage.isResolved()) {
                     change = ("Luggage has been marked as \"Resolved\"");
                 } else {
                     change = ("Luggage has been marked as \"Unresolved\"");
                 }
-                System.out.println(change);
             }
             db.close();
         }

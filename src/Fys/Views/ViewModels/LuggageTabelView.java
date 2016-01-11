@@ -22,10 +22,11 @@ public class LuggageTabelView {
     private String color;
     private String comment;
     private String status;
+    private String resolved;
 
     /**
      * This method grabs the id of the Luggage, used to create the table.
-     * @see getId()
+     *
      * @return
      */
     public int getId() {
@@ -34,16 +35,16 @@ public class LuggageTabelView {
 
     /**
      * This method sets the id of the Luggage, used to create the table.
-     * @see setId()
+     *
      * @param id
      */
     public void setId(int id) {
         this.id = id;
     }
-    
+
     /**
      * This method gets the type of the Luggage, used to create the table.
-     * @see getType()
+     *
      * @return
      */
     public String getType() {
@@ -52,7 +53,7 @@ public class LuggageTabelView {
 
     /**
      * This method sets the type of the Luggage, used to create the table.
-     * @see setType()
+     *
      * @param type
      */
     public void setType(String type) {
@@ -61,7 +62,7 @@ public class LuggageTabelView {
 
     /**
      * This method gets the brand of the Luggage, used to create the table.
-     * @see getBrand()
+     *
      * @return
      */
     public String getBrand() {
@@ -70,7 +71,7 @@ public class LuggageTabelView {
 
     /**
      * This method sets the brand of the Luggage, used to create the table.
-     * @see setBrand()
+     *
      * @param brand
      */
     public void setBrand(String brand) {
@@ -79,7 +80,7 @@ public class LuggageTabelView {
 
     /**
      * This method gets the material of the Luggage, used to create the table.
-     * @see getMaterial()
+     *
      * @return
      */
     public String getMaterial() {
@@ -88,7 +89,7 @@ public class LuggageTabelView {
 
     /**
      * This method sets the material of the Luggage, used to create the table.
-     * @see setMaterial()
+     *
      * @param material
      */
     public void setMaterial(String material) {
@@ -97,7 +98,7 @@ public class LuggageTabelView {
 
     /**
      * This method gets the color of the Luggage, used to create the table.
-     * @see getColor()
+     *
      * @return
      */
     public String getColor() {
@@ -106,7 +107,7 @@ public class LuggageTabelView {
 
     /**
      * This method sets the color of the Luggage, used to create the table.
-     * @see setColor()
+     *
      * @param color
      */
     public void setColor(String color) {
@@ -114,8 +115,9 @@ public class LuggageTabelView {
     }
 
     /**
-     * This method gets the comment linked to the Luggage, used to create the table.
-     * @see getComment()
+     * This method gets the comment linked to the Luggage, used to create the
+     * table.
+     *
      * @return
      */
     public String getComment() {
@@ -123,26 +125,29 @@ public class LuggageTabelView {
     }
 
     /**
-     * This method sets the comment linked to the Luggage, used to create the table.
-     * @see setComment()
+     * This method sets the comment linked to the Luggage, used to create the
+     * table.
+     *
      * @param comment
      */
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
+
     /**
-     * This method gets the status linked to the Luggage, used to create the table.
-     * @see getStatus()
+     * This method gets the status linked to the Luggage, used to create the
+     * table.
+     *
      * @return
      */
     public String getStatus() {
         return status;
     }
-    
+
     /**
-     * This method sets the status linked to the Luggage, used to create the table.
-     * @see setStatus()
+     * This method sets the status linked to the Luggage, used to create the
+     * table.
+     *
      * @param status
      */
     public void setStatus(String status) {
@@ -150,8 +155,29 @@ public class LuggageTabelView {
     }
 
     /**
-     * This method gets the list of Luggage, and the details
-     * After that has been done, the method generates a table containing those details.
+     * This method gets the resolved status linked to the Luggage, used to
+     * create the table.
+     *
+     * @return
+     */
+    public String getResolved() {
+        return resolved;
+    }
+
+    /**
+     * This method sets the resolved status linked to the Luggage, used to
+     * create the table.
+     *
+     * @param resolved
+     */
+    public void setResolved(String resolved) {
+        this.resolved = resolved;
+    }
+
+    /**
+     * This method gets the list of Luggage, and the details After that has been
+     * done, the method generates a table containing those details.
+     *
      * @see getLuggageList()
      * @return
      * @throws Exception
@@ -170,6 +196,11 @@ public class LuggageTabelView {
                 foundLuggage.setColor(result.getString(5));
                 foundLuggage.setComment(result.getString(6));
                 foundLuggage.setStatus(new Status().getStatusById(result.getInt(8)).getStatusName());
+                if (result.getBoolean(10)) {
+                    foundLuggage.setResolved("True");
+                } else {
+                    foundLuggage.setResolved("False");
+                }
                 luggage.add(foundLuggage);
             }
         }
@@ -177,32 +208,56 @@ public class LuggageTabelView {
     }
 
     /**
-     * This method gets the list of Luggage, and the details
-     * After that has been done, the method generates a table containing those details, this method reacts to the user's search terms .
-     * @see getLuggageList(String searchTerm, String status)
+     * This method gets the list of Luggage, and the details After that has been
+     * done, the method generates a table containing those details, this method
+     * reacts to the user's search terms .
+     *
+     * @param resolved
      * @param searchTerm
      * @param status
      * @return
      * @throws Exception
      */
-    public ObservableList<LuggageTabelView> getLuggageList(String searchTerm, String status) throws Exception {
+    public ObservableList<LuggageTabelView> getLuggageList(String searchTerm, String status, String resolved) throws Exception {
         ObservableList<LuggageTabelView> luggage = FXCollections.observableArrayList();
+        int resolvedInt = 0;
+        if (resolved.equals("True")) {
+            resolvedInt = 1;
+        }
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Status statusId = new Status().getStatusByName(status);
             Statement statement = db.createStatement();
             ResultSet result;
             if (statusId.getId() == 0) {
-                result = statement.executeQuery("SELECT * FROM luggage WHERE type LIKE '%"
-                        + searchTerm + "%' OR brand LIKE '%" + searchTerm + "%' OR material LIKE '%"
-                        + searchTerm + "%' OR color LIKE '%" + searchTerm + "%' OR comments LIKE '%"
-                        + searchTerm + "%'");
-            } else if (searchTerm.equals("")) {
-                result = statement.executeQuery("SELECT * FROM luggage WHERE statusid=" + statusId.getId());
-            } else {
+                if (resolved.equals("All")) {
+                    result = statement.executeQuery("SELECT * FROM luggage WHERE type LIKE '%"
+                            + searchTerm + "%' OR brand LIKE '%" + searchTerm + "%' OR material LIKE '%"
+                            + searchTerm + "%' OR color LIKE '%" + searchTerm + "%' OR comments LIKE '%"
+                            + searchTerm + "%'");
+                } else {
+                    result = statement.executeQuery("SELECT * FROM luggage WHERE (type LIKE '%"
+                            + searchTerm + "%' OR brand LIKE '%" + searchTerm + "%' OR material LIKE '%"
+                            + searchTerm + "%' OR color LIKE '%" + searchTerm + "%' OR comments LIKE '%"
+                            + searchTerm + "%') AND resolved=" + resolvedInt);
+                }
+            } else if (resolved.equals("All")) {
                 result = statement.executeQuery("SELECT * FROM luggage WHERE (type LIKE '%"
                         + searchTerm + "%' OR brand LIKE '%" + searchTerm + "%' OR material LIKE '%"
                         + searchTerm + "%' OR color LIKE '%" + searchTerm + "%' OR comments LIKE '%"
                         + searchTerm + "%') AND statusid=" + statusId.getId());
+            } else if (searchTerm.equals("")) {
+                if (resolved.equals("All")) {
+                    result = statement.executeQuery("SELECT * FROM luggage WHERE statusid="
+                            + statusId.getId());
+                } else {
+                    result = statement.executeQuery("SELECT * FROM luggage WHERE statusid="
+                            + statusId.getId() + " AND resolved=" + resolvedInt);
+                }
+            } else {
+                result = statement.executeQuery("SELECT * FROM luggage WHERE (type LIKE '%"
+                        + searchTerm + "%' OR brand LIKE '%" + searchTerm + "%' OR material LIKE '%"
+                        + searchTerm + "%' OR color LIKE '%" + searchTerm + "%' OR comments LIKE '%"
+                        + searchTerm + "%') AND statusid=" + statusId.getId() + " AND resolved=" + resolvedInt);
             }
             while (result.next()) {
                 LuggageTabelView foundLuggage = new LuggageTabelView();
@@ -213,6 +268,11 @@ public class LuggageTabelView {
                 foundLuggage.setColor(result.getString(5));
                 foundLuggage.setComment(result.getString(6));
                 foundLuggage.setStatus(new Status().getStatusById(result.getInt(8)).getStatusName());
+                if (result.getBoolean(10)) {
+                    foundLuggage.setResolved("True");
+                } else {
+                    foundLuggage.setResolved("False");
+                }
                 luggage.add(foundLuggage);
             }
         }

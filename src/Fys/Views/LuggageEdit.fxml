@@ -76,7 +76,6 @@
                     <items>
                       <MenuItem fx:id="ddwnStatusLost" mnemonicParsing="false" onAction="#ddwnStatusLostEvent" text="Lost" />
                       <MenuItem fx:id="ddwnStatusFound" mnemonicParsing="false" onAction="#ddwnStatusFoundEvent" text="Found" />
-                        <MenuItem fx:id="ddwnStatusConnected" mnemonicParsing="false" onAction="#ddwnStatusConnectedEvent" text="Connected" />
                     </items>
                   </MenuButton>
                   <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="451.0" prefHeight="17.0" prefWidth="442.0" textFill="RED">
@@ -170,6 +169,7 @@
                         <Font name="Arial" size="14.0" />
                      </font>
                   </Text>
+                  <Button fx:id="btnRemoveCustomer" layoutX="469.0" layoutY="260.0" mnemonicParsing="false" onAction="#btnRemoveCustomerEvent" prefHeight="25.0" prefWidth="300.0" styleClass="btnRed" text="Remove Customer" />
                </children></AnchorPane>
         </items>
       </SplitPane>
