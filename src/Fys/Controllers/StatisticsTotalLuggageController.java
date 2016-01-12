@@ -44,6 +44,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Fys.Tools.ChartTools;
 import Fys.Tools.PieChartData;
+import java.text.DecimalFormat;
 
 /**
  * FXML Controller class. This class controls the Account Overview screen
@@ -182,7 +183,7 @@ public class StatisticsTotalLuggageController implements Initializable {
             /*
              * Convert the dropdown-boxes to numbers.
              */
-            int interval, resolved, graphType;
+            int interval, resolved, graphType, luggageType;
             switch (ddwnInterval.getText()) {
                 case ("Day"): {
                     interval = 1;
@@ -215,6 +216,24 @@ public class StatisticsTotalLuggageController implements Initializable {
                 }
                 default: {
                     resolved = 0;
+                    break;
+                }
+            }
+            switch (ddwnLuggageType.getText()) {
+                case ("Lost"): {
+                    luggageType = 1;
+                    break;
+                }
+                case ("Found"): {
+                    luggageType = 2;
+                    break;
+                }
+                case ("All"): {
+                    luggageType = 3;
+                    break;
+                }
+                default: {
+                    luggageType = 0;
                     break;
                 }
             }
@@ -283,7 +302,7 @@ public class StatisticsTotalLuggageController implements Initializable {
              * ints that were made earlier.
              */
             if (graphType == 5) {
-//                fillPieChart(startDate.getValue(), endDate.getValue(), interval);
+                fillPieChart(startDate.getValue(), endDate.getValue(), interval, resolved, luggageType, ddwnInterval.getText());
             } else {
                 if (ddwnLuggageType.getText().equals("All")) {
                     fillGraphAllTypes(graphType, startDate.getValue(),
@@ -343,24 +362,28 @@ public class StatisticsTotalLuggageController implements Initializable {
      * @throws SQLException when there is an SQL error.
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
-//    private void fillPieChart(LocalDate start, LocalDate end, int interval)
-//            throws ClassNotFoundException, SQLException {
-//        PieChartData pieChartData = new PieChartData();
-//        pieChartData.getData(start, end, interval);
-//        if (pieChartData.getLostLuggage() != 0) {
-//            pieChart.getData().add(new PieChart.Data("Lost",
-//                    pieChartData.getLostLuggage()));
-//        }
-//        if (pieChartData.getFoundLuggage() != 0) {
-//            pieChart.getData().add(new PieChart.Data("Found",
-//                    pieChartData.getFoundLuggage()));
-//        }
-//        if (pieChartData.getConnectedLuggage() != 0) {
-//            pieChart.getData().add(new PieChart.Data("Connected",
-//                    pieChartData.getConnectedLuggage()));
-//        }
-//        pieChart.setTitle("Total Luggage Reported");
-//    }
+    private void fillPieChart(LocalDate start, LocalDate end, int interval, int resolved, int type, String intervalName) throws ClassNotFoundException, SQLException {
+        PieChartData pieChartData = new PieChartData();
+        pieChartData.getData(start, end, interval, resolved, type);
+        DecimalFormat df = new DecimalFormat("#.0");
+        if (pieChartData.getFoundLuggageResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Resolved Found - " 
+                    + df.format(((double)pieChartData.getFoundLuggageResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getFoundLuggageResolved()));
+        }
+        if (pieChartData.getFoundLuggageUnResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Unresolved Found - " 
+                    + df.format(((double)pieChartData.getFoundLuggageUnResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getFoundLuggageUnResolved()));
+        }
+        if (pieChartData.getLostLuggageResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Resolved Lost - " 
+                    + df.format(((double)pieChartData.getLostLuggageResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getLostLuggageResolved()));
+        }
+        if (pieChartData.getLostLuggageUnResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Unresolved Lost - " 
+                    + df.format(((double)pieChartData.getLostLuggageUnResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getLostLuggageUnResolved()));
+        }
+        pieChart.setTitle("Total Luggage Reported from " + start + " to " + end + " per " + intervalName);
+    }
 
     /**
      * void fillGraphSingleType(String luggageType, int graphType, LocalDate
