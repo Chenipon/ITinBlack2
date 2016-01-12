@@ -15,7 +15,6 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,7 +39,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.print.PrintService;
 
 /**
  * FXML Controller class. This class controls the Edit Luggage screen including
@@ -65,18 +63,45 @@ public class LuggageEditController implements Initializable {
     @FXML private CheckBox chckResolved;
     @FXML private Button btnRemoveCustomer;
 
+    /**
+     * void setScreen(Screen newScreen) sets the Screen element for the
+     * Controller. This element contains the Stage object, used for switching
+     * scenes.
+     *
+     * @param newScreen is the new Screen object that needs to be set in this
+     * class.
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
 
+    /**
+     * void setUser(User user) sets the user for the Controller. Ths is the
+     * curent User that is used to log into the application, and is being used
+     * for tracking of actions.
+     *
+     * @param user is the user that needs to be set in this class.
+     */
     public static void setUser(User user) {
         currentUser = user;
     }
 
+    /**
+     * void setLuggage(Luggage luggage)  sets the luggage for the Controller.
+     * This sets the luggage information that is needed for this controller.
+     *
+     * @param luggage is the user that needs to be set in this class.
+     */
     public static void setLuggage(Luggage luggage) {
         editLuggage = luggage;
     }
 
+    /**
+     * void setCustomer(Customer customer)  sets the customer for the Controller.
+     * This sets the customer information that is needed for this controller.
+     *
+     * @param customer is the user that needs to be set in this class.
+     */
     public static void setCustomer(Customer customer) {
         connectedCustomer = customer;
     }
@@ -193,6 +218,13 @@ public class LuggageEditController implements Initializable {
         ddwnStatus.setPrefWidth(200);
     }
     
+    /**
+     * btnRemoveCustomerEvent() removes the connected customer from the selected customer.
+     * 
+     * @throws ClassNotFoundException when the class could not be found.
+     * @throws SQLException when no connection with the Database could be
+     * established.
+     */
     @FXML
     private void btnRemoveCustomerEvent() throws ClassNotFoundException, SQLException {
         if (editLuggage.checkIfLuggageIsConnected(editLuggage)) {
@@ -204,6 +236,13 @@ public class LuggageEditController implements Initializable {
         btnRemoveCustomer.setVisible(false);
     }
 
+    /**
+     * void btnSelectCustomerEvent(ActionEvent event) changes the scene of the Stage
+     * to the Select Customer scene. This scene is being used to connect a customer to the selected luggage.
+     * 
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnSelectCustomerEvent(ActionEvent event) throws IOException {
         LuggageSelectCustomerController.setUser(currentUser);
@@ -212,6 +251,16 @@ public class LuggageEditController implements Initializable {
         screen.change("LuggageSelectCustomer");
     }
 
+    /**
+     * void btnSaveChangesEvent(ActionEvent event) saves the changes made to
+     * editCustomer and returns to the Customer Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws ClassNotFoundException when the class could not be found.
+     * @throws SQLException when no connection with the Database could be
+     * established.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnSaveChangesEvent(ActionEvent event) throws IOException,
             ClassNotFoundException, SQLException {
@@ -298,6 +347,12 @@ public class LuggageEditController implements Initializable {
         }
     }
 
+    /**
+     * void btnPrintProofEvent(ActionEvent event) opens the file explorer to save the proof as pdf.
+     * The saved document can be printed from the computer location.
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void btnPrintProofEvent(ActionEvent event) {
         try {
@@ -344,6 +399,14 @@ public class LuggageEditController implements Initializable {
         }
     }
 
+    /**
+     * void btnShowHistoryEvent(ActionEvent event) changes the scene of the Stage
+     * to the history log scene. This scene is being used to add new customers into
+     * the database so that they can be notified when their luggage is found.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnShowHistoryEvent(ActionEvent event) throws IOException {
         LogLuggageController.setLuggage(editLuggage);
@@ -357,6 +420,14 @@ public class LuggageEditController implements Initializable {
         logStage.show();
     }
 
+    /**
+     * void btnBackToOverviewEvent(ActionEvent event) returns the user back to
+     * the Luggage Overview screen. This is the button next to the "Save
+     * Changes" button.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
@@ -365,6 +436,13 @@ public class LuggageEditController implements Initializable {
         screen.change("LuggageOverview");
     }
 
+    /**
+     * void btnLuggageEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Luggage Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
@@ -373,6 +451,13 @@ public class LuggageEditController implements Initializable {
         screen.change("LuggageOverview");
     }
 
+    /**
+     * void btnCustomerEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Customer Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
         connectedCustomer = null;
@@ -381,6 +466,13 @@ public class LuggageEditController implements Initializable {
         screen.change("CustomerOverview");
     }
 
+    /**
+     * void btnLogoutEvent(ActionEvent event) logs the current User out of the
+     * application and displays the Login screen.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
         LoginController.setScreen(screen);

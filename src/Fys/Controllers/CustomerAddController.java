@@ -156,7 +156,7 @@ public class CustomerAddController implements Initializable {
     }
     
     /**
-     * void btnAccountEvent(ActionEvent event) is the button on the left of the
+     * void btnLuggageEvent(ActionEvent event) is the button on the left of the
      * screen inside the red bar that returns to the Luggage Overview scene.
      *
      * @param event The event that is being fired by clicking the button.
@@ -170,7 +170,7 @@ public class CustomerAddController implements Initializable {
     }
     
     /**
-     * void btnAccountEvent(ActionEvent event) is the button on the left of the
+     * void btnCustomerEvent(ActionEvent event) is the button on the left of the
      * screen inside the red bar that returns to the Customer Overview scene.
      *
      * @param event The event that is being fired by clicking the button.

@@ -34,38 +34,78 @@ public class LuggageAddController implements Initializable {
     @FXML private TextArea luggageComments;
     
     /**
+     * void setScreen(Screen newScreen) sets the Screen element for the
+     * Controller. This element contains the Stage object, used for switching
+     * scenes.
      *
-     * @param newScreen
+     * @param newScreen is the new Screen object that needs to be set in this
+     * class.
      */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
     
     /**
+     * void setUser(User user) sets the user for the Controller. Ths is the
+     * curent User that is used to log into the application, and is being used
+     * for tracking of actions.
      *
-     * @param user
+     * @param user is the user that needs to be set in this class.
      */
     public static void setUser(User user) {
         currentUser = user;
     }
 
+    /**
+     * void initialize(URL url, ResourceBundel rb) is the automatic
+     * initialization of the Controller when it's being fired due to a load of
+     * it's connected scene.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
     }
 
+    /**
+     * void ddwnLuggageLostEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Lost" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnLuggageLostEvent(ActionEvent event) {
         ddwnLuggageStatus.setText("Lost");
         ddwnLuggageStatus.setPrefWidth(200);
     }
 
+    /**
+     * void ddwnLuggageFoundEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Found" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnLuggageFoundEvent(ActionEvent event) {
         ddwnLuggageStatus.setText("Found");
         ddwnLuggageStatus.setPrefWidth(200);
     }
 
+    /**
+     * Void btnAddLuggageEvent(ActionEvent event) changes the scene of the Stage
+     * to the Luggage Add scene. This scene is being used to add new luggage into
+     * the database.
+     * 
+     * @param event The event that is being fired by clicking the button.
+     * @throws ClassNotFoundException when the class could not be found.
+     * @throws SQLException when no connection with the Database could be
+     * established.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnAddLuggageEvent(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
         if (!(luggageType.getText().equals("")
@@ -103,6 +143,14 @@ public class LuggageAddController implements Initializable {
         }
     }
 
+    /**
+     * void btnBackToOverviewEvent(ActionEvent event) returns the user back to
+     * the Luggage Overview screen. This is the button next to the "Save
+     * Changes" button.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnBackToOverviewEvent(ActionEvent event) throws IOException {
         LuggageOverviewController.setUser(currentUser);
@@ -110,6 +158,13 @@ public class LuggageAddController implements Initializable {
         screen.change("LuggageOverview");
     }
 
+    /**
+     * void btnLuggageEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Luggage Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
         LuggageOverviewController.setUser(currentUser);
@@ -117,6 +172,13 @@ public class LuggageAddController implements Initializable {
         screen.change("LuggageOverview");
     }
 
+    /**
+     * void btnCustomerEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Customer Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
         CustomerOverviewController.setUser(currentUser);
@@ -124,6 +186,13 @@ public class LuggageAddController implements Initializable {
         screen.change("CustomerOverview");
     }
 
+    /**
+     * void btnLogoutEvent(ActionEvent event) logs the current User out of the
+     * application and displays the Login screen.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
         LoginController.setScreen(screen);

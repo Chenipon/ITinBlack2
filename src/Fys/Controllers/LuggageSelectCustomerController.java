@@ -43,10 +43,25 @@ public class LuggageSelectCustomerController implements Initializable {
     @FXML private TableColumn colFirstName, colLastName, colGender, colPhone, colAddress, colEmail, colAction;
     @FXML private TextField lblSearch;
     
+    /**
+     * void setScreen(Screen newScreen) sets the Screen element for the
+     * Controller. This element contains the Stage object, used for switching
+     * scenes.
+     *
+     * @param newScreen is the new Screen object that needs to be set in this
+     * class.
+     */
     public static void setScreen(Screen newScreen) {
         screen = newScreen;
     }
     
+    /**
+     * void setUser(User user) sets the user for the Controller. Ths is the
+     * curent User that is used to log into the application, and is being used
+     * for tracking of actions.
+     *
+     * @param user is the user that needs to be set in this class.
+     */
     public static void setUser(User user) {
         currentUser = user;
     }
@@ -55,6 +70,14 @@ public class LuggageSelectCustomerController implements Initializable {
         selectedLuggage = luggage;
     }
 
+    /**
+     * void initialize(URL url, ResourceBundel rb) is the automatic
+     * initialization of the Controller when it's being fired due to a load of
+     * it's connected scene.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
@@ -122,17 +145,42 @@ public class LuggageSelectCustomerController implements Initializable {
         }
     }
     
+    /**
+     * ObservableList<CustomerTabelView> getCustomerList() returns an ObservableList
+     * that can be used in the TableView.
+     *
+     * @return an ObservableList containing the information that is added into
+     * the TableView.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     public ObservableList<CustomerTabelView> getCustomerList() throws Exception {
         ObservableList<CustomerTabelView> customerList = new CustomerTabelView().getCustomerList();
         return customerList;
     }
 
+    /**
+     * void btnSearchCustomerEvent(ActionEvent event) fills the ObservableList of
+     * the TableView with a new one using a search term to filter the results.
+     * The SQL query is being filtered here.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws Exception when no connection with the Database could be
+     * established.
+     */
     @FXML
     private void btnSearchCustomerEvent(ActionEvent event) throws Exception {
         ObservableList<CustomerTabelView> customerList = new CustomerTabelView().getCustomerList(lblSearch.getText());
         tblCustomers.setItems(customerList);
     }
     
+    /**
+     * void btnBackToEditEvent(ActionEvent event) returns the current user to the 
+     * Luggage Edit Controller. 
+     * 
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnBackToEditEvent(ActionEvent event) throws IOException {
         LuggageEditController.setUser(currentUser);
@@ -141,6 +189,13 @@ public class LuggageSelectCustomerController implements Initializable {
         screen.change("LuggageEdit");
     }
 
+    /**
+     * void btnCustomerEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Customer Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnCustomerEvent(ActionEvent event) throws IOException {
         CustomerOverviewController.setUser(currentUser);
@@ -148,6 +203,13 @@ public class LuggageSelectCustomerController implements Initializable {
         screen.change("CustomerOverview");
     }
 
+    /**
+     * void btnLuggageEvent(ActionEvent event) is the button on the left of the
+     * screen inside the red bar that returns to the Luggage Overview scene.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLuggageEvent(ActionEvent event) throws IOException {
         LuggageOverviewController.setUser(currentUser);
@@ -155,6 +217,13 @@ public class LuggageSelectCustomerController implements Initializable {
         screen.change("LuggageOverview");
     }
 
+    /**
+     * void btnLogoutEvent(ActionEvent event) logs the current User out of the
+     * application and displays the Login screen.
+     *
+     * @param event The event that is being fired by clicking the button.
+     * @throws IOException when the FXML file could not be loaded.
+     */
     @FXML
     private void btnLogoutEvent(ActionEvent event) throws IOException {
         LoginController.setScreen(screen);
