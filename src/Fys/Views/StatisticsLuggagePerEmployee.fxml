@@ -12,7 +12,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.StatisticsLuggagePerEmployeeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.StatisticsLuggagePerEmployeeController">
    <center>
       <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -99,6 +99,13 @@
                         <MenuItem fx:id="ddwnIntervalMonth" mnemonicParsing="false" onAction="#ddwnIntervalMonthEvent" text="Month" />
                         <MenuItem fx:id="ddwnIntervalYear" mnemonicParsing="false" onAction="#ddwnIntervalYearEvent" text="Year" />
                      </items>
+                  </MenuButton>
+                  <MenuButton fx:id="ddwnResolved" layoutX="598.0" layoutY="83.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Select">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnResolvedEvent" text="Resolved" />
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnUnResolvedEvent" text="Unresolved" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnAllResolvedEvent" text="All" />
+                    </items>
                   </MenuButton>
                </children></AnchorPane>
         </items>

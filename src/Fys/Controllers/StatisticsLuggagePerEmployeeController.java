@@ -60,7 +60,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
 
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private DatePicker startDate, endDate;
-    @FXML private MenuButton ddwnLuggageType, ddwnInterval, ddwnChartType;
+    @FXML private MenuButton ddwnLuggageType, ddwnInterval, ddwnChartType, ddwnResolved;
     @FXML private ComboBox comboEmployee;
     @FXML private Button btnPrintStatistics;
     @FXML private AnchorPane charts;
@@ -121,7 +121,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
                     if (!ddwnLuggageType.getText().equals("Select Type")) {
                         if (!ddwnChartType.getText().equals("Select Graph Type")) {
                             btnPrintStatistics.setDisable(false); //Enable the "Save Statistics" button
-                            int interval, graphType;
+                            int interval, graphType, resolved = 0;
                             switch (ddwnInterval.getText()) {
                                 case ("Day"): {
                                     interval = 1;
@@ -137,6 +137,20 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
                                 }
                                 default: {
                                     interval = 0;
+                                }
+                            }
+                            switch (ddwnResolved.getText()) {
+                                case ("Resolved"): {
+                                    resolved = 1;
+                                    break;
+                                }
+                                case ("Unresolved"): {
+                                    resolved = 0;
+                                    break;
+                                }
+                                case ("All"): {
+                                    resolved = 3;
+                                    break;
                                 }
                             }
                             switch (ddwnChartType.getText()) {
@@ -200,9 +214,9 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
                                 fillPieChart(start, end, interval);
                             } else {
                                 if (ddwnLuggageType.getText().equals("All")) {
-                                    fillGraphAllTypes(graphType, start, end, interval, employee);
+                                    fillGraphAllTypes(graphType, start, end, interval, employee, resolved);
                                 } else {
-                                    fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval, employee);
+                                    fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval, employee, resolved);
                                 }
                             }
                         } else {
@@ -268,6 +282,24 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         } catch (IOException | DocumentException ex) {
             Logger.getLogger(LuggageEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @FXML
+    private void ddwnResolvedEvent(ActionEvent event) {
+        ddwnResolved.setText("Resolved");
+        ddwnResolved.setPrefWidth(100);
+    }
+    
+    @FXML
+    private void ddwnUnResolvedEvent(ActionEvent event) {
+        ddwnResolved.setText("Unresolved");
+        ddwnResolved.setPrefWidth(100);
+    }
+    
+    @FXML
+    private void ddwnAllResolvedEvent(ActionEvent event) {
+        ddwnResolved.setText("All");
+        ddwnResolved.setPrefWidth(100);
     }
 
     @FXML
@@ -357,7 +389,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         pieChart.setTitle("Total Luggage Reported");
     }
 
-    private void fillGraphSingleType(String luggageType, int graphType, LocalDate start, LocalDate end, int interval, User employee) throws SQLException, ClassNotFoundException {
+    private void fillGraphSingleType(String luggageType, int graphType, LocalDate start, LocalDate end, int interval, User employee, int resolved) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> observableList;
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -367,14 +399,14 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
 
         switch (luggageType) {
             case ("Lost"): {
-                observableList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee);
+                observableList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee, resolved);
                 for (int i = 0; i < observableList.size(); i++) {
                     series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
                 }
                 break;
             }
             case ("Found"): {
-                observableList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 2, employee);
+                observableList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 2, employee, resolved);
                 for (int i = 0; i < observableList.size(); i++) {
                     series.getData().add(new XYChart.Data(observableList.get(i).getDate(), observableList.get(i).getAmount()));
                 }
@@ -419,11 +451,11 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
 
     }
 
-    private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end, int interval, User employee) throws SQLException, ClassNotFoundException {
+    private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end, int interval, User employee, int resolved) throws SQLException, ClassNotFoundException {
         /* Lost luggage */
         XYChart.Series lostLuggage = new XYChart.Series();
         lostLuggage.setName("Lost Luggage");
-        ObservableList<ChartTools> lostLuggageList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee);
+        ObservableList<ChartTools> lostLuggageList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee, resolved);
         for (int i = 0; i < lostLuggageList.size(); i++) {
             lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
         }
@@ -431,7 +463,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         /* Found luggage */
         XYChart.Series foundLuggage = new XYChart.Series();
         foundLuggage.setName("Found Luggage");
-        ObservableList<ChartTools> foundLuggageList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 2);
+        ObservableList<ChartTools> foundLuggageList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 2, employee, resolved);
         for (int i = 0; i < foundLuggageList.size(); i++) {
             foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
         }

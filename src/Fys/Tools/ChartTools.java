@@ -300,7 +300,7 @@ public class ChartTools {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public ObservableList<ChartTools> getLostOrFoundLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, int type, User employee) throws SQLException, ClassNotFoundException {
+    public ObservableList<ChartTools> getLostOrFoundLuggagePerEmployee(LocalDate startDate, LocalDate endDate, int interval, int type, User employee, int resolved) throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> luggageData = FXCollections.observableArrayList();
         int employeeId = employee.getId();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -308,17 +308,24 @@ public class ChartTools {
                 /* Luggage per day */
                 case (1): {
                     Statement statement = db.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal "
-                            + "FROM luggage "
-                            + "WHERE statusid= " + type + " AND employeeid=" + employeeId
-                            + " GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d') "
-                            + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'");
+                    ResultSet result = null;
+                    if (resolved != 3) {
+                        result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal FROM luggage" +
+                                        " WHERE statusid= " + type + " AND employeeid=" + employeeId + " AND resolved=" + resolved +
+                                        " GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d')" +
+                                        " HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'");
+                    } else {
+                        result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal FROM luggage" +
+                                        " WHERE statusid= " + type + " AND employeeid=" + employeeId +
+                                        " GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d')" +
+                                        " HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'");
+                    }
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
                     while (result.next()) {
                         dateArray.add(result.getString(2));
-                        amountArray.add(result.getInt(3));
+                        amountArray.add(result.getInt(4));
                     }
                     while (!iterateDate.equals(endDate.plusDays(1))) {
                         ChartTools chartTools = new ChartTools();
@@ -339,11 +346,20 @@ public class ChartTools {
                 /* Luggage per month */
                 case (2): {
                     Statement statement = db.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
-                            + "FROM luggage "
-                            + "WHERE statusid= " + type + " AND employeeid=" + employeeId
-                            + " GROUP BY MONTH(registerdate), YEAR(registerdate) "
-                            + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%m-01') AND LAST_DAY('" + endDate + "');");
+                    ResultSet result = null;
+                    if (resolved != 3) {
+                        result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal" +
+                                        " FROM luggage" +
+                                        " WHERE statusid="+ type +" AND employeeid=" + employeeId + " AND resolved=" + resolved +
+                                        " GROUP BY MONTH(registerdate), YEAR(registerdate)" +
+                                        " HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('"+ startDate +"', '%Y-%m-01') AND LAST_DAY('"+ endDate +"');");
+                    } else {
+                        result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal" +
+                                        " FROM luggage" +
+                                        " WHERE statusid="+ type +" AND employeeid=" + employeeId +
+                                        " GROUP BY MONTH(registerdate), YEAR(registerdate)" +
+                                        " HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('"+ startDate +"', '%Y-%m-01') AND LAST_DAY('"+ endDate +"');");
+                    }
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
@@ -375,11 +391,20 @@ public class ChartTools {
                 /* Luggage per year */
                 case (3): {
                     Statement statement = db.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
+                    ResultSet result = null;
+                    if (resolved != 3) {
+                        result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
+                            + "FROM luggage "
+                            + "WHERE statusid=" + type + " AND employeeid=" + employeeId + " AND resolved= " + resolved
+                            + " GROUP BY YEAR(registerdate) "
+                            + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
+                    } else {
+                        result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
                             + "FROM luggage "
                             + "WHERE statusid=" + type + " AND employeeid=" + employeeId
                             + " GROUP BY YEAR(registerdate) "
                             + "HAVING DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%y-%M-01') AND LAST_DAY('" + endDate + "');");
+                    }
                     LocalDate iterateDate = startDate;
                     ArrayList<String> dateArray = new ArrayList<String>();
                     ArrayList<Integer> amountArray = new ArrayList<Integer>();
