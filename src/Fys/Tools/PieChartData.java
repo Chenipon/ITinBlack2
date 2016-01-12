@@ -1,5 +1,6 @@
 package Fys.Tools;
 
+import Fys.Models.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,16 +13,20 @@ import java.time.LocalDate;
  */
 public class PieChartData {
 
-    private int lostLuggage;
-    private int foundLuggage;
+    private int lostLuggageResolved;
+    private int foundLuggageResolved;
+    private int lostLuggageUnResolved;
+    private int foundLuggageUnResolved;
     private int connectedLuggage;
 
     /**
      *
      */
     public PieChartData() {
-        this.lostLuggage = 0;
-        this.foundLuggage = 0;
+        this.lostLuggageResolved = 0;
+        this.foundLuggageResolved = 0;
+        this.foundLuggageUnResolved = 0;
+        this.foundLuggageUnResolved = 0;
         this.connectedLuggage = 0;
     }
 
@@ -44,19 +49,10 @@ public class PieChartData {
                             + "GROUP BY statusid;");
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
-                            this.lostLuggage = result.getInt(3);
+                            this.lostLuggageResolved = result.getInt(3);
                         } else if (result.getInt(2) == 2) {
-                            this.foundLuggage = result.getInt(3);
+                            this.foundLuggageResolved = result.getInt(3);
                         }
-                    }
-                }
-                try (Connection db = new ConnectMysqlServer().dbConnect()) {
-                    Statement statement = db.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT connectiondate, COUNT(*) AS aantal "
-                            + "FROM connection "
-                            + "WHERE DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'");
-                    while (result.next()) {
-                        this.connectedLuggage = result.getInt(2);
                     }
                 }
                 break;
@@ -70,19 +66,10 @@ public class PieChartData {
                             + "GROUP BY statusid;");
                     while (result.next()) {
                         if (result.getInt(3) == 1) {
-                            this.lostLuggage = result.getInt(4);
+                            this.lostLuggageResolved = result.getInt(4);
                         } else if (result.getInt(3) == 2) {
-                            this.foundLuggage = result.getInt(4);
+                            this.foundLuggageResolved = result.getInt(4);
                         }
-                    }
-                }
-                try (Connection db = new ConnectMysqlServer().dbConnect()) {
-                    Statement statement = db.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT connectiondate, MONTH(connectiondate) AS month, COUNT(*) AS aantal "
-                            + "FROM connection "
-                            + "WHERE DATE_FORMAT(connectiondate, '%Y-%m-01') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%m-01') AND LAST_DAY('" + endDate + "')");
-                    while (result.next()) {
-                        this.connectedLuggage = result.getInt(2);
                     }
                 }
                 break;
@@ -96,38 +83,142 @@ public class PieChartData {
                             + "GROUP BY statusid;");
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
-                            this.lostLuggage = result.getInt(3);
+                            this.lostLuggageResolved = result.getInt(3);
                         } else if (result.getInt(2) == 2) {
-                            this.foundLuggage = result.getInt(3);
+                            this.foundLuggageResolved = result.getInt(3);
                         }
-                    }
-                }
-                try (Connection db = new ConnectMysqlServer().dbConnect()) {
-                    Statement statement = db.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT connectiondate, COUNT(*) as aantal "
-                            + "FROM connection "
-                            + "WHERE DATE_FORMAT(connectiondate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31');");
-                    while (result.next()) {
-                        this.connectedLuggage = result.getInt(2);
                     }
                 }
                 break;
             }
             default: {
-                this.lostLuggage = 0;
-                this.foundLuggage = 0;
-                this.connectedLuggage = 0;
+                this.lostLuggageResolved = 0;
+                this.foundLuggageResolved = 0;
+                this.foundLuggageUnResolved = 0;
+                this.lostLuggageUnResolved = 0;
             }
         }
 
     }
+    
+    public void getDataPerEmployee(LocalDate startDate, LocalDate endDate, int interval, User employee, int resolved) throws ClassNotFoundException, SQLException {
+        int employeeId = employee.getId();
+        switch (interval) {
+            case (1): {
+                try (Connection db = new ConnectMysqlServer().dbConnect()) {
+                    Statement statement = db.createStatement();
+                    ResultSet result;
+                    if (resolved == 3) {
+                        result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved" +
+                                " FROM luggage" +
+                                " WHERE employeeid="+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '"+startDate+"' AND '"+endDate+"'" +
+                                " GROUP BY statusid, resolved;");
+                    } else{
+                        result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved "
+                            + "FROM luggage "
+                            + "WHERE employeeid= "+employeeId+" AND resolved="+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'"
+                            + "GROUP BY statusid;");
+                    }
+                    while (result.next()) {
+                        if (result.getInt(2) == 1) {
+                            if (result.getInt(4) == 0) {
+                                this.lostLuggageUnResolved = result.getInt(3);
+                            } else{
+                                this.lostLuggageResolved = result.getInt(3);
+                            }
+                        } else if (result.getInt(2) == 2) {
+                            if (result.getInt(4) == 0) {
+                                this.foundLuggageUnResolved = result.getInt(3);
+                            } else{
+                                this.foundLuggageResolved = result.getInt(3);
+                            }
+                        }
+                    }
+                }                   
+                break;
+            }
+            case (2): {
+                try (Connection db = new ConnectMysqlServer().dbConnect()) {
+                    Statement statement = db.createStatement();
+                    ResultSet result;
+                    if (resolved == 3) {
+                        result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved" +
+                                " FROM luggage" +
+                                " WHERE employeeId ="+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('"+startDate+"', '%Y-%m-01') AND LAST_DAY('"+endDate+"')" +
+                                " GROUP BY statusid, resolved;");
+                        
+                    } else{
+                        result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved"
+                            + " FROM luggage"
+                            + " WHERE employeeId = "+employeeId+" AND resolved= "+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%m-01') AND LAST_DAY('" + endDate + "')"
+                            + " GROUP BY statusid;");
+                    }
+                    while (result.next()) {
+                        if (result.getInt(2) == 1) {
+                            if (result.getInt(4) == 0) {
+                                this.lostLuggageUnResolved = result.getInt(3);
+                            } else{
+                                this.lostLuggageResolved = result.getInt(3);
+                            }
+                        } else if (result.getInt(2) == 2) {
+                            if (result.getInt(4) == 0) {
+                                this.foundLuggageUnResolved = result.getInt(3);
+                            } else{
+                                this.foundLuggageResolved = result.getInt(3);
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            case (3): {
+                try (Connection db = new ConnectMysqlServer().dbConnect()) {
+                    Statement statement = db.createStatement();
+                    ResultSet result;
+                    if (resolved == 3) {
+                        result  = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
+                            + "FROM luggage "
+                            + "WHERE employeeId= "+employeeId+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "GROUP BY statusid, resolved;");
+                    } else {
+                        result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
+                            + "FROM luggage "
+                            + "WHERE employeeId= "+employeeId+" AND resolved = "+resolved+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "GROUP BY statusid;");
+                    }
+                    while (result.next()) {
+                        if (result.getInt(2) == 1) {
+                            if (result.getInt(4) == 0) {
+                                this.lostLuggageUnResolved = result.getInt(3);
+                            } else{
+                                this.lostLuggageResolved = result.getInt(3);
+                            }
+                        } else if (result.getInt(2) == 2) {
+                            if (result.getInt(4) == 0) {
+                                this.foundLuggageUnResolved = result.getInt(3);
+                            } else{
+                                this.foundLuggageResolved = result.getInt(3);
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            default: {
+                this.lostLuggageResolved = 0;
+                this.foundLuggageResolved = 0;
+                this.foundLuggageUnResolved = 0;
+                this.lostLuggageUnResolved = 0;
+            }
+        }
 
+    }
     /**
      *
      * @return
      */
     public int getLostLuggage() {
-        return lostLuggage;
+        return lostLuggageResolved;
     }
 
     /**
@@ -135,15 +226,18 @@ public class PieChartData {
      * @return
      */
     public int getFoundLuggage() {
-        return foundLuggage;
+        return foundLuggageResolved;
+    }
+
+    public int getConnectedLuggage() {
+        return connectedLuggage;
     }
 
     /**
      *
      * @return
      */
-    public int getConnectedLuggage() {
-        return connectedLuggage;
-    }
+    
+    
 
 }
