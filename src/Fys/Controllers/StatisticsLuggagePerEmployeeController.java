@@ -300,7 +300,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             scatterChart.getData().clear();
             lblErrorMessage.setText("");
             if (graphType == 5) {
-                fillPieChart(start, end, interval, employee, resolved, type);
+                fillPieChart(start, end, interval, employee, resolved, type, ddwnInterval.getText());
             } else {
                 if (ddwnLuggageType.getText().equals("All")) {
                     fillGraphAllTypes(graphType, start, end, interval, employee, resolved);
@@ -353,7 +353,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         return true;
     }
 
-    private void fillPieChart(LocalDate start, LocalDate end, int interval, User employee, int resolved, int type) throws ClassNotFoundException, SQLException {
+    private void fillPieChart(LocalDate start, LocalDate end, int interval, User employee, int resolved, int type, String intervalName) throws ClassNotFoundException, SQLException {
         PieChartData pieChartData = new PieChartData();
         pieChartData.getDataPerEmployee(start, end, interval, employee, resolved, type);
         DecimalFormat df = new DecimalFormat("#.0");
@@ -373,7 +373,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             pieChart.getData().add(new PieChart.Data("Unresolved Lost - " 
                     + df.format(((double)pieChartData.getLostLuggageUnResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getLostLuggageUnResolved()));
         }
-        pieChart.setTitle("Total Luggage Reported");
+        pieChart.setTitle("Total Luggage Reported by employee " + employee.getUsername() + " from " + start + " to " + end + " per " + intervalName);
     }
 
     private void fillGraphSingleType(String luggageType, int graphType, 
