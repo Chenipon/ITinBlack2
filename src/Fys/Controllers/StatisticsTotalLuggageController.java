@@ -201,12 +201,12 @@ public class StatisticsTotalLuggageController implements Initializable {
                 }
             }
             switch (ddwnResolved.getText()) {
-                case ("Resolved"): {
+                case ("Unresolved"): {
                     resolved = 1;
                     break;
                 }
-                case ("Unresolved"): {
-                    resolved = 0;
+                case ("Resolved"): {
+                    resolved = 2;
                     break;
                 }
                 case ("All"): {
@@ -287,10 +287,10 @@ public class StatisticsTotalLuggageController implements Initializable {
             } else {
                 if (ddwnLuggageType.getText().equals("All")) {
                     fillGraphAllTypes(graphType, startDate.getValue(),
-                            endDate.getValue(), interval);
+                            endDate.getValue(), interval, resolved);
                 } else {
                     fillGraphSingleType(ddwnLuggageType.getText(), graphType,
-                            startDate.getValue(), endDate.getValue(), interval);
+                            startDate.getValue(), endDate.getValue(), interval, resolved);
                 }
             }
         }
@@ -376,7 +376,7 @@ public class StatisticsTotalLuggageController implements Initializable {
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
     private void fillGraphSingleType(String luggageType, int graphType,
-            LocalDate start, LocalDate end, int interval)
+            LocalDate start, LocalDate end, int interval, int resolved)
             throws SQLException, ClassNotFoundException {
         ObservableList<ChartTools> observableList;
         final CategoryAxis xAxis = new CategoryAxis();
@@ -388,7 +388,8 @@ public class StatisticsTotalLuggageController implements Initializable {
 
         switch (luggageType) {
             case ("Lost"): {
-                observableList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 1);
+                observableList = new ChartTools().getLostOrFoundLuggage(start, 
+                        end, interval, 1, resolved);
                 for (int i = 0; i < observableList.size(); i++) {
                     series.getData().add(new XYChart.Data(observableList.get(i)
                             .getDate(), observableList.get(i).getAmount()));
@@ -396,7 +397,8 @@ public class StatisticsTotalLuggageController implements Initializable {
                 break;
             }
             case ("Found"): {
-                observableList = new ChartTools().getLostOrFoundLuggage(start, end, interval, 2);
+                observableList = new ChartTools().getLostOrFoundLuggage(start, 
+                        end, interval, 2, resolved);
                 for (int i = 0; i < observableList.size(); i++) {
                     series.getData().add(new XYChart.Data(observableList.get(i)
                             .getDate(), observableList.get(i).getAmount()));
@@ -449,12 +451,12 @@ public class StatisticsTotalLuggageController implements Initializable {
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
     private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end,
-            int interval) throws SQLException, ClassNotFoundException {
+            int interval, int resolved) throws SQLException, ClassNotFoundException {
         /* Lost luggage */
         XYChart.Series lostLuggage = new XYChart.Series();
         lostLuggage.setName("Lost Luggage");
         ObservableList<ChartTools> lostLuggageList = new ChartTools()
-                .getLostOrFoundLuggage(start, end, interval, 1);
+                .getLostOrFoundLuggage(start, end, interval, 1, resolved);
         for (int i = 0; i < lostLuggageList.size(); i++) {
             lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i)
                     .getDate(), lostLuggageList.get(i).getAmount()));
@@ -464,7 +466,7 @@ public class StatisticsTotalLuggageController implements Initializable {
         XYChart.Series foundLuggage = new XYChart.Series();
         foundLuggage.setName("Found Luggage");
         ObservableList<ChartTools> foundLuggageList = new ChartTools()
-                .getLostOrFoundLuggage(start, end, interval, 2);
+                .getLostOrFoundLuggage(start, end, interval, 2, resolved);
         for (int i = 0; i < foundLuggageList.size(); i++) {
             foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i)
                     .getDate(), foundLuggageList.get(i).getAmount()));

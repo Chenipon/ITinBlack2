@@ -206,12 +206,12 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
                 }
             }
             switch (ddwnResolved.getText()) {
-                case ("Resolved"): {
+                case ("Unresolved"): {
                     resolved = 1;
                     break;
                 }
-                case ("Unresolved"): {
-                    resolved = 0;
+                case ("Resolved"): {
+                    resolved = 2;
                     break;
                 }
                 case ("All"): {
