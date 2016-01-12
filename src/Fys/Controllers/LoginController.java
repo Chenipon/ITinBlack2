@@ -121,7 +121,8 @@ public class LoginController implements Initializable {
                 break;
             }
             default: {
-                MainController.currentUser = user;
+                MainController.setUser(user);
+                MainController.setScreen(screen);
                 screen.change("Main");
                 break;
             }

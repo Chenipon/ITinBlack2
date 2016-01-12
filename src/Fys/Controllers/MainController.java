@@ -19,15 +19,8 @@ import javafx.scene.control.Label;
  */
 public class MainController implements Initializable {
 
-    /**
-     *
-     */
-    public static User currentUser;
-
-    /**
-     *
-     */
-    public static Screen screen;
+    private static User currentUser;
+    private static Screen screen;
 
     @FXML private Label lblUsername;
 
