@@ -183,14 +183,14 @@ public class PieChartData {
                         }
                     }
                     while (result.next()) {
-                        if (result.getInt(2) == 1) {
-                            if (result.getInt(4) == 0) {
+                        if (result.getInt(4) == 1) {
+                            if (result.getInt(5) == 0) {
                                 this.lostLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.lostLuggageResolved = result.getInt(3);
                             }
-                        } else if (result.getInt(2) == 2) {
-                            if (result.getInt(4) == 0) {
+                        } else if (result.getInt(3) == 2) {
+                            if (result.getInt(5) == 0) {
                                 this.foundLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.foundLuggageResolved = result.getInt(3);
@@ -208,24 +208,24 @@ public class PieChartData {
                         if (type == 3) {
                             result  = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
                             + "FROM luggage "
-                            + "WHERE employeeId= "+employeeId+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "WHERE employeeId= "+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
                             + "GROUP BY statusid, resolved;");
                         } else {
                             result  = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
                             + "FROM luggage "
-                            + "WHERE statusid = "+type+" AND employeeId= "+employeeId+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "WHERE statusid = "+type+" AND employeeId= "+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
                             + "GROUP BY statusid, resolved;");
                         }
                     } else {
                         if (type == 3) {
                             result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
                             + "FROM luggage "
-                            + "WHERE employeeId= "+employeeId+" AND resolved = "+resolved+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "WHERE employeeId= "+employeeId+" AND resolved = "+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
                             + "GROUP BY statusid;");
                         } else {
                             result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
                             + "FROM luggage "
-                            + "WHERE statusid ="+type+" AND employeeId= "+employeeId+" AND resolved = "+resolved+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "WHERE statusid ="+type+" AND employeeId= "+employeeId+" AND resolved = "+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
                             + "GROUP BY statusid;");
                         }
                         
