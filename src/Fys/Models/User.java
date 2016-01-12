@@ -10,7 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * User is the model for the user, having all attributes for the database model.
  * @author Daan
  */
 public class User {
@@ -27,7 +27,7 @@ public class User {
     private Role role;
 
     /**
-     *
+     * public User() is the constructor for the User object.
      */
     public User() {
         this.username = "";
@@ -41,162 +41,165 @@ public class User {
     }
 
     /**
-     *
-     * @return
+     * public int getId() returns the id of the User object.
+     * @return id The id of the User
      */
     public int getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
+     * public void setId(int id) sets the id of the User object.
+     * @param id The id of the User
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * public String getUsername() returns the username attribute of the User.
+     * @return username The username of the User object.
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     *
-     * @param username
+     * public void setUsername(String username) sets the username attribute of the User.
+     * @param username The username of the User object.
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
-     *
-     * @return
+     * public String getPassword() returns the password of the User.
+     * @return password The password of the user.
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     *
-     * @param password
+     * public void setPassword(String password) sets the password of the user.
+     * @param password The password of the user.
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     *
-     * @return
+     * public String getFirstname() returns the firstname attribute of the User.
+     * @return firstname The first name of the user.
      */
     public String getFirstname() {
         return firstname;
     }
 
     /**
-     *
-     * @param firstname
+     * public void setFirstname(String firstname) sets the firstname of the User.
+     * @param firstname The first name of the user.
      */
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
     /**
-     *
-     * @return
+     * public String getLastname() returns the lastnamme attribute of the User.
+     * @return lastname The last name of the user.
      */
     public String getLastname() {
         return lastname;
     }
 
     /**
-     *
-     * @param lastname
+     * public void setLastname(String lastname) sets the lastname of the User.
+     * @param lastname The last name of the user.
      */
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
     /**
-     *
-     * @return
+     * public int getRoleId() returns the roleId of the User.
+     * @return roleId The id of the role assigned to the User.
      */
     public int getRoleId() {
         return roleId;
     }
 
     /**
-     *
-     * @param roleId
+     * public void setRoleId(int roleId) sets the roleId of the User.
+     * @param roleId The id of the role assigned to the User.
      */
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 
     /**
-     *
-     * @return
+     * public String getRegisterDate() returns the registerDate of the User.
+     * @return registerDate The date when the user is registered
      */
     public String getRegisterDate() {
         return registerDate;
     }
 
     /**
-     *
-     * @param registerDate
+     * public void setRegisterDate(String registerDate) sets the registerdate
+     * of the User.
+     * @param registerDate The date when the user is registered
      */
     public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
     /**
-     *
-     * @return
+     * public boolean isActive() returns the active value of the User.
+     * @return active Determines if the user is active or disabled.
      */
     public boolean isActive() {
         return active;
     }
 
     /**
-     *
-     * @param active
+     * public void setActive(boolean active) sets the active value of 
+     * the User.
+     * @param active Determines if the user is active or disabled.
      */
     public void setActive(boolean active) {
         this.active = active;
     }
 
     /**
-     *
-     * @param role
+     * public void setRole(Role role) sets the role for the User.
+     * @param role The role of the user.
      */
     public void setRole(Role role) {
         this.role = role;
     }
 
     /**
-     *
-     * @return
+     * public Role getRole() returns the role of the user.
+     * @return role The role of the user.
      */
     public Role getRole() {
         return this.role;
     }
     
     /**
-     *
-     * @return
+     * public String fullName() returns the full name of the user
+     * @return firstname, lastname The attributes for the Full Name of the User.
      */
     public String fullName() {
         return this.firstname + " " + this.lastname;
     }
 
     /**
-     *
-     * @param user
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * public void insertUser(User user) throws ClassNotFoundException, 
+     * SQLException inserts the User object to the database.
+     * @param user The User object.
+     * @throws ClassNotFoundException MySqlConnector.jar not found.
+     * @throws SQLException Can't connect to the MySQL database.
      */
     public void insertUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -214,10 +217,11 @@ public class User {
     }
     
     /**
-     *
-     * @param user
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * public void updateUser(User user) throws ClassNotFoundException, 
+     * SQLException updates the User inserted in the method.
+     * @param user Current User object.
+     * @throws ClassNotFoundException MySqlConnector.jar not found.
+     * @throws SQLException Can't connect to the MySQL database.
      */
     public void updateUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -235,11 +239,12 @@ public class User {
     }
 
     /**
-     *
-     * @param id
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * public User getUserById(int id) throws ClassNotFoundException, 
+     * SQLException gets the user by the id typed in the method.
+     * @param id The id of the user.
+     * @return user The current user object.
+     * @throws ClassNotFoundException MySqlConnector.jar not found.
+     * @throws SQLException Can't connect to the MySQL database.
      */
     public User getUserById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -261,9 +266,10 @@ public class User {
     }
 
     /**
-     *
-     * @param username
-     * @return
+     * public User getUserByUsername(String username) throws ClassNotFoundException, 
+     * SQLException searchs on the username the user provided.
+     * @param username The username of the user.
+     * @return User The current User object.
      * @throws ClassNotFoundException
      * @throws SQLException
      */
@@ -287,8 +293,9 @@ public class User {
     }
 
     /**
-     *
-     * @return
+     * public ObservableList<User> getEmployees() throws ClassNotFoundException, 
+     * SQLException returns the employees in the form of an ObservableList.
+     * @return ObservableList<User> userlist The FXCollection containing all employees.
      * @throws ClassNotFoundException
      * @throws SQLException
      */
