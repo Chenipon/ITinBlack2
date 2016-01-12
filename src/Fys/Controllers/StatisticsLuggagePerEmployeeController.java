@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -355,17 +356,22 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
     private void fillPieChart(LocalDate start, LocalDate end, int interval, User employee, int resolved, int type) throws ClassNotFoundException, SQLException {
         PieChartData pieChartData = new PieChartData();
         pieChartData.getDataPerEmployee(start, end, interval, employee, resolved, type);
+        DecimalFormat df = new DecimalFormat("#.0");
         if (pieChartData.getFoundLuggageResolved() != 0) {
-            pieChart.getData().add(new PieChart.Data("Resolved Found - " + pieChartData.getFoundLuggageResolved(), pieChartData.getFoundLuggageResolved()));
+            pieChart.getData().add(new PieChart.Data("Resolved Found - " 
+                    + df.format(((double)pieChartData.getFoundLuggageResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getFoundLuggageResolved()));
         }
         if (pieChartData.getFoundLuggageUnResolved() != 0) {
-            pieChart.getData().add(new PieChart.Data("Unresolved Found - " + pieChartData.getFoundLuggageUnResolved(), pieChartData.getFoundLuggageUnResolved()));
+            pieChart.getData().add(new PieChart.Data("Unresolved Found - " 
+                    + df.format(((double)pieChartData.getFoundLuggageUnResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getFoundLuggageUnResolved()));
         }
         if (pieChartData.getLostLuggageResolved() != 0) {
-            pieChart.getData().add(new PieChart.Data("Resolved Lost - " + pieChartData.getLostLuggageResolved(), pieChartData.getLostLuggageResolved()));
+            pieChart.getData().add(new PieChart.Data("Resolved Lost - " 
+                    + df.format(((double)pieChartData.getLostLuggageResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getLostLuggageResolved()));
         }
         if (pieChartData.getLostLuggageUnResolved() != 0) {
-            pieChart.getData().add(new PieChart.Data("Unresolved Lost - " + pieChartData.getLostLuggageUnResolved(), pieChartData.getLostLuggageUnResolved()));
+            pieChart.getData().add(new PieChart.Data("Unresolved Lost - " 
+                    + df.format(((double)pieChartData.getLostLuggageUnResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getLostLuggageUnResolved()));
         }
         pieChart.setTitle("Total Luggage Reported");
     }

@@ -15,8 +15,9 @@ public class PieChartData {
 
     private int lostLuggageResolved;
     private int foundLuggageResolved;
-    private int lostLuggageUnResolved;
-    private int foundLuggageUnResolved;
+    private int lostLuggageUnresolved;
+    private int foundLuggageUnresolved;
+    private int totalLuggage;
 
     /**
      *
@@ -24,8 +25,9 @@ public class PieChartData {
     public PieChartData() {
         this.lostLuggageResolved = 0;
         this.foundLuggageResolved = 0;
-        this.foundLuggageUnResolved = 0;
-        this.foundLuggageUnResolved = 0;
+        this.foundLuggageUnresolved = 0;
+        this.foundLuggageUnresolved = 0;
+        this.totalLuggage = 0;
     }
 
     /**
@@ -92,11 +94,12 @@ public class PieChartData {
             default: {
                 this.lostLuggageResolved = 0;
                 this.foundLuggageResolved = 0;
-                this.foundLuggageUnResolved = 0;
-                this.lostLuggageUnResolved = 0;
+                this.foundLuggageUnresolved = 0;
+                this.lostLuggageUnresolved = 0;
             }
         }
-
+        this.totalLuggage = this.lostLuggageResolved + this.foundLuggageResolved 
+                + this.foundLuggageUnresolved + this.lostLuggageUnresolved;
     }
     
     public void getDataPerEmployee(LocalDate startDate, LocalDate endDate, int interval, User employee, int resolved, int type) throws ClassNotFoundException, SQLException {
@@ -135,13 +138,13 @@ public class PieChartData {
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
                             if (result.getInt(4) == 0) {
-                                this.lostLuggageUnResolved = result.getInt(3);
+                                this.lostLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.lostLuggageResolved = result.getInt(3);
                             }
                         } else if (result.getInt(2) == 2) {
                             if (result.getInt(4) == 0) {
-                                this.foundLuggageUnResolved = result.getInt(3);
+                                this.foundLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.foundLuggageResolved = result.getInt(3);
                             }
@@ -182,13 +185,13 @@ public class PieChartData {
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
                             if (result.getInt(4) == 0) {
-                                this.lostLuggageUnResolved = result.getInt(3);
+                                this.lostLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.lostLuggageResolved = result.getInt(3);
                             }
                         } else if (result.getInt(2) == 2) {
                             if (result.getInt(4) == 0) {
-                                this.foundLuggageUnResolved = result.getInt(3);
+                                this.foundLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.foundLuggageResolved = result.getInt(3);
                             }
@@ -230,13 +233,13 @@ public class PieChartData {
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
                             if (result.getInt(4) == 0) {
-                                this.lostLuggageUnResolved = result.getInt(3);
+                                this.lostLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.lostLuggageResolved = result.getInt(3);
                             }
                         } else if (result.getInt(2) == 2) {
                             if (result.getInt(4) == 0) {
-                                this.foundLuggageUnResolved = result.getInt(3);
+                                this.foundLuggageUnresolved = result.getInt(3);
                             } else{
                                 this.foundLuggageResolved = result.getInt(3);
                             }
@@ -248,11 +251,12 @@ public class PieChartData {
             default: {
                 this.lostLuggageResolved = 0;
                 this.foundLuggageResolved = 0;
-                this.foundLuggageUnResolved = 0;
-                this.lostLuggageUnResolved = 0;
+                this.foundLuggageUnresolved = 0;
+                this.lostLuggageUnresolved = 0;
             }
         }
-
+        this.totalLuggage = this.lostLuggageResolved + this.foundLuggageResolved 
+                + this.foundLuggageUnresolved + this.lostLuggageUnresolved;
     }
 
     public int getLostLuggageResolved() {
@@ -264,15 +268,15 @@ public class PieChartData {
     }
 
     public int getLostLuggageUnResolved() {
-        return lostLuggageUnResolved;
+        return lostLuggageUnresolved;
     }
 
     public int getFoundLuggageUnResolved() {
-        return foundLuggageUnResolved;
+        return foundLuggageUnresolved;
     }
     
-    
-    
-    
+    public int getTotalLuggage() {
+        return totalLuggage;
+    }
 
 }
