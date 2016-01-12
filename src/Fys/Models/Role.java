@@ -9,7 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * The Role class defines the role and gets users by the Role attributes.
  * @author Daan
  */
 public class Role {
@@ -18,57 +18,59 @@ public class Role {
     private String roleName;
 
     /**
-     *
+     * public Role() is the constructor for the Role class.
      */
     public Role() {
         this.roleName = "";
     }
 
     /**
-     *
-     * @param roleName
+     * public Role(String roleName) is the alternative constructor for the 
+     * Role class.
+     * @param roleName The roleName for the Role class.
      */
     public Role(String roleName) {
         this.roleName = roleName;
     }
 
     /**
-     *
-     * @return
+     * public int getId() returns the id of the Role.
+     * @return id The id of the Role class.
      */
     public int getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
+     * public void setId(int id) sets the Id of the Role.
+     * @param id The id of the Role class.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * public String getRoleName() gets the rolename of the Role.
+     * @return roleName The rolename of the Role.
      */
     public String getRoleName() {
         return roleName;
     }
 
     /**
-     *
-     * @param roleName
+     * public void setRoleName(String roleName) sets the rolename of the Role.
+     * @param roleName The rolename of the Role.
      */
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
 
     /**
-     *
-     * @param role
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * public void insertRole(Role role) throws ClassNotFoundException, 
+     * SQLException inserts the role into the database.
+     * @param role The Role instance.
+     * @throws ClassNotFoundException MySqlConnector.jar not found.
+     * @throws SQLException Can't connect to the MySQL database.
      */
     public void insertRole(Role role) throws ClassNotFoundException, SQLException {
         Connection db = new ConnectMysqlServer().dbConnect();
@@ -78,11 +80,12 @@ public class Role {
     }
 
     /**
-     *
-     * @param id
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * public Role getRoleById(int id) throws ClassNotFoundException, 
+     * SQLException
+     * @param id The id of the Role class.
+     * @return Role Current role instance.
+     * @throws ClassNotFoundException MySqlConnector.jar not found.
+     * @throws SQLException Can't connect to the MySQL database.
      */
     public Role getRoleById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -97,8 +100,9 @@ public class Role {
     }
     
     /**
-     *
-     * @return
+     * public ObservableList<Role> getRoles() throws Exception stores all roles 
+     * in an FXCollection Arraylist.
+     * @return ObservableList<Role>
      * @throws Exception
      */
     public ObservableList<Role> getRoles() throws Exception {
@@ -117,11 +121,12 @@ public class Role {
     }
     
     /**
-     *
-     * @param name
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * public Role getRoleByName(String name) throws ClassNotFoundException, 
+     * SQLException gets the role by ID.
+     * @param name The name of the role.
+     * @return Role Current Role class.
+     * @throws ClassNotFoundException MySqlConnector.jar not found.
+     * @throws SQLException Can't connect to the MySQL database.
      */
     public Role getRoleByName(String name) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
