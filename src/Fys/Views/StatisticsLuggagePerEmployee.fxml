@@ -12,7 +12,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.StatisticsLuggagePerEmployeeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.StatisticsLuggagePerEmployeeController">
    <center>
       <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -29,11 +29,44 @@
                         <Font name="Arial" size="16.0" />
                      </font>
                   </Text>
+                  <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="136.0" />
+                  <DatePicker fx:id="endDate" layoutX="154.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" AnchorPane.leftAnchor="156.0" AnchorPane.topAnchor="136.0" />
+                  <MenuButton fx:id="ddwnInterval" layoutX="279.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Select" AnchorPane.leftAnchor="277.0" AnchorPane.topAnchor="136.0">
+                     <items>
+                        <MenuItem fx:id="ddwnIntervalDay" mnemonicParsing="false" onAction="#ddwnIntervalDayEvent" text="Day" />
+                        <MenuItem fx:id="ddwnIntervalMonth" mnemonicParsing="false" onAction="#ddwnIntervalMonthEvent" text="Month" />
+                        <MenuItem fx:id="ddwnIntervalYear" mnemonicParsing="false" onAction="#ddwnIntervalYearEvent" text="Year" />
+                     </items>
+                  </MenuButton>
+                  <MenuButton fx:id="ddwnLuggageType" layoutX="377.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Select" AnchorPane.leftAnchor="362.0" AnchorPane.topAnchor="136.0">
+                    <items>
+                      <MenuItem fx:id="ddwnLostLuggage" mnemonicParsing="false" onAction="#ddwnLostLuggageEvent" text="Lost" />
+                      <MenuItem fx:id="ddwnFoundLuggage" mnemonicParsing="false" onAction="#ddwnFoundLuggageEvent" text="Found" />
+                        <MenuItem fx:id="ddwnAllLuggage" mnemonicParsing="false" onAction="#ddwnAllLuggageEvent" text="All" />
+                    </items>
+                  </MenuButton>
+                  <MenuButton fx:id="ddwnResolved" layoutX="445.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Select" AnchorPane.leftAnchor="442.0" AnchorPane.topAnchor="136.0">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnResolvedEvent" text="Resolved" />
+                      <MenuItem mnemonicParsing="false" onAction="#ddwnUnresolvedEvent" text="Unresolved" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnResolvedAllEvent" text="All" />
+                    </items>
+                  </MenuButton>
+                  <MenuButton fx:id="ddwnChartType" layoutX="553.0" layoutY="135.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" text="Select" AnchorPane.leftAnchor="547.0" AnchorPane.topAnchor="136.0">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeAreaChartEvent" text="Area Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeBarChartEvent" text="Bar Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeLineChartEvent" text="Line Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeScatterChartEvent" text="Scatter Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypePieChartEvent" text="Pie Chart" />
+                     </items>
+                  </MenuButton>
+                  <ComboBox fx:id="comboEmployee" layoutX="600.0" layoutY="102.0" prefHeight="25.0" prefWidth="110.0" promptText="Select" AnchorPane.leftAnchor="600.0" AnchorPane.topAnchor="102.0" />
                   <Button fx:id="btnFilter" layoutX="515.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnFilterEvent" styleClass="btnRed" text="Filter" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="136.0" />
-                  <Button fx:id="btnPrintStatistics" layoutX="645.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnPrintStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="31.0" />
+                  <Button fx:id="btnSaveStatistics" layoutX="645.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnSaveStatisticsEvent" styleClass="btnRed" text="Save Statistics to PDF" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="31.0" />
                   <AnchorPane fx:id="charts" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="181.0">
                      <children>
-                        <BarChart fx:id="barChart" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <BarChart fx:id="barChart" animated="false" prefHeight="463.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -68,45 +101,11 @@
                         <PieChart fx:id="pieChart" animated="false" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                  <MenuButton fx:id="ddwnLuggageType" layoutX="377.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Type" AnchorPane.leftAnchor="362.0" AnchorPane.topAnchor="136.0">
-                    <items>
-                      <MenuItem fx:id="ddwnLostLuggage" mnemonicParsing="false" onAction="#ddwnLostLuggageEvent" text="Lost" />
-                      <MenuItem fx:id="ddwnFoundLuggage" mnemonicParsing="false" onAction="#ddwnFoundLuggageEvent" text="Found" />
-                        <MenuItem fx:id="ddwnConnectedLuggage" mnemonicParsing="false" onAction="#ddwnConnectedLuggageEvent" text="Connected" />
-                        <MenuItem fx:id="ddwnAllLuggage" mnemonicParsing="false" onAction="#ddwnAllLuggageEvent" text="All" />
-                    </items>
-                  </MenuButton>
-                  <DatePicker fx:id="startDate" layoutX="24.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Start Date" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="136.0" />
-                  <DatePicker fx:id="endDate" layoutX="154.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="End Date" AnchorPane.leftAnchor="156.0" AnchorPane.topAnchor="136.0" />
-                  <ComboBox fx:id="comboEmployee" layoutX="590.0" layoutY="136.0" prefHeight="25.0" prefWidth="110.0" promptText="Employee" AnchorPane.leftAnchor="597.0" AnchorPane.topAnchor="136.0" />
                   <Label fx:id="lblErrorMessage" layoutX="-132.0" layoutY="172.0" prefHeight="15.0" prefWidth="750.0" textFill="RED" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <MenuButton fx:id="ddwnChartType" layoutX="506.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" text="Graph Type" AnchorPane.leftAnchor="472.0" AnchorPane.topAnchor="136.0">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeAreaChartEvent" text="Area Chart" />
-                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeBarChartEvent" text="Bar Chart" />
-                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeLineChartEvent" text="Line Chart" />
-                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypeScatterChartEvent" text="Scatter Chart" />
-                        <MenuItem mnemonicParsing="false" onAction="#ddwnChartTypePieChartEvent" text="Pie Chart" />
-                     </items>
-                  </MenuButton>
-                  <MenuButton fx:id="ddwnInterval" layoutX="279.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Interval" AnchorPane.leftAnchor="277.0" AnchorPane.topAnchor="136.0">
-                     <items>
-                        <MenuItem fx:id="ddwnIntervalDay" mnemonicParsing="false" onAction="#ddwnIntervalDayEvent" text="Day" />
-                        <MenuItem fx:id="ddwnIntervalMonth" mnemonicParsing="false" onAction="#ddwnIntervalMonthEvent" text="Month" />
-                        <MenuItem fx:id="ddwnIntervalYear" mnemonicParsing="false" onAction="#ddwnIntervalYearEvent" text="Year" />
-                     </items>
-                  </MenuButton>
-                  <MenuButton fx:id="ddwnResolved" layoutX="598.0" layoutY="83.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Select">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#ddwnResolvedEvent" text="Resolved" />
-                      <MenuItem mnemonicParsing="false" onAction="#ddwnUnResolvedEvent" text="Unresolved" />
-                        <MenuItem mnemonicParsing="false" onAction="#ddwnAllResolvedEvent" text="All" />
-                    </items>
-                  </MenuButton>
                </children></AnchorPane>
         </items>
       </SplitPane>

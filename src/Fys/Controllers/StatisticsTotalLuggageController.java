@@ -182,7 +182,7 @@ public class StatisticsTotalLuggageController implements Initializable {
             /*
              * Convert the dropdown-boxes to numbers.
              */
-            int interval, graphType;
+            int interval, resolved, graphType;
             switch (ddwnInterval.getText()) {
                 case ("Day"): {
                     interval = 1;
@@ -198,6 +198,24 @@ public class StatisticsTotalLuggageController implements Initializable {
                 }
                 default: {
                     interval = 0;
+                }
+            }
+            switch (ddwnResolved.getText()) {
+                case ("Resolved"): {
+                    resolved = 1;
+                    break;
+                }
+                case ("Unresolved"): {
+                    resolved = 0;
+                    break;
+                }
+                case ("All"): {
+                    resolved = 3;
+                    break;
+                }
+                default: {
+                    resolved = 0;
+                    break;
                 }
             }
             switch (ddwnChartType.getText()) {
