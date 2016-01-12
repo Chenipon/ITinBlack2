@@ -202,15 +202,15 @@ public class StatisticsTotalLuggageController implements Initializable {
             }
             switch (ddwnResolved.getText()) {
                 case ("Unresolved"): {
-                    resolved = 1;
+                    resolved = 0;
                     break;
                 }
                 case ("Resolved"): {
-                    resolved = 2;
+                    resolved = 1;
                     break;
                 }
                 case ("All"): {
-                    resolved = 3;
+                    resolved = 2;
                     break;
                 }
                 default: {

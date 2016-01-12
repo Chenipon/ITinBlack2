@@ -75,8 +75,8 @@ public class ChartTools {
      * the database as follow: 1 = day, 2 = month, 3 = year.
      * @param type is the type of luggage that needs to be pulled from the
      * database as follow: 1 = lost, 2 = found.
-     * @param resolved is the resolved parameter that pulls data as follow: 1 =
-     * unresolved, 2 = resolved, 3 = all.
+     * @param resolved is the resolved parameter that pulls data as follow: 0 =
+     * unresolved, 1 = resolved, 2 = all.
      * @return an ObservableList containing ChartTools elements per date
      * interval.
      * @throws SQLException when an SQL error has occured.
@@ -92,7 +92,7 @@ public class ChartTools {
                 case (1): {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
+                    if (resolved == 2) {
                         result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal FROM luggage"
                                 + " WHERE statusid= " + type
                                 + " GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d')"
@@ -130,7 +130,7 @@ public class ChartTools {
                 case (2): {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
+                    if (resolved == 2) {
                         result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal"
                                 + " FROM luggage"
                                 + " WHERE statusid=" + type
@@ -176,7 +176,7 @@ public class ChartTools {
                 case (3): {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
+                    if (resolved == 2) {
                         result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
                                 + "FROM luggage "
                                 + "WHERE statusid=" + type
@@ -240,8 +240,8 @@ public class ChartTools {
      * @param type is the type of luggage that needs to be pulled from the
      * database as follow: 1 = lost, 2 = found.
      * @param employee is the employee of who the data belongs to.
-     * @param resolved is the resolved parameter that pulls data as follow: 1 =
-     * unresolved, 2 = resolved, 3 = all.
+     * @param resolved is the resolved parameter that pulls data as follow: 0 =
+     * unresolved, 1 = resolved, 2 = all.
      * @return an ObservableList containing ChartTools elements per date
      * interval.
      * @throws SQLException when an SQL error has occured.
@@ -258,7 +258,7 @@ public class ChartTools {
                 case (1): {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
+                    if (resolved == 2) {
                         result = statement.executeQuery("SELECT registerdate, DATE_FORMAT(registerdate, '%Y-%m-%d') AS date, statusid AS status, COUNT(registerdate) AS aantal FROM luggage"
                                 + " WHERE statusid= " + type + " AND employeeid=" + employeeId
                                 + " GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d')"
@@ -296,7 +296,7 @@ public class ChartTools {
                 case (2): {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
+                    if (resolved == 2) {
                         result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal"
                                 + " FROM luggage"
                                 + " WHERE statusid=" + type + " AND employeeid=" + employeeId
@@ -341,7 +341,7 @@ public class ChartTools {
                 case (3): {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
+                    if (resolved == 2) {
                         result = statement.executeQuery("SELECT registerdate, YEAR(registerdate) AS year, statusid AS status, COUNT(registerdate) AS aantal "
                                 + "FROM luggage "
                                 + "WHERE statusid=" + type + " AND employeeid=" + employeeId
