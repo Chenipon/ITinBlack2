@@ -187,7 +187,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
             btnSaveStatistics.setDisable(false); //Enable the "Save Statistics" button
-            int interval, graphType, resolved;
+            int interval, graphType, resolved, type;
             switch (ddwnInterval.getText()) {
                 case ("Day"): {
                     interval = 1;
@@ -220,6 +220,24 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
                 }
                 default: {
                     resolved = 0;
+                    break;
+                }
+            }
+            switch (ddwnLuggageType.getText()) {
+                case ("Lost"): {
+                    type = 1;
+                    break;
+                }
+                case ("Found"): {
+                    type = 2;
+                    break;
+                }
+                case ("All"): {
+                    type = 3;
+                    break;
+                }
+                default: {
+                    type = 0;
                     break;
                 }
             }
@@ -281,7 +299,7 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             scatterChart.getData().clear();
             lblErrorMessage.setText("");
             if (graphType == 5) {
-                fillPieChart(start, end, interval);
+                fillPieChart(start, end, interval, employee, resolved, type);
             } else {
                 if (ddwnLuggageType.getText().equals("All")) {
                     fillGraphAllTypes(graphType, start, end, interval, employee, resolved);
@@ -334,14 +352,20 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         return true;
     }
 
-    private void fillPieChart(LocalDate start, LocalDate end, int interval) throws ClassNotFoundException, SQLException {
+    private void fillPieChart(LocalDate start, LocalDate end, int interval, User employee, int resolved, int type) throws ClassNotFoundException, SQLException {
         PieChartData pieChartData = new PieChartData();
-        pieChartData.getData(start, end, interval);
-        if (pieChartData.getLostLuggage() != 0) {
-            pieChart.getData().add(new PieChart.Data("Lost", pieChartData.getLostLuggage()));
+        pieChartData.getDataPerEmployee(start, end, interval, employee, resolved, type);
+        if (pieChartData.getFoundLuggageResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Resolved Found - " + pieChartData.getFoundLuggageResolved(), pieChartData.getFoundLuggageResolved()));
         }
-        if (pieChartData.getFoundLuggage() != 0) {
-            pieChart.getData().add(new PieChart.Data("Found", pieChartData.getFoundLuggage()));
+        if (pieChartData.getFoundLuggageUnResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Unresolved Found - " + pieChartData.getFoundLuggageUnResolved(), pieChartData.getFoundLuggageUnResolved()));
+        }
+        if (pieChartData.getLostLuggageResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Resolved Lost - " + pieChartData.getLostLuggageResolved(), pieChartData.getLostLuggageResolved()));
+        }
+        if (pieChartData.getLostLuggageUnResolved() != 0) {
+            pieChart.getData().add(new PieChart.Data("Unresolved Lost - " + pieChartData.getLostLuggageUnResolved(), pieChartData.getLostLuggageUnResolved()));
         }
         pieChart.setTitle("Total Luggage Reported");
     }

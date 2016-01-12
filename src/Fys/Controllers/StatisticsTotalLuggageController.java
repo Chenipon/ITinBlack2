@@ -283,7 +283,7 @@ public class StatisticsTotalLuggageController implements Initializable {
              * ints that were made earlier.
              */
             if (graphType == 5) {
-                fillPieChart(startDate.getValue(), endDate.getValue(), interval);
+//                fillPieChart(startDate.getValue(), endDate.getValue(), interval);
             } else {
                 if (ddwnLuggageType.getText().equals("All")) {
                     fillGraphAllTypes(graphType, startDate.getValue(),
@@ -343,24 +343,24 @@ public class StatisticsTotalLuggageController implements Initializable {
      * @throws SQLException when there is an SQL error.
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
-    private void fillPieChart(LocalDate start, LocalDate end, int interval)
-            throws ClassNotFoundException, SQLException {
-        PieChartData pieChartData = new PieChartData();
-        pieChartData.getData(start, end, interval);
-        if (pieChartData.getLostLuggage() != 0) {
-            pieChart.getData().add(new PieChart.Data("Lost",
-                    pieChartData.getLostLuggage()));
-        }
-        if (pieChartData.getFoundLuggage() != 0) {
-            pieChart.getData().add(new PieChart.Data("Found",
-                    pieChartData.getFoundLuggage()));
-        }
-        if (pieChartData.getConnectedLuggage() != 0) {
-            pieChart.getData().add(new PieChart.Data("Connected",
-                    pieChartData.getConnectedLuggage()));
-        }
-        pieChart.setTitle("Total Luggage Reported");
-    }
+//    private void fillPieChart(LocalDate start, LocalDate end, int interval)
+//            throws ClassNotFoundException, SQLException {
+//        PieChartData pieChartData = new PieChartData();
+//        pieChartData.getData(start, end, interval);
+//        if (pieChartData.getLostLuggage() != 0) {
+//            pieChart.getData().add(new PieChart.Data("Lost",
+//                    pieChartData.getLostLuggage()));
+//        }
+//        if (pieChartData.getFoundLuggage() != 0) {
+//            pieChart.getData().add(new PieChart.Data("Found",
+//                    pieChartData.getFoundLuggage()));
+//        }
+//        if (pieChartData.getConnectedLuggage() != 0) {
+//            pieChart.getData().add(new PieChart.Data("Connected",
+//                    pieChartData.getConnectedLuggage()));
+//        }
+//        pieChart.setTitle("Total Luggage Reported");
+//    }
 
     /**
      * void fillGraphSingleType(String luggageType, int graphType, LocalDate

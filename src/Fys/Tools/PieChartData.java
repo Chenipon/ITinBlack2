@@ -17,7 +17,6 @@ public class PieChartData {
     private int foundLuggageResolved;
     private int lostLuggageUnResolved;
     private int foundLuggageUnResolved;
-    private int connectedLuggage;
 
     /**
      *
@@ -27,7 +26,6 @@ public class PieChartData {
         this.foundLuggageResolved = 0;
         this.foundLuggageUnResolved = 0;
         this.foundLuggageUnResolved = 0;
-        this.connectedLuggage = 0;
     }
 
     /**
@@ -101,23 +99,38 @@ public class PieChartData {
 
     }
     
-    public void getDataPerEmployee(LocalDate startDate, LocalDate endDate, int interval, User employee, int resolved) throws ClassNotFoundException, SQLException {
+    public void getDataPerEmployee(LocalDate startDate, LocalDate endDate, int interval, User employee, int resolved, int type) throws ClassNotFoundException, SQLException {
         int employeeId = employee.getId();
         switch (interval) {
             case (1): {
                 try (Connection db = new ConnectMysqlServer().dbConnect()) {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
-                        result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved" +
+                    if (resolved == 2) {
+                        if (type == 3) {
+                            result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved" +
                                 " FROM luggage" +
                                 " WHERE employeeid="+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '"+startDate+"' AND '"+endDate+"'" +
                                 " GROUP BY statusid, resolved;");
+                        } else {
+                            result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved" +
+                                " FROM luggage" +
+                                " WHERE statusid = "+type+" AND employeeid="+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '"+startDate+"' AND '"+endDate+"'" +
+                                " GROUP BY statusid, resolved;");
+                        }
+                        
                     } else{
-                        result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved "
+                        if (type == 3) {
+                            result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved "
                             + "FROM luggage "
                             + "WHERE employeeid= "+employeeId+" AND resolved="+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'"
                             + "GROUP BY statusid;");
+                        } else {
+                            result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) AS aantal, resolved "
+                            + "FROM luggage "
+                            + "WHERE statusid = "+type+" AND employeeid= "+employeeId+" AND resolved="+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN '" + startDate + "' AND '" + endDate + "'"
+                            + "GROUP BY statusid;");
+                        }
                     }
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
@@ -141,17 +154,30 @@ public class PieChartData {
                 try (Connection db = new ConnectMysqlServer().dbConnect()) {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
-                        result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved" +
+                    if (resolved == 2) {
+                        if (type == 3) {
+                            result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved" +
                                 " FROM luggage" +
                                 " WHERE employeeId ="+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('"+startDate+"', '%Y-%m-01') AND LAST_DAY('"+endDate+"')" +
                                 " GROUP BY statusid, resolved;");
-                        
+                        } else {
+                            result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved" +
+                                " FROM luggage" +
+                                " WHERE statusid= "+type+" AND employeeid ="+employeeId+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('"+startDate+"', '%Y-%m-01') AND LAST_DAY('"+endDate+"')" +
+                                " GROUP BY statusid, resolved;");
+                        }
                     } else{
-                        result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved"
+                        if (type == 3) {
+                            result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved"
                             + " FROM luggage"
-                            + " WHERE employeeId = "+employeeId+" AND resolved= "+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%m-01') AND LAST_DAY('" + endDate + "')"
+                            + " WHERE employeeid = "+employeeId+" AND resolved= "+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%m-01') AND LAST_DAY('" + endDate + "')"
                             + " GROUP BY statusid;");
+                        } else {
+                            result = statement.executeQuery("SELECT registerdate, MONTH(registerdate) AS month, statusid, COUNT(*) AS aantal, resolved"
+                            + " FROM luggage"
+                            + " WHERE statusid= "+type+" AND employeeid = "+employeeId+" AND resolved= "+resolved+" AND DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%m-01') AND LAST_DAY('" + endDate + "')"
+                            + " GROUP BY statusid;");
+                        }
                     }
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
@@ -175,16 +201,31 @@ public class PieChartData {
                 try (Connection db = new ConnectMysqlServer().dbConnect()) {
                     Statement statement = db.createStatement();
                     ResultSet result;
-                    if (resolved == 3) {
-                        result  = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
+                    if (resolved == 2) {
+                        if (type == 3) {
+                            result  = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
                             + "FROM luggage "
                             + "WHERE employeeId= "+employeeId+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
                             + "GROUP BY statusid, resolved;");
+                        } else {
+                            result  = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
+                            + "FROM luggage "
+                            + "WHERE statusid = "+type+" AND employeeId= "+employeeId+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "GROUP BY statusid, resolved;");
+                        }
                     } else {
-                        result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
+                        if (type == 3) {
+                            result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
                             + "FROM luggage "
                             + "WHERE employeeId= "+employeeId+" AND resolved = "+resolved+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
                             + "GROUP BY statusid;");
+                        } else {
+                            result = statement.executeQuery("SELECT registerdate, statusid, COUNT(*) as aantal, resolved "
+                            + "FROM luggage "
+                            + "WHERE statusid ="+type+" AND employeeId= "+employeeId+" AND resolved = "+resolved+" DATE_FORMAT(registerdate, '%Y-%m-%d') BETWEEN DATE_FORMAT('" + startDate + "', '%Y-%01-01') AND DATE_FORMAT('" + endDate + "', '%Y-%12-%31') "
+                            + "GROUP BY statusid;");
+                        }
+                        
                     }
                     while (result.next()) {
                         if (result.getInt(2) == 1) {
@@ -213,30 +254,24 @@ public class PieChartData {
         }
 
     }
-    /**
-     *
-     * @return
-     */
-    public int getLostLuggage() {
+
+    public int getLostLuggageResolved() {
         return lostLuggageResolved;
     }
 
-    /**
-     *
-     * @return
-     */
-    public int getFoundLuggage() {
+    public int getFoundLuggageResolved() {
         return foundLuggageResolved;
     }
 
-    public int getConnectedLuggage() {
-        return connectedLuggage;
+    public int getLostLuggageUnResolved() {
+        return lostLuggageUnResolved;
     }
 
-    /**
-     *
-     * @return
-     */
+    public int getFoundLuggageUnResolved() {
+        return foundLuggageUnResolved;
+    }
+    
+    
     
     
 
