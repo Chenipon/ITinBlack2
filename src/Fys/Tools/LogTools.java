@@ -23,7 +23,7 @@ public class LogTools {
 
     /**
      * The method getCustomerRegisterDate(int id) grabs the Customers register date.
-     * @param id the id of a registered Customer.
+     * @param id the id of the Customer.
      * @return java.util.Date format of the register date of the Customer;
      * @throws SQLException when the Database gives errors
      * @throws ParseException when the date can't be parsed correctly
@@ -64,11 +64,11 @@ public class LogTools {
     /**
      * This method grabs the date when the luggage is registered.
      * @see getLuggageRegisterDate()
-     * @param id
-     * @return
-     * @throws SQLException
-     * @throws ParseException
-     * @throws ClassNotFoundException
+     * @param id the id of a registered Customer.
+     * @return java.util.Date
+     * @throws SQLException when the Database could not be contacted.
+     * @throws ParseException If a conversion of datatype goes wrong.
+     * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
     public java.util.Date getLuggageRegisterDate(int id) throws SQLException, ParseException, ClassNotFoundException {
         String registerdate = "";
@@ -85,10 +85,10 @@ public class LogTools {
     /**
      * This class grabs the luggage registerd per employee.
      * @see getLuggageRegisterEmployee()
-     * @param id
-     * @return
-     * @throws SQLException
-     * @throws ClassNotFoundException
+     * @param id the id of a registered Customer.
+     * @return username the username of the employee.
+     * @throws SQLException when the Database could not be contacted.
+     * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
     public String getLuggageRegisterEmployee(int id) throws SQLException, ClassNotFoundException {
         String username = "";
@@ -104,11 +104,11 @@ public class LogTools {
     
     /**
      * This method checks if an element in the luggage has changed.
-     * @param type
-     * @param editLuggage
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @param editLuggage The new data of the current luggage.
+     * @return boolean luggageChanged
+     * @throws SQLException when the Database could not be contacted.
+     * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
     public boolean checkLuggageChanged(Luggage editLuggage, String type) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -159,11 +159,11 @@ public class LogTools {
     
     /**
      * This method logs whenever a piece of luggage has been changed by an employee.
-     * @param editLuggage
-     * @param currentUser
-     * @param type
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @param editLuggage The new data of the current luggage.
+     * @param currentUser The current user that is editing the Customer, needed to get the ID of this user.
+     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @throws SQLException when the Database could not be contacted.
+     * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
     public void logLuggageChanged(Luggage editLuggage, User currentUser, String type) throws ClassNotFoundException, SQLException {
         String change = "";
@@ -230,11 +230,11 @@ public class LogTools {
     
     /**
      * This method checks if an element of the Customer object has changed.
-     * @param type The type of a Customer value
-     * @param editCustomer The Customer object that might have been edited
+     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @param editCustomer The Customer to check next to the one registered in the Database.
      * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws SQLException when the Database could not be contacted.
+     * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
     public boolean checkCustomerChanged(Customer editCustomer, String type) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -280,8 +280,8 @@ public class LogTools {
      * @param editCustomer The Customer to check next to the one registered in the Database.
      * @param currentUser The current user that is editing the Customer, needed to get the ID of this user.
      * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws SQLException when the Database could not be contacted.
+     * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
     public void logCustomerChanged(Customer editCustomer, User currentUser, String type) throws ClassNotFoundException, SQLException {
         String change = "";

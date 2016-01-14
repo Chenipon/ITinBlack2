@@ -22,34 +22,33 @@ public class LogCustomerTabelView {
     private String change;
 
     /**
-     * This method grabs the id of the Luggage, used to create the table.
-     * @see getId()
-     * @return
+     * int getId() This method grabs the id of the Luggage, used to create the table.
+     * @return id The id of the customer.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * This method sets the id of the Luggage, used to create the table.
-     * @see setId()
-     * @param id
+     * void setId() This method sets the id of the Luggage, used to create the table.
+     * @param id The id of the customer.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * String getRegisterdate() returns the registerdate of the Customer.
+     * @return registerdate The registerdate of the customer.
      */
     public String getRegisterdate() {
         return registerdate;
     }
 
     /**
-     *
-     * @param registerdate
+     * void setRegisterdate(String registerdate) sets the registerdate of the
+     * customer.
+     * @param registerdate The registerdate of the customer.
      */
     public void setRegisterdate(String registerdate) {
         /* 
@@ -64,42 +63,44 @@ public class LogCustomerTabelView {
     }
 
     /**
-     *
-     * @return
+     * String getChange() returns the changes made to the luggage of a Customer.
+     * @return change The changes made to the luggage.
      */
     public String getChange() {
         return change;
     }
 
     /**
-     *
-     * @param change
+     * void setChange(String change) fills the String change.
+     * @param change The changes made to the luggage.
      */
     public void setChange(String change) {
         this.change = change;
     }
 
     /**
-     *
-     * @return
+     * void setEmployee(String employee) returns the employee that made a change.
+     * @return employee The employee that made the change to the luggage or customer.
      */
     public String getEmployee() {
         return employee;
     }
 
     /**
-     *
-     * @param employee
+     * void setEmployee(String employee) sets the employee that made the change.
+     * @param employee The employee that made the change to the luggage or customer.
      */
     public void setEmployee(String employee) {
         this.employee = employee;
     }
 
     /**
-     *
-     * @param customer
-     * @return
-     * @throws Exception
+     * ObservableList<LogCustomerTabelView> getLogList(Customer customer)
+     * composes the loglist and puts all the data in the ObservableList.
+     * @param customer The customer typed in 
+     * @return logEntry FXCollection that logs all the changes made.
+     * @throws Exception Catches exceptions made while looping the data to
+     * the ObservableList.
      */
     public ObservableList<LogCustomerTabelView> getLogList(Customer customer) throws Exception {
         ObservableList<LogCustomerTabelView> logEntry = FXCollections.observableArrayList();
