@@ -6,6 +6,7 @@ import Fys.Tools.Screen;
 import Fys.Views.ViewModels.CustomerTableView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -140,10 +141,11 @@ public class CustomerOverviewController implements Initializable {
      *
      * @return an ObservableList containing the information that is added into
      * the TableView.
-     * @throws Exception when no connection with the Database could be
-     * established.
+     * @throws SQLException when there is an SQL error.
+     * @throws ClassNotFoundException when the jdbc can't be found.
      */
-    public ObservableList<CustomerTableView> getCustomerList() throws Exception {
+    public ObservableList<CustomerTableView> getCustomerList() throws ClassNotFoundException,
+            SQLException  {
         ObservableList<CustomerTableView> customerList = new CustomerTableView().getCustomerList();
         return customerList;
     }
