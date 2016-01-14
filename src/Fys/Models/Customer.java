@@ -93,6 +93,10 @@ public class Customer {
         return gender;
     }
     
+    public String getFullname(){
+        return this.firstName + " " + this.lastName;
+    }
+    
     /**
      *
      * @param gender

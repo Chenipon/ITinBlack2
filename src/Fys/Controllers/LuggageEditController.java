@@ -390,6 +390,15 @@ public class LuggageEditController implements Initializable {
             document.add(new Paragraph("Material: " + editLuggage.getMaterial()));
             document.add(new Paragraph("Status: " + editLuggage.getStatus().getStatusName()));
             document.add(new Paragraph("Register date: " + editLuggage.getRegisterDate()));
+            
+            if (connectedCustomer.getId() != 0) {
+                document.add(new Paragraph(" "));
+                document.add(new Paragraph("Connected customer", fontbold));
+                document.add(new Paragraph("Name: " + connectedCustomer.getFullname()));
+                document.add(new Paragraph("Address: " + connectedCustomer.getAddress()));
+                document.add(new Paragraph("Email: " + connectedCustomer.getEmail()));
+                document.add(new Paragraph("Telephone number: " + connectedCustomer.getPhone()));
+            }
             document.close();
             
             /* Display success of file save */
