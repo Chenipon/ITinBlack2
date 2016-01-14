@@ -333,7 +333,7 @@ public class Luggage {
      * public void setResolveDate(String resolveDate) sets the resolveDate. This
      * is the date that the resolved box has been checked.
      *
-     * @param resolveDate
+     * @param resolveDate the date when luggage is resolved with customer
      */
     public void setResolveDate(String resolveDate) {
         this.resolveDate = resolveDate;

@@ -111,8 +111,6 @@ public class LuggageEditController implements Initializable {
      * loaded and initialized. This method is used to initialize all text and
      * information before being displayed.
      *
-     * @param url
-     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

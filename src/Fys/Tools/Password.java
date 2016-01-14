@@ -25,7 +25,7 @@ public class Password {
      * storing in a database. Empty passwords are not supported.
      * @param password String password is a password in String format.
      * @return String saltedHash. This is an encrypted String of the String password.
-     * @throws java.lang.Exception 
+     * @throws java.lang.Exception a exception when somthing went wrong
      */
     public static String getSaltedHash(String password) throws Exception {
         byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLen);
@@ -37,9 +37,9 @@ public class Password {
      * Checks whether given plain text password corresponds to a stored salted
      * hash of the password.
      * @param password String password is the normal readable password
-     * @param stored
+     * @param stored the database password
      * @return boolean result of password check with the password stored in the Database
-     * @throws java.lang.Exception 
+     * @throws java.lang.Exception a exception when somthing went wrong
      */
     public static boolean check(String password, String stored) throws Exception {
         String[] saltAndPass = stored.split("\\$");
