@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * public class Luggage contains the attributes, constructor and methods of
- * the object Luggage. This object holds the data of luggage that gets registered
- * or edited in the application.
+ * public class Luggage contains the attributes, constructor and methods of the
+ * object Luggage. This object holds the data of luggage that gets registered or
+ * edited in the application.
+ *
  * @author Jeffrey van der Lingen, IS106-2
  */
 public class Luggage {
@@ -29,9 +30,10 @@ public class Luggage {
     private String resolveDate;
 
     /**
-     * public Luggage() creates an empty Luggage object, which stores the data
-     * of Luggage type, Luggage brand, Luggage material, Luggages color, Luggage comment,
-     * Luggage statusId, Luggage registerDate and Luggage Status.
+     * Constructor Luggage() creates an empty Luggage object, which stores the
+     * data of Luggage type, Luggage brand, Luggage material, Luggages color,
+     * Luggage comment, Luggage statusId, Luggage registerDate and Luggage
+     * Status.
      */
     public Luggage() {
         this.type = "";
@@ -46,19 +48,21 @@ public class Luggage {
         this.resolved = false;
         this.resolveDate = null;
     }
-    
+
     /**
-     * public Luggage(String type, String brand, String material, String color, String comment) 
-     * creates a Luggage object based of all the TextField input in the Luggage Add screens. 
-     * statusId, registerDate and Status have to be added seperately using the methodes 
-     * that Luggage() provides.
+     * Constructor Luggage(String type, String brand, String material, String
+     * color, String comment) creates a Luggage object based of all the
+     * TextField input in the Luggage Add screens. statusId, registerDate and
+     * Status have to be added seperately using the methodes that Luggage()
+     * provides.
+     *
      * @param type String type of Luggage
      * @param brand String brand of Luggage
      * @param material String material of Luggage
      * @param color String color of Luggage
      * @param comment String comment(s) of Luggage
      */
-    public Luggage(String type, String brand, String material, String color, 
+    public Luggage(String type, String brand, String material, String color,
             String comment) {
         this.type = type;
         this.brand = brand;
@@ -74,23 +78,30 @@ public class Luggage {
     }
 
     /**
-     * public int getId()
-     * @return Gets int id of Luggage Object. This is the Primary Key in the Database.
+     * public int getId() gets the id of a piece of Luggage.
+     *
+     * @return Gets int id of Luggage Object. This is the Primary Key in the
+     * Database.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * public void setId(int id)
-     * @param id Sets int id to Luggage Object "id". This is the Primary Key in the Database.
+     * public void setId(int id) sets the id of a piece of Luggage. This method
+     * should not be used as it can cause issues in the database as this id
+     * resembles the Primary Key in the database.
+     *
+     * @param id Sets int id to Luggage Object "id". This is the Primary Key in
+     * the Database.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * public String getType()
+     * public String getType() gets the type of a piece of Luggage.
+     *
      * @return Gets String type of Luggage Object
      */
     public String getType() {
@@ -98,14 +109,17 @@ public class Luggage {
     }
 
     /**
-     * public void setType(String type)
+     * public void setType(String type) sets the type of a piece of Luggage.
+     *
      * @param type Sets String type to Luggage Object "type"
      */
     public void setType(String type) {
         this.type = type;
     }
+
     /**
-     * public String getBrand()
+     * public String getBrand() gets the brand of a piece of Luggage.
+     *
      * @return Gets String brand of Luggage Object
      */
     public String getBrand() {
@@ -113,15 +127,17 @@ public class Luggage {
     }
 
     /**
-     * public void setType(String brand)
+     * public void setType(String brand) sets the brand of a piece of Luggage.
+     *
      * @param brand Sets String brand to Luggage Object "brand"
      */
     public void setBrand(String brand) {
         this.brand = brand;
     }
-    
+
     /**
-     * public String getMaterial()
+     * public String getMaterial() gets the material of a piece of Luggage.
+     *
      * @return Gets String material of Luggage Object
      */
     public String getMaterial() {
@@ -129,7 +145,9 @@ public class Luggage {
     }
 
     /**
-     * public void setMaterial(String material)
+     * public void setMaterial(String material) sets the material of a piece of
+     * Luggage.
+     *
      * @param material Sets String material to Luggage Object "material"
      */
     public void setMaterial(String material) {
@@ -137,7 +155,8 @@ public class Luggage {
     }
 
     /**
-     * public String getColor()
+     * public String getColor() gets the color of a piece of Luggage.
+     *
      * @return Gets String color of Luggage Object
      */
     public String getColor() {
@@ -145,7 +164,9 @@ public class Luggage {
     }
 
     /**
-     * public void setMaterial(String color)
+     * public void setMaterial(String color) sets the color of a piece of
+     * Luggage.
+     *
      * @param color Sets String color to Luggage Object "color"
      */
     public void setColor(String color) {
@@ -153,7 +174,8 @@ public class Luggage {
     }
 
     /**
-     * public String getComment()
+     * public String getComment() gets the comment of a piece of Luggage.
+     *
      * @return Gets String comment of Luggage Object
      */
     public String getComment() {
@@ -161,7 +183,9 @@ public class Luggage {
     }
 
     /**
-     * public void setComment(String comment)
+     * public void setComment(String comment) sets the comment of a piece of
+     * Luggage.
+     *
      * @param comment Sets String comment to Luggage Object "comment"
      */
     public void setComment(String comment) {
@@ -169,37 +193,53 @@ public class Luggage {
     }
 
     /**
-     * public String getStatusId()
-     * @return Gets int statusId of Luggage Object. This is the status of a piece of Luggage.
+     * public String getStatusId() gets the statusId of a piece of Luggage.
+     * Statusid = 1 is lost, statusid = 2 is found.
+     *
+     * @return Gets int statusId of Luggage Object. This is the status of a
+     * piece of Luggage.
      */
     public int getStatusId() {
         return statusId;
     }
 
     /**
-     * public String setStatusId(int statusId)
-     * @param statusId Sets int statusId to Luggage Object "statusId". This is the status
-     * of a piece of Luggage.
+     * public String setStatusId(int statusId) sets the statusId of a piece of
+     * Luggage. Statusid = 1 is lost, statusid = 2 is found. Other ids are not
+     * allowed.
+     *
+     * @param statusId Sets int statusId to Luggage Object "statusId". This is
+     * the status of a piece of Luggage.
      */
     public void setStatusId(int statusId) {
-        this.statusId = statusId;
+        if (statusId == 1 || statusId == 2) {
+            this.statusId = statusId;
+        } else {
+            throw new IllegalArgumentException("statusId can only be 1 or 2");
+        }
     }
 
     /**
-     * public String getRegisterDate()
-     * @return Gets String registerDate of Luggage Object. This is a String, and not
-     * a Date object as MySQL and Java use 2 different types of Date formatting. To
-     * format a Java Date to a MySQL Date, see the method convertJavaDateToSqlDate(Date date).
+     * public String getRegisterDate() gets the register date of a piece of
+     * Luggage. This is th date that the Luggage was added to the database.
+     *
+     * @return Gets String registerDate of Luggage Object. This is a String, and
+     * not a Date object as MySQL and Java use 2 different types of Date
+     * formatting. To format a Java Date to a MySQL Date, see the method
+     * convertJavaDateToSqlDate(Date date).
      */
     public String getRegisterDate() {
         return registerDate;
     }
 
     /**
-     * public String getRegisterDate()
-     * @param registerDate Sets String registerDate of Luggage Object. This is a String, and not
-     * a Date object as MySQL and Java use 2 different types of Date formatting. To
-     * format a Java Date to a MySQL Date, see the method convertJavaDateToSqlDate(Date date).
+     * public String getRegisterDate() sets the register date of a piece of
+     * Luggage. This is the date that the Luggage was added to the database.
+     *
+     * @param registerDate Sets String registerDate of Luggage Object. This is a
+     * String, and not a Date object as MySQL and Java use 2 different types of
+     * Date formatting. To format a Java Date to a MySQL Date, see the method
+     * convertJavaDateToSqlDate(Date date).
      */
     public void setRegisterDate(String registerDate) {
         /* 
@@ -212,10 +252,12 @@ public class Luggage {
         }
         this.registerDate = registerDate;
     }
-    
+
     /**
-     * public int getEmployeeId()
-     * @return Gets int employeeid of Luggage Object. This is the employee id of 
+     * public int getEmployeeId() gets the employeeId of a Luggage object. This
+     * is the employee that registered this piece of luggage.
+     *
+     * @return Gets int employeeid of Luggage Object. This is the employee id of
      * a piece of Luggage.
      */
     public int getEmployeeId() {
@@ -223,58 +265,89 @@ public class Luggage {
     }
 
     /**
+     * public void setEmployeeId(int employeeId) sets the employeeId of a
+     * Luggage object. This is the employee that registered this piece of
+     * luggage.
      *
-     * @param employeeId Sets int employeeId to Luggage Object "employeeId". This is the employee
-     * id of a piece of Luggage.
+     * @param employeeId Sets int employeeId to Luggage Object "employeeId".
+     * This is the employee id of a piece of Luggage.
      */
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
     /**
-     * public Status getStatus()
-     * @return Status Gets a Status object which holds the statusId and statusName.
+     * public Status getStatus() gets the Status of a Luggage object.
+     *
+     * @return Status Gets a Status object which holds the statusId and
+     * statusName.
      */
     public Status getStatus() {
         return this.status;
     }
 
     /**
-     * public Status getStatus()
-     * @param status Sets Status status to Luggage Object "status" which holds 
+     * public Status getStatus() sets the Status of a Luggage object.
+     *
+     * @param status Sets Status status to Luggage Object "status" which holds
      * the statusId and statusName.
      */
     public void setStatus(Status status) {
         this.status = status;
     }
 
+    /**
+     * public boolean isResolved() gets the resolved state of this Luggage
+     * object. This is the boolean that indicates if the Luggage has been
+     * finished or not.
+     *
+     * @return true if the Luggage has been resolved, false otherwise.
+     */
     public boolean isResolved() {
         return resolved;
     }
 
+    /**
+     * public void setResolved(boolean resolved) sets the resolved state of this
+     * Luggage object. Thsi is the boolean that indicates if the Luggage has
+     * been finished or not.
+     *
+     * @param resolved is the boolean that indicates whether or not a piece of
+     * Luggage has been resolved.
+     */
     public void setResolved(boolean resolved) {
         this.resolved = resolved;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getResolveDate() {
         return resolveDate;
     }
 
+    /**
+     *
+     * @param resolveDate
+     */
     public void setResolveDate(String resolveDate) {
         this.resolveDate = resolveDate;
     }
-    
+
     /**
-     * public void insertLuggage(Luggage luggage)
-     * This method inserts a Luggage object into a connected Database using the
-     * ConnectMysqlServer class.
+     * public void insertLuggage(Luggage luggage) This method inserts a Luggage
+     * object into a connected Database using the ConnectMysqlServer class.
+     *
      * @param luggage Luggage object that needs to be imported into the Database
      * @throws ClassNotFoundException
      * @throws SQLException
      */
     public void insertLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO luggage (type,brand,material,color,comments,registerdate,statusid,employeeid,resolved,resolvedate) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            String query = ("INSERT INTO luggage (type,brand,material,color,comments,"
+                    + "registerdate,statusid,employeeid,resolved,resolvedate) "
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, luggage.type);
             preparedStatement.setString(2, luggage.brand);
@@ -289,18 +362,21 @@ public class Luggage {
             preparedStatement.executeUpdate();
         }
     }
-    
+
     /**
-     * public void updateLuggage(Luggage luggage)
-     * This method updates already registered luggage, which can be used in the
-     * events of changing of luggage data.
+     * public void updateLuggage(Luggage luggage) This method updates already
+     * registered luggage, which can be used in the events of changing of
+     * luggage data.
+     *
      * @param luggage Luggage luggage is the luggage that needs to be updated
      * @throws ClassNotFoundException
      * @throws SQLException
      */
     public void updateLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("UPDATE luggage SET type = ?,brand = ?,material = ?,color = ?,comments = ?,statusid = ?,resolved = ?,resolvedate = ? WHERE id=" + luggage.getId());
+            String query = ("UPDATE luggage SET type = ?,brand = ?,material = ?,color = ?,"
+                    + "comments = ?,statusid = ?,resolved = ?,resolvedate = ? WHERE id="
+                    + luggage.getId());
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, luggage.type);
             preparedStatement.setString(2, luggage.brand);
@@ -313,19 +389,23 @@ public class Luggage {
             preparedStatement.executeUpdate();
         }
     }
-    
+
     /**
      * public int getStatusIdByName(String statusName)
+     *
      * @param statusName String of a status name of a piece of luggage.
-     * @return the id of a status name, as defined in the Database "luggagestatus".
-     * Returns 0 when the status name is not found in the Database.
+     * @return the id of a status name, as defined in the Database
+     * "luggagestatus". Returns 0 when the status name is not found in the
+     * Database.
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public int getStatusIdByName(String statusName) throws ClassNotFoundException, SQLException {
+    public int getStatusIdByName(String statusName)
+            throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM luggagestatus WHERE statusname='" + statusName + "'");
+            ResultSet result = statement.executeQuery("SELECT * FROM luggagestatus"
+                    + " WHERE statusname='" + statusName + "'");
             while (result.next()) {
                 return result.getInt(1);
             }
@@ -335,8 +415,11 @@ public class Luggage {
 
     /**
      * public Luggage getLuggageById(int id)
-     * @param id int id is the Primary Key of a Luggage object layed out in the Database.
-     * @return Luggage object made out of the data from a row with the specified Primary Key.
+     *
+     * @param id int id is the Primary Key of a Luggage object layed out in the
+     * Database.
+     * @return Luggage object made out of the data from a row with the specified
+     * Primary Key.
      * @throws ClassNotFoundException
      * @throws SQLException
      */
@@ -351,7 +434,7 @@ public class Luggage {
                 this.material = result.getString(4);
                 this.color = result.getString(5);
                 this.comment = result.getString(6);
-                this.setRegisterDate(result.getString(7)); //Fix the .0 issue by calling on the .setRegisterDate method here.
+                this.setRegisterDate(result.getString(7)); //.0 fix applied here.
                 this.statusId = result.getInt(8);
                 this.employeeId = result.getInt(10);
                 this.status = new Status().getStatusById(this.statusId);
@@ -361,11 +444,13 @@ public class Luggage {
         }
         return this;
     }
-    
-    public boolean checkIfLuggageIsConnected(Luggage luggage) throws ClassNotFoundException, SQLException {
+
+    public boolean checkIfLuggageIsConnected(Luggage luggage)
+            throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT id FROM connection WHERE luggageid=" + id);
+            ResultSet result = statement.executeQuery("SELECT id FROM connection"
+                    + " WHERE luggageid=" + id);
             while (result.next()) {
                 return true;
             }
