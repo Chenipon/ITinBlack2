@@ -5,6 +5,7 @@ import Fys.Models.User;
 import Fys.Tools.ConnectMysqlServer;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,27 +23,37 @@ public class LogLuggageTabelView {
     private String change;
 
     /**
-     * This method grabs the id of the Luggage, used to create the table.
-     * @see getId()
-     * @return
+     * int getId() gets the id of the luggage.
+     * 
+     * @return int id 
      */
     public int getId() {
         return id;
     }
 
     /**
-     * This method sets the id of the Luggage, used to create the table.
-     * @see setId()
-     * @param id
+     * void setId(int id) sets the id of the luggage.
+     * 
+     * @param id is the id that needs to be set in this class
      */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * String getRegisterdate() gets the Registerdate of the Luggage.
+     * 
+     * @return String registerdate 
+     */
     public String getRegisterdate() {
         return registerdate;
     }
 
+    /**
+     * setRegisterdate(String registerdate) sets the Registerdate of the Luggage.
+     * 
+     * @param registerdate is the registerdate that needs to be set in this class
+     */
     public void setRegisterdate(String registerdate) {
         /* 
          * For a strange reason, MySQL adds ".0" after the date. 
@@ -55,27 +66,59 @@ public class LogLuggageTabelView {
         this.registerdate = registerdate;
     }
 
+    /**
+     * String getChange() gets the changes that are made to the luggage. 
+     * 
+     * @return String change
+     */
     public String getChange() {
         return change;
     }
 
+    /**
+     * void setChange(String change) sets the changes that are made to the luggage.
+     * 
+     * @param change is the change that needs to be set in this class
+     */
     public void setChange(String change) {
         this.change = change;
     }
 
+    /**
+     * String getEmployee() gets the employee that is needed for this table.
+     * 
+     * @return String employee
+     */
     public String getEmployee() {
         return employee;
     }
 
+    /**
+     * void setEmployee(String employee) sets the employee for the table.
+     * 
+     * @param employee is the employee that needs to be set in this class
+     */
     public void setEmployee(String employee) {
         this.employee = employee;
     }
 
-    public ObservableList<LogLuggageTabelView> getLogList(Luggage luggage) throws Exception {
+    /**
+     * ObservableList<LogLuggageTabelView> getLogList(Luggage luggage) returns an ObservableList
+     * that can be used in the TableView.
+     * 
+     * @param luggage is the luggage that needs to be set in this class
+     * @return logEntry
+     * @throws SQLException when there is an SQL error.
+     * @throws ClassNotFoundException when the jdbc can't be found.
+     */
+    public ObservableList<LogLuggageTabelView> getLogList(Luggage luggage) throws ClassNotFoundException, SQLException {
         ObservableList<LogLuggageTabelView> logEntry = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM logluggage WHERE luggageid=" + luggage.getId() + " ORDER BY logdate DESC");
+            ResultSet result = statement.executeQuery(
+                      " SELECT * FROM logluggage"
+                    + " WHERE luggageid=" + luggage.getId() + ""
+                    + " ORDER BY logdate DESC");
             while (result.next()) {
                 LogLuggageTabelView logLuggage = new LogLuggageTabelView();
                 logLuggage.setRegisterdate(result.getString(2));
