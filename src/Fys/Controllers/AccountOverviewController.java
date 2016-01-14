@@ -86,7 +86,7 @@ public class AccountOverviewController implements Initializable {
         columnLastname.setCellValueFactory(
                 new PropertyValueFactory<AccountTabelView, String>("lastname"));
         columnRole.setCellValueFactory(
-                new PropertyValueFactory<AccountTabelView, String>("role"));
+                new PropertyValueFactory<AccountTabelView, String>("roleName"));
         columnActive.setCellValueFactory(
                 new PropertyValueFactory<AccountTabelView, String>("active"));
         columnAction.setCellValueFactory(

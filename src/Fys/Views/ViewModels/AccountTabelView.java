@@ -21,7 +21,7 @@ public class AccountTabelView {
     private String username;
     private String firstname;
     private String lastname;
-    private String role;
+    private String roleName;
     private String active;
 
     /**
@@ -102,21 +102,22 @@ public class AccountTabelView {
     }
 
     /**
-     * public String getRole() gets the role of the User object.
+     * public String getRoleName() gets the roleName of the User object.
      *
-     * @return the role name of the User object.
+     * @return the roleName name of the User object.
      */
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
     /**
-     * public void setRole(String role) sets the role of the User object.
+     * public void setRoleName(String roleName) sets the roleName of the User
+     * object.
      *
-     * @param role the role name of the User object.
+     * @param roleName the roleName name of the User object.
      */
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     /**
@@ -161,7 +162,7 @@ public class AccountTabelView {
                 foundUsers.setUsername(result.getString(2));
                 foundUsers.setFirstname(result.getString(4));
                 foundUsers.setLastname(result.getString(5));
-                foundUsers.setRole(role.getRoleName());
+                foundUsers.setRoleName(role.getRoleName());
                 if (result.getBoolean(8)) {
                     foundUsers.setActive("Active");
                 } else {
@@ -200,7 +201,7 @@ public class AccountTabelView {
                 foundUsers.setUsername(result.getString(2));
                 foundUsers.setFirstname(result.getString(4));
                 foundUsers.setLastname(result.getString(5));
-                foundUsers.setRole(role.getRoleName());
+                foundUsers.setRoleName(role.getRoleName());
                 if (result.getBoolean(8)) {
                     foundUsers.setActive("Active");
                 } else {
