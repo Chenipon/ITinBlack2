@@ -120,11 +120,12 @@ public class LuggageAddController implements Initializable {
                 luggageColor.setStyle("-fx-border-width: 0px;");
 
                 DateConverter dateConverter = new DateConverter();
+                Status status = new Status().getStatusByName(ddwnLuggageStatus.getText());
                 Luggage luggage = new Luggage(luggageType.getText(), luggageBrand.getText(),
                         luggageMaterial.getText(), luggageColor.getText(), luggageComments.getText());
-                luggage.setStatusId(luggage.getStatusIdByName(ddwnLuggageStatus.getText()));
+                luggage.setStatusId(status.getId());
                 luggage.setRegisterDate(dateConverter.getCurrentDateInSqlFormat());
-                luggage.setStatus(new Status().getStatusByName(ddwnLuggageStatus.getText()));
+                luggage.setStatus(status);
                 luggage.setEmployeeId(currentUser.getId());
                 luggage.insertLuggage(luggage);
                 

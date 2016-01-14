@@ -320,14 +320,18 @@ public class Luggage {
     }
 
     /**
+     * public String getResolveDate() gets the resolveDate. This is the date
+     * that the resolved box has been checked.
      *
-     * @return
+     * @return the resolveDate as a String.
      */
     public String getResolveDate() {
         return resolveDate;
     }
 
     /**
+     * public void setResolveDate(String resolveDate) sets the resolveDate. This
+     * is the date that the resolved box has been checked.
      *
      * @param resolveDate
      */
@@ -337,11 +341,11 @@ public class Luggage {
 
     /**
      * public void insertLuggage(Luggage luggage) This method inserts a Luggage
-     * object into a connected Database using the ConnectMysqlServer class.
+     * object into the database.
      *
      * @param luggage Luggage object that needs to be imported into the Database
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL exception error occurs.
      */
     public void insertLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -369,8 +373,8 @@ public class Luggage {
      * luggage data.
      *
      * @param luggage Luggage luggage is the luggage that needs to be updated
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL exception error occurs.
      */
     public void updateLuggage(Luggage luggage) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -391,37 +395,15 @@ public class Luggage {
     }
 
     /**
-     * public int getStatusIdByName(String statusName)
-     *
-     * @param statusName String of a status name of a piece of luggage.
-     * @return the id of a status name, as defined in the Database
-     * "luggagestatus". Returns 0 when the status name is not found in the
-     * Database.
-     * @throws ClassNotFoundException
-     * @throws SQLException
-     */
-    public int getStatusIdByName(String statusName)
-            throws ClassNotFoundException, SQLException {
-        try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM luggagestatus"
-                    + " WHERE statusname='" + statusName + "'");
-            while (result.next()) {
-                return result.getInt(1);
-            }
-            return 0;
-        }
-    }
-
-    /**
-     * public Luggage getLuggageById(int id)
+     * public Luggage getLuggageById(int id) gets a piece of Luggage by it's id
+     * from the database.
      *
      * @param id int id is the Primary Key of a Luggage object layed out in the
      * Database.
      * @return Luggage object made out of the data from a row with the specified
      * Primary Key.
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL exception error occurs.
      */
     public Luggage getLuggageById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -445,6 +427,16 @@ public class Luggage {
         return this;
     }
 
+    /**
+     * public boolean checkIfLuggageIsConnected(Luggage luggage) checks if there
+     * is a connection valid in the database containing a given piece of
+     * Luggage.
+     *
+     * @param luggage The piece of Luggage that needs to be checked.
+     * @return true if a connection has been found, false otherwise.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL exception error occurs.
+     */
     public boolean checkIfLuggageIsConnected(Luggage luggage)
             throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
