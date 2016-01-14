@@ -23,7 +23,7 @@
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Text>
-                  <Text layoutX="24.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Luggage per Employee statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected per registered employee in the application. A start and end date can also be specified to get a specific timerange. Press &quot;Print Statistics&quot; to print the current chart." wrappingWidth="370.486328125" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="51.0" />
+                  <Text layoutX="24.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Luggage per Employee statistics show a bar chart of all luggage of a certain type: Lost, Found or Connected per registered employee in the application. A start and end date can also be specified to get a specific timerange. Press &quot;Save Statistics to PDF&quot; to save the current chart." wrappingWidth="395.486328125" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="51.0" />
                   <Text layoutX="143.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="126.515625">
                      <font>
                         <Font name="Arial" size="16.0" />

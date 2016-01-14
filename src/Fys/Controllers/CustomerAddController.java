@@ -107,7 +107,7 @@ public class CustomerAddController implements Initializable {
     private void btnAddCustomerEvent(ActionEvent event) 
             throws ClassNotFoundException, SQLException, IOException {
         if (!(firstName.getText().equals("") || lastName.getText().equals("") || 
-                phone.getText().equals("") || address.getText().equals(""))) {
+                phone.getText().equals(""))) {
             if (!ddwnGender.getText().equals("Select...")) {
                 lblErrorMessage.setText("");
                 firstName.setStyle("-fx-border-width: 0px;");
@@ -137,7 +137,6 @@ public class CustomerAddController implements Initializable {
             firstName.setStyle("-fx-text-box-border: red;");
             lastName.setStyle("-fx-text-box-border: red;");
             phone.setStyle("-fx-text-box-border: red;");
-            address.setStyle("-fx-text-box-border: red;");
         }
     }
     

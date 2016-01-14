@@ -31,11 +31,15 @@ public class AccountEditController implements Initializable {
     private static Screen screen;
     private static User currentUser;
     private static User editUser;
-    
-    @FXML private Label lblUsername, lblError;
-    @FXML private TextField txtUsername, txtPassword, txtFirstName, txtLastName;
-    @FXML private ComboBox comboRoles;
-    @FXML private CheckBox chckActive;
+
+    @FXML
+    private Label lblUsername, lblError;
+    @FXML
+    private TextField txtUsername, txtPassword, txtFirstName, txtLastName;
+    @FXML
+    private ComboBox comboRoles;
+    @FXML
+    private CheckBox chckActive;
 
     /**
      * void setScreen(Screen newScreen) sets the Screen element for the
@@ -125,28 +129,21 @@ public class AccountEditController implements Initializable {
         txtUsername.setStyle("-fx-border-width: 0px;");
         Role newRole = (Role) comboRoles.getSelectionModel().getSelectedItem();
         User checkUser = new User().getUserByUsername(txtUsername.getText());
-        if (editUser.getUsername().equals(txtUsername.getText())) {
-            editUser.setFirstname(txtFirstName.getText());
-            editUser.setLastname(txtLastName.getText());
-            if (chckActive.selectedProperty().getValue()) {
-                editUser.setActive(true);
-            } else {
-                editUser.setActive(false);
-            }
-            editUser.setRoleId(newRole.getId());
-            if (!txtPassword.getText().equals("")) {
-                editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
-            }
-            editUser.updateUser(editUser);
-            AccountOverviewController.setUser(currentUser);
-            AccountOverviewController.setScreen(screen);
-            screen.change("AccountOverview");
+        if (txtUsername.getText().equals("") || txtFirstName.getText().equals("")
+                || txtLastName.getText().equals("")) {
+            lblError.setText("The highlighted fields can't be empty");
+            txtUsername.setStyle("-fx-text-box-border: red;");
+            txtFirstName.setStyle("-fx-text-box-border: red;");
+            txtLastName.setStyle("-fx-text-box-border: red;");
         } else {
-            if (checkUser.getId() == 0) {
-                editUser.setUsername(txtUsername.getText());
+            if (editUser.getUsername().equals(txtUsername.getText())) {
                 editUser.setFirstname(txtFirstName.getText());
                 editUser.setLastname(txtLastName.getText());
-                editUser.setActive(chckActive.selectedProperty().getValue());
+                if (chckActive.selectedProperty().getValue()) {
+                    editUser.setActive(true);
+                } else {
+                    editUser.setActive(false);
+                }
                 editUser.setRoleId(newRole.getId());
                 if (!txtPassword.getText().equals("")) {
                     editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
@@ -156,11 +153,25 @@ public class AccountEditController implements Initializable {
                 AccountOverviewController.setScreen(screen);
                 screen.change("AccountOverview");
             } else {
-                lblError.setText("Username already exists!");
-                txtUsername.setStyle("-fx-text-box-border: red;");
+                if (checkUser.getId() == 0) {
+                    editUser.setUsername(txtUsername.getText());
+                    editUser.setFirstname(txtFirstName.getText());
+                    editUser.setLastname(txtLastName.getText());
+                    editUser.setActive(chckActive.selectedProperty().getValue());
+                    editUser.setRoleId(newRole.getId());
+                    if (!txtPassword.getText().equals("")) {
+                        editUser.setPassword(Password.getSaltedHash(txtPassword.getText()));
+                    }
+                    editUser.updateUser(editUser);
+                    AccountOverviewController.setUser(currentUser);
+                    AccountOverviewController.setScreen(screen);
+                    screen.change("AccountOverview");
+                } else {
+                    lblError.setText("Username already exists!");
+                    txtUsername.setStyle("-fx-text-box-border: red;");
+                }
             }
         }
-
     }
 
     /**
