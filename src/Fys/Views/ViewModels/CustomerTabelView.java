@@ -9,9 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * This class is used to fill data into a TableView, 
+ * which is displayed on the CustomerOverview screen.
+ * 
  * @author Jeffrey van der Lingen, Daan Befort IS106-2
  */
+
+
 public class CustomerTabelView {
 
     private int id;
@@ -24,7 +28,7 @@ public class CustomerTabelView {
 
     /**
      * This method grabs the id of the Customer
-     * @return id of user
+     * @return the id of user
      */
     public int getId() {
         return id;
