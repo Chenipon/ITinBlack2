@@ -178,9 +178,11 @@ public class CustomerTableView {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
-            result = statement.executeQuery("SELECT * FROM customer WHERE firstname LIKE '%"
-                    + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%' OR address LIKE '%"
-                    + searchTerm + "%' OR email LIKE '%" + searchTerm + "%'");
+            result = statement.executeQuery("SELECT * FROM customer WHERE "
+                    + "concat(firstname, ' ' , lastname) LIKE '%" + searchTerm + "%' "
+                    + "OR address LIKE '%" + searchTerm + "%' "
+                    + "OR email LIKE '%" + searchTerm + "%'"
+                    + "OR gender = '" + searchTerm + "'");
             while (result.next()) {
                 CustomerTableView foundCustomers = new CustomerTableView();
                 foundCustomers.setId(result.getInt(1));
