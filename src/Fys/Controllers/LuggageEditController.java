@@ -199,7 +199,7 @@ public class LuggageEditController implements Initializable {
     /**
      * ddwnStatusLostEvent() replaces the text in the Status dropdown with
      * "Lost" and sets the width to the default one of 200. Also disables the
-     * "Select Customer" button if visable.
+     * "Select Customer" button if visible.
      */
     @FXML
     private void ddwnStatusLostEvent() {
@@ -210,7 +210,7 @@ public class LuggageEditController implements Initializable {
     /**
      * ddwnStatusFoundEvent() replaces the text in the Status dropdown with
      * "Found" and sets the width to the default one of 200. Also disables the
-     * "Select Customer" button if visable.
+     * "Select Customer" button if visible.
      */
     @FXML
     private void ddwnStatusFoundEvent() {

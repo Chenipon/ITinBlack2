@@ -94,7 +94,7 @@ public class Connection {
      * @param connection is the connection that needs to be inserted into the
      * database.
      * @throws ClassNotFoundException when the jdbc could not be found.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      */
     public void insertConnection(Connection connection)
             throws ClassNotFoundException, SQLException {
@@ -114,7 +114,7 @@ public class Connection {
      * @param connection is the connection that needs to be updated in the
      * database.
      * @throws ClassNotFoundException when the jdbc could not be found.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      */
     public void updateConnection(Connection connection)
             throws ClassNotFoundException, SQLException {
@@ -135,7 +135,7 @@ public class Connection {
      * @param connection is the connection that needs to be deleted from the
      * database.
      * @throws ClassNotFoundException when the jdbc could not be found.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      */
     public void deleteConnection(Connection connection)
             throws ClassNotFoundException, SQLException {
@@ -153,7 +153,7 @@ public class Connection {
      *
      * @param luggageId is the luggage id that the Connection contains.
      * @return a Connection object initialized from given luggageId.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      * @throws ClassNotFoundException when the jdbc could not be found.
      */
     public Connection getConnectionByLuggageId(int luggageId)
@@ -177,7 +177,7 @@ public class Connection {
      *
      * @param customerId is the customer id that the Connection contains.
      * @return a Connection object initialized from given customerId.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      * @throws ClassNotFoundException when the jdbc could not be found.
      */
     public Connection getConnectionByCustomerId(int customerId)

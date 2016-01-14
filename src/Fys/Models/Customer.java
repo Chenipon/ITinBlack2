@@ -239,7 +239,7 @@ public class Customer {
      * @param customer is the customer that needs to be inserted into the
      * database.
      * @throws ClassNotFoundException when the jdbc could not be found.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      */
     public void insertCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -264,7 +264,7 @@ public class Customer {
      *
      * @param customer is the customer that needs to be updated in the database.
      * @throws ClassNotFoundException when the jdbc could not be found.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      */
     public void updateCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -288,7 +288,7 @@ public class Customer {
      * @param id is the id of the Customer that needs to be fetched.
      * @return the found Customer in the database.
      * @throws ClassNotFoundException when the jdbc could not be found.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      */
     public Customer getCustomerById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {

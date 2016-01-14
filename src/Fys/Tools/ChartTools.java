@@ -79,7 +79,7 @@ public class ChartTools {
      * unresolved, 1 = resolved, 2 = all.
      * @return an ObservableList containing ChartTools elements per date
      * interval.
-     * @throws SQLException when an SQL error has occured.
+     * @throws SQLException when an SQL error has occurred.
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
     public ObservableList<ChartTools> getLostOrFoundLuggage(LocalDate startDate,
@@ -274,7 +274,7 @@ public class ChartTools {
      * unresolved, 1 = resolved, 2 = all.
      * @return an ObservableList containing ChartTools elements per date
      * interval.
-     * @throws SQLException when an SQL error has occured.
+     * @throws SQLException when an SQL error has occurred.
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
     public ObservableList<ChartTools> getLostOrFoundLuggagePerEmployee(LocalDate startDate,

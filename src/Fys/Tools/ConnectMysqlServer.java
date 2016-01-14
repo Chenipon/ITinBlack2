@@ -22,7 +22,7 @@ public class ConnectMysqlServer {
      * @return the Connection object that can be used to connect with the
      * Database.
      * @throws ClassNotFoundException when the jdbc could not be found.
-     * @throws SQLException when an SQL exception occured.
+     * @throws SQLException when an SQL exception occurred.
      */
     public Connection dbConnect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");

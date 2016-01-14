@@ -298,7 +298,7 @@ public class StatisticsTotalLuggageController implements Initializable {
             areaChart.getData().clear();
             barChart.getData().clear();
             lineChart.getData().clear();
-            scatterChart.getData().clear();
+//            scatterChart.getData().clear();
 
             /*
              * Fill the new graphs with data based on the 
