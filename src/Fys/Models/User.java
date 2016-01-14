@@ -10,8 +10,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * User is the model for the user, having all attributes for the database model.
- * @author Daan
+ * This class contains the attributes, the constructor and the methods of the
+ * User object. The User object is the user of the application the logs in to do
+ * things inside the application.
+ *
+ * @author Daan Befort, IS106-2
  */
 public class User {
 
@@ -27,7 +30,7 @@ public class User {
     private Role role;
 
     /**
-     * public User() is the constructor for the User object.
+     * Constructor User() is the empty constructor for the User object.
      */
     public User() {
         this.username = "";
@@ -41,7 +44,8 @@ public class User {
     }
 
     /**
-     * public int getId() returns the id of the User object.
+     * int getId() gets the id of the User object.
+     *
      * @return id The id of the User
      */
     public int getId() {
@@ -49,15 +53,17 @@ public class User {
     }
 
     /**
-     * public void setId(int id) sets the id of the User object.
-     * @param id The id of the User
+     * void setId(int id) sets the id of the User object.
+     *
+     * @param id The new id of the User
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * public String getUsername() returns the username attribute of the User.
+     * String getUsername() gets the username attribute of the User.
+     *
      * @return username The username of the User object.
      */
     public String getUsername() {
@@ -65,7 +71,9 @@ public class User {
     }
 
     /**
-     * public void setUsername(String username) sets the username attribute of the User.
+     * public void setUsername(String username) sets the username attribute of
+     * the User.
+     *
      * @param username The username of the User object.
      */
     public void setUsername(String username) {
@@ -73,15 +81,18 @@ public class User {
     }
 
     /**
-     * public String getPassword() returns the password of the User.
-     * @return password The password of the user.
+     * String getPassword() gets the password of the User. This is the encrypted
+     * password from the database.
+     *
+     * @return password The password of the User.
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * public void setPassword(String password) sets the password of the user.
+     * void setPassword(String password) sets the password of the user.
+     *
      * @param password The password of the user.
      */
     public void setPassword(String password) {
@@ -89,39 +100,44 @@ public class User {
     }
 
     /**
-     * public String getFirstname() returns the firstname attribute of the User.
-     * @return firstname The first name of the user.
+     * String getFirstname() gets the firstname attribute of the User.
+     *
+     * @return firstname The first name of the User.
      */
     public String getFirstname() {
         return firstname;
     }
 
     /**
-     * public void setFirstname(String firstname) sets the firstname of the User.
-     * @param firstname The first name of the user.
+     * void setFirstname(String firstname) sets the firstname of the User.
+     *
+     * @param firstname The first name of the User.
      */
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
     /**
-     * public String getLastname() returns the lastnamme attribute of the User.
-     * @return lastname The last name of the user.
+     * String getLastname() gets the lastnamme attribute of the User.
+     *
+     * @return lastname The last name of the User.
      */
     public String getLastname() {
         return lastname;
     }
 
     /**
-     * public void setLastname(String lastname) sets the lastname of the User.
-     * @param lastname The last name of the user.
+     * void setLastname(String lastname) sets the lastname of the User.
+     *
+     * @param lastname The last name of the User.
      */
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
     /**
-     * public int getRoleId() returns the roleId of the User.
+     * int getRoleId() gets the roleId of the User.
+     *
      * @return roleId The id of the role assigned to the User.
      */
     public int getRoleId() {
@@ -129,7 +145,8 @@ public class User {
     }
 
     /**
-     * public void setRoleId(int roleId) sets the roleId of the User.
+     * void setRoleId(int roleId) sets the roleId of the User.
+     *
      * @param roleId The id of the role assigned to the User.
      */
     public void setRoleId(int roleId) {
@@ -137,41 +154,47 @@ public class User {
     }
 
     /**
-     * public String getRegisterDate() returns the registerDate of the User.
-     * @return registerDate The date when the user is registered
+     * String getRegisterDate() gets the registerDate of the User.
+     *
+     * @return registerDate The date when the User is registered
      */
     public String getRegisterDate() {
         return registerDate;
     }
 
     /**
-     * public void setRegisterDate(String registerDate) sets the registerdate
-     * of the User.
-     * @param registerDate The date when the user is registered
+     * void setRegisterDate(String registerDate) sets the registerdate of the
+     * User.
+     *
+     * @param registerDate The date when the User is registered
      */
     public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
     /**
-     * public boolean isActive() returns the active value of the User.
-     * @return active Determines if the user is active or disabled.
+     * boolean isActive() returns the active value of the User.
+     *
+     * @return active gets the status if the User is enabled or disabled, if
+     * they can log in or not.
      */
     public boolean isActive() {
         return active;
     }
 
     /**
-     * public void setActive(boolean active) sets the active value of 
-     * the User.
-     * @param active Determines if the user is active or disabled.
+     * void setActive(boolean active) sets the active value of the User.
+     *
+     * @param active sets the status of the User to active or inactive, if they
+     * can log in or not.
      */
     public void setActive(boolean active) {
         this.active = active;
     }
 
     /**
-     * public void setRole(Role role) sets the role for the User.
+     * void setRole(Role role) sets the role for the User.
+     *
      * @param role The role of the user.
      */
     public void setRole(Role role) {
@@ -180,52 +203,33 @@ public class User {
 
     /**
      * public Role getRole() returns the role of the user.
+     *
      * @return role The role of the user.
      */
     public Role getRole() {
         return this.role;
     }
-    
+
     /**
-     * public String fullName() returns the full name of the user
+     * String fullName() returns the full name of the User.
+     *
      * @return firstname, lastname The attributes for the Full Name of the User.
      */
     public String fullName() {
-        return this.firstname + " " + this.lastname;
+        return (this.firstname + " " + this.lastname);
     }
 
     /**
-     * public void insertUser(User user) throws ClassNotFoundException, 
-     * SQLException inserts the User object to the database.
-     * @param user The User object.
-     * @throws ClassNotFoundException MySqlConnector.jar not found.
-     * @throws SQLException Can't connect to the MySQL database.
+     * void insertUser(User user) inserts a new User object into the database.
+     *
+     * @param user The User object that needs to be inserted into the database.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL exception occurs.
      */
     public void insertUser(User user) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO user (username,password,firstname,lastname,roleid,registerdate,active) VALUES (?,?,?,?,?,?,?)");
-            PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
-            preparedStatement.setString(1, user.username);
-            preparedStatement.setString(2, user.password);
-            preparedStatement.setString(3, user.firstname);
-            preparedStatement.setString(4, user.lastname);
-            preparedStatement.setInt(5, user.roleId);
-            preparedStatement.setString(6, user.registerDate);
-            preparedStatement.setBoolean(7, user.active);
-            preparedStatement.executeUpdate();
-        }
-    }
-    
-    /**
-     * public void updateUser(User user) throws ClassNotFoundException, 
-     * SQLException updates the User inserted in the method.
-     * @param user Current User object.
-     * @throws ClassNotFoundException MySqlConnector.jar not found.
-     * @throws SQLException Can't connect to the MySQL database.
-     */
-    public void updateUser(User user) throws ClassNotFoundException, SQLException {
-        try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("UPDATE user SET username = ?, password=?,firstname=?,lastname=?,roleId=?,registerDate=?,active=? WHERE id=" + user.getId());
+            String query = ("INSERT INTO user (username,password,firstname,lastname,"
+                    + "roleid,registerdate,active) VALUES (?,?,?,?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
             preparedStatement.setString(1, user.username);
             preparedStatement.setString(2, user.password);
@@ -239,12 +243,35 @@ public class User {
     }
 
     /**
-     * public User getUserById(int id) throws ClassNotFoundException, 
-     * SQLException gets the user by the id typed in the method.
-     * @param id The id of the user.
-     * @return user The current user object.
-     * @throws ClassNotFoundException MySqlConnector.jar not found.
-     * @throws SQLException Can't connect to the MySQL database.
+     * void updateUser(User user) updates the given User object in the database.
+     *
+     * @param user The User object that needs to be updated in the databases.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL exception occurs.
+     */
+    public void updateUser(User user) throws ClassNotFoundException, SQLException {
+        try (Connection db = new ConnectMysqlServer().dbConnect()) {
+            String query = ("UPDATE user SET username = ?, password=?,firstname=?,lastname=?,"
+                    + "roleId=?,registerDate=?,active=? WHERE id=" + user.getId());
+            PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
+            preparedStatement.setString(1, user.username);
+            preparedStatement.setString(2, user.password);
+            preparedStatement.setString(3, user.firstname);
+            preparedStatement.setString(4, user.lastname);
+            preparedStatement.setInt(5, user.roleId);
+            preparedStatement.setString(6, user.registerDate);
+            preparedStatement.setBoolean(7, user.active);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    /**
+     * User getUserById(int id) gets a User object from the database by it's id.
+     *
+     * @param id The id of the User that needs to be fetched from the database.
+     * @return user The found User object.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL excepion occurs.
      */
     public User getUserById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -266,17 +293,20 @@ public class User {
     }
 
     /**
-     * public User getUserByUsername(String username) throws ClassNotFoundException, 
-     * SQLException searchs on the username the user provided.
-     * @param username The username of the user.
-     * @return User The current User object.
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * User getUserByUsername(String username) gets a User object from the
+     * database based of it's username.
+     *
+     * @param username The username of the User that needs to be fetched from
+     * the database.
+     * @return User The found User object.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL excepion occurs.
      */
     public User getUserByUsername(String username) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
+            ResultSet result = statement.executeQuery("SELECT * FROM user WHERE username='"
+                    + username + "'");
             while (result.next()) {
                 this.id = result.getInt(1);
                 this.username = result.getString(2);
@@ -293,11 +323,13 @@ public class User {
     }
 
     /**
-     * public ObservableList<User> getEmployees() throws ClassNotFoundException, 
-     * SQLException returns the employees in the form of an ObservableList.
-     * @return ObservableList<User> userlist The FXCollection containing all employees.
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * ObservableList<User> getEmployees() returns an ObservableList containing
+     * all Users that have roleid 3. This is used for the Manager screen to get
+     * the statistics per employee.
+     *
+     * @return an ObservableList of User objects that have roleid 3.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL excepion occurs.
      */
     public ObservableList<User> getEmployees() throws ClassNotFoundException, SQLException {
         ObservableList<User> userList = FXCollections.observableArrayList();

@@ -56,5 +56,20 @@
     -fx-pie-color: #EF9A9A;
 }
 .default-color2.chart-pie {
-    -fx-pie-color: #8BC34A;
+    -fx-pie-color: #FFAB40;
+}
+.default-color3.chart-pie {
+    -fx-pie-color: #FFCC80;
+}
+.default-color0.chart-series-line {
+    -fx-stroke: #C62828;
+}
+.default-color1.chart-series-line {
+    -fx-stroke: #EF9A9A;
+}
+.default-color0.chart-line-symbol {
+    -fx-background-color: #C62828;
+}
+.default-color1.chart-line-symbol {
+    -fx-background-color: #EF9A9A;
 }

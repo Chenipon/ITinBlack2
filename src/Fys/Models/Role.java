@@ -10,7 +10,8 @@ import javafx.collections.ObservableList;
 
 /**
  * The Role class defines the role and gets users by the Role attributes.
- * @author Daan
+ *
+ * @author Daan Befort, IS106-2
  */
 public class Role {
 
@@ -18,15 +19,16 @@ public class Role {
     private String roleName;
 
     /**
-     * public Role() is the constructor for the Role class.
+     * Constructor Role() is the empty constructor for the Role class.
      */
     public Role() {
         this.roleName = "";
     }
 
     /**
-     * public Role(String roleName) is the alternative constructor for the 
-     * Role class.
+     * Constructor Role(String roleName) is the main constructor for the Role
+     * class.
+     *
      * @param roleName The roleName for the Role class.
      */
     public Role(String roleName) {
@@ -34,7 +36,8 @@ public class Role {
     }
 
     /**
-     * public int getId() returns the id of the Role.
+     * int getId() gets the id of the Role.
+     *
      * @return id The id of the Role class.
      */
     public int getId() {
@@ -42,7 +45,8 @@ public class Role {
     }
 
     /**
-     * public void setId(int id) sets the Id of the Role.
+     * void setId(int id) sets the Id of the Role.
+     *
      * @param id The id of the Role class.
      */
     public void setId(int id) {
@@ -50,7 +54,8 @@ public class Role {
     }
 
     /**
-     * public String getRoleName() gets the rolename of the Role.
+     * String getRoleName() gets the rolename of the Role.
+     *
      * @return roleName The rolename of the Role.
      */
     public String getRoleName() {
@@ -58,7 +63,8 @@ public class Role {
     }
 
     /**
-     * public void setRoleName(String roleName) sets the rolename of the Role.
+     * void setRoleName(String roleName) sets the rolename of the Role.
+     *
      * @param roleName The rolename of the Role.
      */
     public void setRoleName(String roleName) {
@@ -66,26 +72,14 @@ public class Role {
     }
 
     /**
-     * public void insertRole(Role role) throws ClassNotFoundException, 
-     * SQLException inserts the role into the database.
-     * @param role The Role instance.
-     * @throws ClassNotFoundException MySqlConnector.jar not found.
-     * @throws SQLException Can't connect to the MySQL database.
-     */
-    public void insertRole(Role role) throws ClassNotFoundException, SQLException {
-        Connection db = new ConnectMysqlServer().dbConnect();
-        Statement statement = db.createStatement();
-        statement.executeQuery("INSERT INTO role (rolename) VALUES (" + role.getRoleName() + ")");
-        db.close();
-    }
-
-    /**
-     * public Role getRoleById(int id) throws ClassNotFoundException, 
-     * SQLException
-     * @param id The id of the Role class.
-     * @return Role Current role instance.
-     * @throws ClassNotFoundException MySqlConnector.jar not found.
-     * @throws SQLException Can't connect to the MySQL database.
+     * Role getRoleById(int id) gets a role from a given roleid from the
+     * database.
+     *
+     * @param id The id of the a role.
+     * @return the role created using the roleid.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException is thrown when no connection to the database could
+     * be established.
      */
     public Role getRoleById(int id) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -98,14 +92,16 @@ public class Role {
         }
         return this;
     }
-    
+
     /**
-     * public ObservableList<Role> getRoles() throws Exception stores all roles 
-     * in an FXCollection Arraylist.
-     * @return ObservableList<Role>
-     * @throws Exception
+     * public ObservableList<Role> getRoles() gets all the roles from the
+     * database and stores them in an ObservableList.
+     *
+     * @return an ObservableList containing all roles.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when there is an error in the SQL syntax.
      */
-    public ObservableList<Role> getRoles() throws Exception {
+    public ObservableList<Role> getRoles() throws ClassNotFoundException, SQLException {
         ObservableList<Role> roleList = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
@@ -119,14 +115,15 @@ public class Role {
         }
         return roleList;
     }
-    
+
     /**
-     * public Role getRoleByName(String name) throws ClassNotFoundException, 
-     * SQLException gets the role by ID.
+     * public Role getRoleByName(String name) SQLException gets the role by
+     * their name.
+     *
      * @param name The name of the role.
-     * @return Role Current Role class.
-     * @throws ClassNotFoundException MySqlConnector.jar not found.
-     * @throws SQLException Can't connect to the MySQL database.
+     * @return The Role of who the name belongs to.
+     * @throws ClassNotFoundException When the jdbc could not be found.
+     * @throws SQLException when there is an error in the SQL syntax.
      */
     public Role getRoleByName(String name) throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
@@ -139,5 +136,5 @@ public class Role {
         }
         return this;
     }
-    
+
 }
