@@ -14,9 +14,7 @@ import javafx.collections.ObservableList;
  * 
  * @author Jeffrey van der Lingen, Daan Befort IS106-2
  */
-
-
-public class CustomerTabelView {
+public class CustomerTableView {
 
     private int id;
     private String firstname;
@@ -145,14 +143,14 @@ public class CustomerTabelView {
      * @throws SQLException when there is an SQL error.
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
-    public ObservableList<CustomerTabelView> getCustomerList() 
+    public ObservableList<CustomerTableView> getCustomerList() 
             throws SQLException, ClassNotFoundException {
-        ObservableList<CustomerTabelView> customers = FXCollections.observableArrayList();
+        ObservableList<CustomerTableView> customers = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM customer");
             while (result.next()) {
-                CustomerTabelView foundCustomers = new CustomerTabelView();
+                CustomerTableView foundCustomers = new CustomerTableView();
                 foundCustomers.setId(result.getInt(1));
                 foundCustomers.setFirstname(result.getString(2));
                 foundCustomers.setLastname(result.getString(3));
@@ -174,9 +172,9 @@ public class CustomerTabelView {
      * @throws SQLException when there is an SQL error.
      * @throws ClassNotFoundException when the jdbc can't be found.
      */
-    public ObservableList<CustomerTabelView> getCustomerList(String searchTerm) 
+    public ObservableList<CustomerTableView> getCustomerList(String searchTerm) 
             throws SQLException, ClassNotFoundException {
-        ObservableList<CustomerTabelView> customers = FXCollections.observableArrayList();
+        ObservableList<CustomerTableView> customers = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
@@ -184,7 +182,7 @@ public class CustomerTabelView {
                     + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%' OR address LIKE '%"
                     + searchTerm + "%' OR email LIKE '%" + searchTerm + "%'");
             while (result.next()) {
-                CustomerTabelView foundCustomers = new CustomerTabelView();
+                CustomerTableView foundCustomers = new CustomerTableView();
                 foundCustomers.setId(result.getInt(1));
                 foundCustomers.setFirstname(result.getString(2));
                 foundCustomers.setLastname(result.getString(3));

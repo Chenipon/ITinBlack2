@@ -19,7 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import Fys.Views.ViewModels.LuggageTabelView;
+import Fys.Views.ViewModels.LuggageTableView;
 import java.sql.SQLException;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -78,26 +78,18 @@ public class LuggageOverviewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        colType.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("type"));
-        colBrand.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("brand"));
-        colMaterial.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("material"));
-        colColor.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("color"));
-        colComment.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("comment"));
-        colStatus.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("status"));
-        colResolved.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("resolved"));
-        colAction.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("action"));
-        Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView,
+        colType.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("type"));
+        colBrand.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("brand"));
+        colMaterial.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("material"));
+        colColor.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("color"));
+        colComment.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("comment"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("status"));
+        colResolved.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("resolved"));
+        colAction.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("action"));
+        Callback<TableColumn<LuggageTableView, String>, TableCell<LuggageTableView,
                 String>> printColumnCellFactory
-                = new Callback<TableColumn<LuggageTabelView, String>,
-                        TableCell<LuggageTabelView, String>>() {
+                = new Callback<TableColumn<LuggageTableView, String>,
+                        TableCell<LuggageTableView, String>>() {
             @Override
             public TableCell call(final TableColumn param) {
                 final TableCell cell = new TableCell() {
@@ -115,7 +107,7 @@ public class LuggageOverviewController implements Initializable {
                                 @Override
                                 public void handle(ActionEvent event) {
                                     param.getTableView().getSelectionModel().select(getIndex());
-                                    LuggageTabelView item = (LuggageTabelView) 
+                                    LuggageTableView item = (LuggageTableView) 
                                             tblLuggage.getSelectionModel().getSelectedItem();
                                     if (item != null) {
                                         try {
@@ -151,7 +143,7 @@ public class LuggageOverviewController implements Initializable {
     }
     
     /**
-     * ObservableList<LuggageTabelView> getLuggageList() returns an ObservableList
+     * ObservableList<LuggageTableView> getLuggageList() returns an ObservableList
      * that can be used in the TableView.
      *
      * @return an ObservableList containing the information that is added into
@@ -159,9 +151,9 @@ public class LuggageOverviewController implements Initializable {
      * @throws Exception when no connection with the Database could be
      * established.
      */
-    public ObservableList<LuggageTabelView> getLuggageList() throws Exception{
-        ObservableList<LuggageTabelView> luggageList= 
-                new LuggageTabelView().getLuggageList();
+    public ObservableList<LuggageTableView> getLuggageList() throws Exception{
+        ObservableList<LuggageTableView> luggageList= 
+                new LuggageTableView().getLuggageList();
         return luggageList;
     }
 
@@ -257,7 +249,7 @@ public class LuggageOverviewController implements Initializable {
         if (!ddwnLuggageType.getText().equals("Luggage Type")) {
             if (!ddwnResolved.getText().equals("Resolved")) {
                 lblErrorMessage.setText("");
-                ObservableList<LuggageTabelView> luggageList = new LuggageTabelView()
+                ObservableList<LuggageTableView> luggageList = new LuggageTableView()
                         .getLuggageList(lblSearch.getText(), ddwnLuggageType.getText(),
                                 ddwnResolved.getText());
                 tblLuggage.setItems(luggageList);

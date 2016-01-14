@@ -3,7 +3,7 @@ package Fys.Controllers;
 import Fys.Models.Customer;
 import Fys.Models.User;
 import Fys.Tools.Screen;
-import Fys.Views.ViewModels.CustomerTabelView;
+import Fys.Views.ViewModels.CustomerTableView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -74,24 +74,17 @@ public class CustomerOverviewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        colFirstName.setCellValueFactory(
-                new PropertyValueFactory<CustomerTabelView, String>("firstname"));
-        colLastName.setCellValueFactory(
-                new PropertyValueFactory<CustomerTabelView, String>("lastname"));
-        colGender.setCellValueFactory(
-                new PropertyValueFactory<CustomerTabelView, String>("gender"));
-        colPhone.setCellValueFactory(
-                new PropertyValueFactory<CustomerTabelView, String>("phone"));
-        colAddress.setCellValueFactory(
-                new PropertyValueFactory<CustomerTabelView, String>("address"));
-        colEmail.setCellValueFactory(
-                new PropertyValueFactory<CustomerTabelView, String>("email"));
-        colAction.setCellValueFactory(
-                new PropertyValueFactory<CustomerTabelView, String>("action"));
-        Callback<TableColumn<CustomerTabelView, String>, 
-                TableCell<CustomerTabelView, String>> printColumnCellFactory
-                = new Callback<TableColumn<CustomerTabelView, String>,
-                        TableCell<CustomerTabelView, String>>() {
+        colFirstName.setCellValueFactory(new PropertyValueFactory<CustomerTableView, String>("firstname"));
+        colLastName.setCellValueFactory(new PropertyValueFactory<CustomerTableView, String>("lastname"));
+        colGender.setCellValueFactory(new PropertyValueFactory<CustomerTableView, String>("gender"));
+        colPhone.setCellValueFactory(new PropertyValueFactory<CustomerTableView, String>("phone"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<CustomerTableView, String>("address"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<CustomerTableView, String>("email"));
+        colAction.setCellValueFactory(new PropertyValueFactory<CustomerTableView, String>("action"));
+        Callback<TableColumn<CustomerTableView, String>, 
+                TableCell<CustomerTableView, String>> printColumnCellFactory
+                = new Callback<TableColumn<CustomerTableView, String>,
+                        TableCell<CustomerTableView, String>>() {
             @Override
             public TableCell call(final TableColumn param) {
                 final TableCell cell = new TableCell() {
@@ -109,7 +102,7 @@ public class CustomerOverviewController implements Initializable {
                                 @Override
                                 public void handle(ActionEvent event) {
                                     param.getTableView().getSelectionModel().select(getIndex());
-                                    CustomerTabelView item = (CustomerTabelView) 
+                                    CustomerTableView item = (CustomerTableView) 
                                             tblCustomers.getSelectionModel().getSelectedItem();
                                     if (item != null) {
                                         try {
@@ -144,7 +137,7 @@ public class CustomerOverviewController implements Initializable {
     }
 
     /**
-     * ObservableList<CustomerTabelView> getCustomerList() returns an ObservableList
+     * ObservableList<CustomerTableView> getCustomerList() returns an ObservableList
      * that can be used in the TableView.
      *
      * @return an ObservableList containing the information that is added into
@@ -152,8 +145,8 @@ public class CustomerOverviewController implements Initializable {
      * @throws Exception when no connection with the Database could be
      * established.
      */
-    public ObservableList<CustomerTabelView> getCustomerList() throws Exception {
-        ObservableList<CustomerTabelView> customerList = new CustomerTabelView().getCustomerList();
+    public ObservableList<CustomerTableView> getCustomerList() throws Exception {
+        ObservableList<CustomerTableView> customerList = new CustomerTableView().getCustomerList();
         return customerList;
     }
     
@@ -197,8 +190,8 @@ public class CustomerOverviewController implements Initializable {
      */
     @FXML
     private void btnSearchCustomerEvent(ActionEvent event) throws Exception {
-        ObservableList<CustomerTabelView> customerList = 
-                new CustomerTabelView().getCustomerList(lblSearch.getText());
+        ObservableList<CustomerTableView> customerList = 
+                new CustomerTableView().getCustomerList(lblSearch.getText());
         tblCustomers.setItems(customerList);
     }
     

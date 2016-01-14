@@ -2,7 +2,7 @@ package Fys.Controllers;
 
 import Fys.Models.Luggage;
 import Fys.Views.ViewModels.LogLuggageTabelView;
-import Fys.Views.ViewModels.LuggageTabelView;
+import Fys.Views.ViewModels.LuggageTableView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -55,12 +55,9 @@ public class LogLuggageController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colDate.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("registerdate"));
-        colEmployee.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("employee"));
-        colLogEntry.setCellValueFactory(
-                new PropertyValueFactory<LuggageTabelView, String>("change"));
+        colDate.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("registerdate"));
+        colEmployee.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("employee"));
+        colLogEntry.setCellValueFactory(new PropertyValueFactory<LuggageTableView, String>("change"));
         try {
             tblLuggageLog.setItems(getLogList());
         } catch (Exception ex) {

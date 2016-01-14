@@ -2,7 +2,7 @@ package Fys.Controllers;
 
 import Fys.Models.User;
 import Fys.Tools.Screen;
-import Fys.Views.ViewModels.AccountTabelView;
+import Fys.Views.ViewModels.AccountTableView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -79,22 +79,16 @@ public class AccountOverviewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        columnUsername.setCellValueFactory(
-                new PropertyValueFactory<AccountTabelView, String>("username"));
-        columnFirstname.setCellValueFactory(
-                new PropertyValueFactory<AccountTabelView, String>("firstname"));
-        columnLastname.setCellValueFactory(
-                new PropertyValueFactory<AccountTabelView, String>("lastname"));
-        columnRole.setCellValueFactory(
-                new PropertyValueFactory<AccountTabelView, String>("roleName"));
-        columnActive.setCellValueFactory(
-                new PropertyValueFactory<AccountTabelView, String>("active"));
-        columnAction.setCellValueFactory(
-                new PropertyValueFactory<AccountTabelView, String>("username"));
-        Callback<TableColumn<AccountTabelView, String>, 
-                TableCell<AccountTabelView, String>> printColumnCellFactory
-                = new Callback<TableColumn<AccountTabelView, String>,
-                        TableCell<AccountTabelView, String>>() {
+        columnUsername.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("username"));
+        columnFirstname.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("firstname"));
+        columnLastname.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("lastname"));
+        columnRole.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("roleName"));
+        columnActive.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("active"));
+        columnAction.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("username"));
+        Callback<TableColumn<AccountTableView, String>, 
+                TableCell<AccountTableView, String>> printColumnCellFactory
+                = new Callback<TableColumn<AccountTableView, String>,
+                        TableCell<AccountTableView, String>>() {
                     @Override
                     public TableCell call(final TableColumn param) {
                         final TableCell cell = new TableCell() {
@@ -113,8 +107,8 @@ public class AccountOverviewController implements Initializable {
                                         public void handle(ActionEvent event) {
                                             param.getTableView().getSelectionModel()
                                             .select(getIndex());
-                                            AccountTabelView item = 
-                                                    (AccountTabelView) tblUsers
+                                            AccountTableView item = 
+                                                    (AccountTableView) tblUsers
                                             .getSelectionModel().getSelectedItem();
                                             if (item != null) {
                                                 try {
@@ -155,7 +149,7 @@ public class AccountOverviewController implements Initializable {
     }
 
     /**
-     * ObservableList<AccountTabelView> getUserList() returns an ObservableList
+     * ObservableList<AccountTableView> getUserList() returns an ObservableList
      * that can be used in the TableView.
      *
      * @return an ObservableList containing the information that is added into
@@ -163,8 +157,8 @@ public class AccountOverviewController implements Initializable {
      * @throws Exception when no connection with the Database could be
      * established.
      */
-    public ObservableList<AccountTabelView> getUserList() throws Exception {
-        return new AccountTabelView().getAccountList();
+    public ObservableList<AccountTableView> getUserList() throws Exception {
+        return new AccountTableView().getAccountList();
     }
 
     /**
@@ -196,7 +190,7 @@ public class AccountOverviewController implements Initializable {
         if (lblSearch.getText().equals("")) {
             tblUsers.setItems(getUserList());
         } else {
-            ObservableList<AccountTabelView> userList = new AccountTabelView()
+            ObservableList<AccountTableView> userList = new AccountTableView()
                     .getAccountList(lblSearch.getText());
             tblUsers.setItems(userList);
         }

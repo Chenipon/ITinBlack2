@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
  *
  * @author Daan Befort, IS106-2
  */
-public class AccountTabelView {
+public class AccountTableView {
 
     private int id;
     private String username;
@@ -141,7 +141,7 @@ public class AccountTabelView {
     }
 
     /**
-     * public ObservableList<AccountTabelView> getAccountList() gets the list of
+     * public ObservableList<AccountTableView> getAccountList() gets the list of
      * accounts from the database.
      *
      * @return an ObservableList containing a list of all Users from the
@@ -149,14 +149,14 @@ public class AccountTabelView {
      * @throws SQLException when an SQL exception occurred.
      * @throws ClassNotFoundException when the jdbc could not be found.
      */
-    public ObservableList<AccountTabelView> getAccountList()
+    public ObservableList<AccountTableView> getAccountList()
             throws SQLException, ClassNotFoundException {
-        ObservableList<AccountTabelView> users = FXCollections.observableArrayList();
+        ObservableList<AccountTableView> users = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM user");
             while (result.next()) {
-                AccountTabelView foundUsers = new AccountTabelView();
+                AccountTableView foundUsers = new AccountTableView();
                 Role role = new Role().getRoleById(result.getInt(6));
                 foundUsers.setId(result.getInt(1));
                 foundUsers.setUsername(result.getString(2));
@@ -175,7 +175,7 @@ public class AccountTabelView {
     }
 
     /**
-     * public ObservableList<AccountTabelView> getAccountList(String searchTerm)
+     * public ObservableList<AccountTableView> getAccountList(String searchTerm)
      * gets the list of accounts from the database based of a search term.
      *
      * @param searchTerm the search term.
@@ -184,9 +184,9 @@ public class AccountTabelView {
      * @throws SQLException when an SQL exception occurred.
      * @throws ClassNotFoundException when the jdbc could not be found.
      */
-    public ObservableList<AccountTabelView> getAccountList(String searchTerm)
+    public ObservableList<AccountTableView> getAccountList(String searchTerm)
             throws SQLException, ClassNotFoundException {
-        ObservableList<AccountTabelView> users = FXCollections.observableArrayList();
+        ObservableList<AccountTableView> users = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
@@ -195,7 +195,7 @@ public class AccountTabelView {
                     + searchTerm + "%' OR lastname LIKE '%"
                     + searchTerm + "%'");
             while (result.next()) {
-                AccountTabelView foundUsers = new AccountTabelView();
+                AccountTableView foundUsers = new AccountTableView();
                 Role role = new Role().getRoleById(result.getInt(6));
                 foundUsers.setId(result.getInt(1));
                 foundUsers.setUsername(result.getString(2));
