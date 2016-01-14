@@ -122,7 +122,8 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             });
 
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(StatisticsLuggagePerEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StatisticsLuggagePerEmployeeController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
@@ -163,7 +164,8 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             /* Create a snapshot of the graph */
             WritableImage writableImage = charts.snapshot(new SnapshotParameters(), null);
             BufferedImage bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
-            com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(bufferedImage, null);
+            com.itextpdf.text.Image image = 
+                    com.itextpdf.text.Image.getInstance(bufferedImage, null);
             image.scalePercent(((document.getPageSize().getWidth() - document.leftMargin()
                     - document.rightMargin()) / image.getWidth()) * 100);
 
@@ -182,7 +184,8 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
     }
 
     @FXML
-    private void btnFilterEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
+    private void btnFilterEvent(ActionEvent event) 
+            throws ClassNotFoundException, SQLException {
         if (ddwnCheckFilled(startDate.getValue(), endDate.getValue())) {
             User employee = (User) comboEmployee.getSelectionModel().getSelectedItem();
             LocalDate start = startDate.getValue();
@@ -300,12 +303,14 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
             scatterChart.getData().clear();
             lblErrorMessage.setText("");
             if (graphType == 5) {
-                fillPieChart(start, end, interval, employee, resolved, type, ddwnInterval.getText());
+                fillPieChart(start, end, interval, employee, 
+                        resolved, type, ddwnInterval.getText());
             } else {
                 if (ddwnLuggageType.getText().equals("All")) {
                     fillGraphAllTypes(graphType, start, end, interval, employee, resolved);
                 } else {
-                    fillGraphSingleType(ddwnLuggageType.getText(), graphType, start, end, interval, employee, resolved);
+                    fillGraphSingleType(ddwnLuggageType.getText(), 
+                            graphType, start, end, interval, employee, resolved);
                 }
             }
 
@@ -353,29 +358,69 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         return true;
     }
 
-    private void fillPieChart(LocalDate start, LocalDate end, int interval, User employee, int resolved, int type, String intervalName) throws ClassNotFoundException, SQLException {
+    /**
+     * void fillPieChart(LocalDate start, LocalDate end, int interval) fills a
+     * PieChart with the data from all types of luggage.
+     * 
+     * @param start is the LocalDate start date of the graph.
+     * @param end is the LocalDate end date of the graph.
+     * @param interval is the interval of the date of the graph.
+     * @param employee the employee the user want data of
+     * @param resolved is the resolved status of the luggage
+     * @param type is the type of luggage that has been selected.
+     * @param intervalName is the selected interval name
+     * @throws SQLException when there is an SQL error.
+     * @throws ClassNotFoundException when the jdbc can't be found.
+     */
+    private void fillPieChart(LocalDate start, LocalDate end, int interval, 
+            User employee, int resolved, int type, String intervalName) 
+            throws ClassNotFoundException, SQLException {
         PieChartData pieChartData = new PieChartData();
         pieChartData.getDataPerEmployee(start, end, interval, employee, resolved, type);
         DecimalFormat df = new DecimalFormat("#.0");
         if (pieChartData.getFoundLuggageResolved() != 0) {
             pieChart.getData().add(new PieChart.Data("Resolved Found - " 
-                    + df.format(((double)pieChartData.getFoundLuggageResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getFoundLuggageResolved()));
+                    + df.format(((double)pieChartData.getFoundLuggageResolved() 
+                            / pieChartData.getTotalLuggage()) * 100) + "%", 
+                    pieChartData.getFoundLuggageResolved()));
         }
         if (pieChartData.getFoundLuggageUnResolved() != 0) {
             pieChart.getData().add(new PieChart.Data("Unresolved Found - " 
-                    + df.format(((double)pieChartData.getFoundLuggageUnResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getFoundLuggageUnResolved()));
+                    + df.format(((double)pieChartData.getFoundLuggageUnResolved() 
+                            / pieChartData.getTotalLuggage()) * 100) + "%", 
+                    pieChartData.getFoundLuggageUnResolved()));
         }
         if (pieChartData.getLostLuggageResolved() != 0) {
             pieChart.getData().add(new PieChart.Data("Resolved Lost - " 
-                    + df.format(((double)pieChartData.getLostLuggageResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getLostLuggageResolved()));
+                    + df.format(((double)pieChartData.getLostLuggageResolved() 
+                            / pieChartData.getTotalLuggage()) * 100) + "%", 
+                    pieChartData.getLostLuggageResolved()));
         }
         if (pieChartData.getLostLuggageUnResolved() != 0) {
             pieChart.getData().add(new PieChart.Data("Unresolved Lost - " 
-                    + df.format(((double)pieChartData.getLostLuggageUnResolved() / pieChartData.getTotalLuggage()) * 100) + "%", pieChartData.getLostLuggageUnResolved()));
+                    + df.format(((double)pieChartData.getLostLuggageUnResolved() 
+                            / pieChartData.getTotalLuggage()) * 100) + "%", 
+                    pieChartData.getLostLuggageUnResolved()));
         }
-        pieChart.setTitle("Total Luggage Reported by employee " + employee.getUsername() + " from " + start + " to " + end + " per " + intervalName);
+        pieChart.setTitle("Total Luggage Reported by employee " + employee.getUsername()
+                + " from " + start + " to " + end + " per " + intervalName);
     }
 
+    /**
+     * void fillGraphSingleType(String luggageType, int graphType, LocalDate
+     * start, LocalDate end, int interval) fills the graph with a single type of
+     * luggage selected from the selection dropdown-boxes.
+     *
+     * @param luggageType is the type of luggage that has been selected.
+     * @param graphType is the type of graph that has been selected.
+     * @param start is the LocalDate start date of the graph.
+     * @param end is the LocalDate end date of the graph.
+     * @param interval is the interval of the date of the graph.
+     * @param employee the employee the user want data of
+     * @param resolved is the resolved status of the luggage
+     * @throws SQLException when there is an SQL error.
+     * @throws ClassNotFoundException when the jdbc can't be found.
+     */
     private void fillGraphSingleType(String luggageType, int graphType, 
             LocalDate start, LocalDate end, int interval, User employee, int resolved) 
             throws SQLException, ClassNotFoundException {
@@ -438,21 +483,41 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
 
     }
 
-    private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end, int interval, User employee, int resolved) throws SQLException, ClassNotFoundException {
+    /**
+     * void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end, int
+     * interval) fills the graph with all types of Luggage status based of the
+     * data that has been filled in in the dropdown-boxes.
+     *
+     * @param graphType is the type of graph that has been selected.
+     * @param start is the LocalDate start date of the graph.
+     * @param end is the LocalDate end date of the graph.
+     * @param interval is the interval of the date of the graph.
+     * @param employee the employee the user want data of
+     * @param resolved is the resolved status of the luggage
+     * @throws SQLException when there is an SQL error.
+     * @throws ClassNotFoundException when the jdbc can't be found.
+     */
+    private void fillGraphAllTypes(int graphType, LocalDate start, LocalDate end,
+            int interval, User employee, int resolved) 
+            throws SQLException, ClassNotFoundException {
         /* Lost luggage */
         XYChart.Series lostLuggage = new XYChart.Series();
         lostLuggage.setName("Lost Luggage");
-        ObservableList<ChartTools> lostLuggageList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee, resolved);
+        ObservableList<ChartTools> lostLuggageList = new ChartTools().
+                getLostOrFoundLuggagePerEmployee(start, end, interval, 1, employee, resolved);
         for (int i = 0; i < lostLuggageList.size(); i++) {
-            lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).getDate(), lostLuggageList.get(i).getAmount()));
+            lostLuggage.getData().add(new XYChart.Data(lostLuggageList.get(i).
+                    getDate(), lostLuggageList.get(i).getAmount()));
         }
 
         /* Found luggage */
         XYChart.Series foundLuggage = new XYChart.Series();
         foundLuggage.setName("Found Luggage");
-        ObservableList<ChartTools> foundLuggageList = new ChartTools().getLostOrFoundLuggagePerEmployee(start, end, interval, 2, employee, resolved);
+        ObservableList<ChartTools> foundLuggageList = new ChartTools().
+                getLostOrFoundLuggagePerEmployee(start, end, interval, 2, employee, resolved);
         for (int i = 0; i < foundLuggageList.size(); i++) {
-            foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).getDate(), foundLuggageList.get(i).getAmount()));
+            foundLuggage.getData().add(new XYChart.Data(foundLuggageList.get(i).
+                    getDate(), foundLuggageList.get(i).getAmount()));
         }
 
         switch (graphType) {
@@ -480,88 +545,182 @@ public class StatisticsLuggagePerEmployeeController implements Initializable {
         }
     }
     
-    /* 
-     * The next couple of methods are all for the setting of text and correct 
-     * width of the selection dropdown-boxes and all work the same 
+    /**
+     * void ddwnLostLuggageEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Lost" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
      */
     @FXML
     private void ddwnLostLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Lost");
         ddwnLuggageType.setPrefWidth(70);
     }
-
+    
+    /**
+     * void ddwnFoundLuggageEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Found" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnFoundLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("Found");
         ddwnLuggageType.setPrefWidth(70);
     }
 
+    /**
+     * void ddwnAllLuggageEvent(ActionEvent event) fills in the MenuButton
+     * with the text "All" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnAllLuggageEvent(ActionEvent event) {
         ddwnLuggageType.setText("All");
         ddwnLuggageType.setPrefWidth(70);
     }
 
+    /**
+     * void ddwnIntervalDayEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Day" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnIntervalDayEvent(ActionEvent event) {
         ddwnInterval.setText("Day");
         ddwnInterval.setPrefWidth(75);
     }
 
+    /**
+     * void ddwnIntervalMonthEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Month" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnIntervalMonthEvent(ActionEvent event) {
         ddwnInterval.setText("Month");
         ddwnInterval.setPrefWidth(75);
     }
 
+    /**
+     * void ddwnIntervalYearEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Year" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnIntervalYearEvent(ActionEvent event) {
         ddwnInterval.setText("Year");
         ddwnInterval.setPrefWidth(75);
     }
 
+    /**
+     * void ddwnChartTypeBarChartEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Bar Chart" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnChartTypeBarChartEvent(ActionEvent event) {
         ddwnChartType.setText("Bar Chart");
         ddwnChartType.setPrefWidth(115);
     }
 
+    /**
+     * void ddwnChartTypeAreaChartEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Area Chart" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnChartTypeAreaChartEvent(ActionEvent event) {
         ddwnChartType.setText("Area Chart");
         ddwnChartType.setPrefWidth(115);
     }
 
+    /**
+     * void ddwnChartTypeLineChartEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Line Chart" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnChartTypeLineChartEvent(ActionEvent event) {
         ddwnChartType.setText("Line Chart");
         ddwnChartType.setPrefWidth(115);
     }
 
+    /**
+     * void ddwnChartTypeScatterChartEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Scatter Chart" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnChartTypeScatterChartEvent(ActionEvent event) {
         ddwnChartType.setText("Scatter Chart");
         ddwnChartType.setPrefWidth(115);
     }
 
+    /**
+     * void ddwnChartTypePieChartEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Pie Chart" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnChartTypePieChartEvent(ActionEvent event) {
         ddwnChartType.setText("Pie Chart");
         ddwnChartType.setPrefWidth(115);
     }
 
+     /**
+     * void ddwnResolvedEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Resolved" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnResolvedEvent(ActionEvent event) {
         ddwnResolved.setText("Resolved");
         ddwnResolved.setPrefWidth(95);
     }
 
+    /**
+     * void ddwnUnresolvedEvent(ActionEvent event) fills in the MenuButton
+     * with the text "Unresolved" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnUnresolvedEvent(ActionEvent event) {
         ddwnResolved.setText("Unresolved");
         ddwnResolved.setPrefWidth(95);
     }
 
+    /**
+     * void ddwnResolvedAllEvent(ActionEvent event) fills in the MenuButton
+     * with the text "All" and sets the size of the MenuButton to always
+     * keep it the same. 
+     *
+     * @param event The event that is being fired by clicking the button.
+     */
     @FXML
     private void ddwnResolvedAllEvent(ActionEvent event) {
         ddwnResolved.setText("All");

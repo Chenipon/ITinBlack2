@@ -104,7 +104,8 @@ public class CustomerAddController implements Initializable {
      * @throws IOException when the FXML file could not be loaded.
      */
     @FXML
-    private void btnAddCustomerEvent(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+    private void btnAddCustomerEvent(ActionEvent event) 
+            throws ClassNotFoundException, SQLException, IOException {
         if (!(firstName.getText().equals("") || lastName.getText().equals("") || 
                 phone.getText().equals("") || address.getText().equals(""))) {
             if (!ddwnGender.getText().equals("Select...")) {

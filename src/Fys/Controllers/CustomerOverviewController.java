@@ -74,61 +74,72 @@ public class CustomerOverviewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        colFirstName.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("firstname"));
-        colLastName.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("lastname"));
-        colGender.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("gender"));
-        colPhone.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("phone"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("address"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("email"));
-        colAction.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("action"));
-        Callback<TableColumn<CustomerTabelView, String>, TableCell<CustomerTabelView, String>> printColumnCellFactory
-                = new Callback<TableColumn<CustomerTabelView, String>, TableCell<CustomerTabelView, String>>() {
+        colFirstName.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("firstname"));
+        colLastName.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("lastname"));
+        colGender.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("gender"));
+        colPhone.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("phone"));
+        colAddress.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("address"));
+        colEmail.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("email"));
+        colAction.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("action"));
+        Callback<TableColumn<CustomerTabelView, String>, 
+                TableCell<CustomerTabelView, String>> printColumnCellFactory
+                = new Callback<TableColumn<CustomerTabelView, String>,
+                        TableCell<CustomerTabelView, String>>() {
+            @Override
+            public TableCell call(final TableColumn param) {
+                final TableCell cell = new TableCell() {
 
                     @Override
-                    public TableCell call(final TableColumn param) {
-                        final TableCell cell = new TableCell() {
+                    public void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            final Button btnPrint = new Button("Edit");
+                            btnPrint.setOnAction(new EventHandler<ActionEvent>() {
 
-                            @Override
-                            public void updateItem(Object item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setText(null);
-                                    setGraphic(null);
-                                } else {
-                                    final Button btnPrint = new Button("Edit");
-                                    btnPrint.setOnAction(new EventHandler<ActionEvent>() {
-
-                                        @Override
-                                        public void handle(ActionEvent event) {
-                                            param.getTableView().getSelectionModel().select(getIndex());
-                                            CustomerTabelView item = (CustomerTabelView) tblCustomers.getSelectionModel().getSelectedItem();
-                                            if (item != null) {
-                                                try {
-                                                    Customer editCustomer = new Customer().getCustomerById(item.getId());
-                                                    CustomerEditController.setUser(currentUser);
-                                                    CustomerEditController.setCustomer(editCustomer);
-                                                    CustomerEditController.setScreen(screen);
-                                                    screen.change("CustomerEdit");
-                                                } catch (Exception ex) {
-                                                    Logger.getLogger(CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    param.getTableView().getSelectionModel().select(getIndex());
+                                    CustomerTabelView item = (CustomerTabelView) 
+                                            tblCustomers.getSelectionModel().getSelectedItem();
+                                    if (item != null) {
+                                        try {
+                                            Customer editCustomer = new Customer().getCustomerById(item.getId());
+                                            CustomerEditController.setUser(currentUser);
+                                            CustomerEditController.setCustomer(editCustomer);
+                                            CustomerEditController.setScreen(screen);
+                                            screen.change("CustomerEdit");
+                                        } catch (Exception ex) {
+                                            Logger.getLogger(CustomerOverviewController.
+                                                    class.getName()).log(Level.SEVERE, null, ex);
                                         }
-                                    });
-                                    setGraphic(btnPrint);
-                                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                                    }
                                 }
-                            }
-                        };
-                        return cell;
+                            });
+                            setGraphic(btnPrint);
+                            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                        }
                     }
                 };
+                return cell;
+            }
+        };
         colAction.setCellFactory(printColumnCellFactory);
 
         try {
             tblCustomers.setItems(getCustomerList());
         } catch (Exception ex) {
-            Logger.getLogger(CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(
+                    CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -186,7 +197,8 @@ public class CustomerOverviewController implements Initializable {
      */
     @FXML
     private void btnSearchCustomerEvent(ActionEvent event) throws Exception {
-        ObservableList<CustomerTabelView> customerList = new CustomerTabelView().getCustomerList(lblSearch.getText());
+        ObservableList<CustomerTabelView> customerList = 
+                new CustomerTabelView().getCustomerList(lblSearch.getText());
         tblCustomers.setItems(customerList);
     }
     

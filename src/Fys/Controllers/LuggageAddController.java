@@ -107,7 +107,8 @@ public class LuggageAddController implements Initializable {
      * @throws IOException when the FXML file could not be loaded.
      */
     @FXML
-    private void btnAddLuggageEvent(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+    private void btnAddLuggageEvent(ActionEvent event) 
+            throws ClassNotFoundException, SQLException, IOException {
         if (!(luggageType.getText().equals("")
                 || luggageBrand.getText().equals("")
                 || luggageMaterial.getText().equals("")

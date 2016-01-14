@@ -324,9 +324,11 @@ public class LuggageEditController implements Initializable {
                 logTools.logLuggageChanged(editLuggage, currentUser, "resolved");
             }
             
-            if ((chckResolved.selectedProperty().get() != new Luggage().getLuggageById(editLuggage.getId()).isResolved())) {
+            if ((chckResolved.selectedProperty().get() != 
+                    new Luggage().getLuggageById(editLuggage.getId()).isResolved())) {
                 if (chckResolved.selectedProperty().get()) {
-                    editLuggage.setResolveDate(new DateConverter().getCurrentDateInSqlFormat());
+                    editLuggage.setResolveDate(
+                            new DateConverter().getCurrentDateInSqlFormat());
                 } else {
                     editLuggage.setResolveDate(null);
                 }
@@ -359,7 +361,8 @@ public class LuggageEditController implements Initializable {
             /* Create new FileChooser */
             FileChooser fileChooser = new FileChooser();
             fileChooser.setInitialFileName("Proof of Registration - luggage" + editLuggage.getId());
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf"));
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf"));
             
             /* Create a new File by selecting a save directory */
             File pdfFile = fileChooser.showSaveDialog(new Stage());

@@ -55,13 +55,17 @@ public class LogLuggageController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colDate.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("registerdate"));
-        colEmployee.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("employee"));
-        colLogEntry.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("change"));
+        colDate.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("registerdate"));
+        colEmployee.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("employee"));
+        colLogEntry.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("change"));
         try {
             tblLuggageLog.setItems(getLogList());
         } catch (Exception ex) {
-            Logger.getLogger(LuggageOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LuggageOverviewController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
     
@@ -75,7 +79,8 @@ public class LogLuggageController implements Initializable {
      * established.
      */
     public ObservableList<LogLuggageTabelView> getLogList() throws Exception{
-        ObservableList<LogLuggageTabelView> logList= new LogLuggageTabelView().getLogList(luggage);
+        ObservableList<LogLuggageTabelView> logList= 
+                new LogLuggageTabelView().getLogList(luggage);
         return logList;
     }
     

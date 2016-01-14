@@ -40,7 +40,8 @@ public class LuggageSelectCustomerController implements Initializable {
     
     @FXML private Label lblUsername, lblType, lblBrand, lblMaterial, lblColor;
     @FXML private TableView tblCustomers;
-    @FXML private TableColumn colFirstName, colLastName, colGender, colPhone, colAddress, colEmail, colAction;
+    @FXML private TableColumn colFirstName, colLastName, colGender, colPhone, 
+            colAddress, colEmail, colAction;
     @FXML private TextField lblSearch;
     
     /**
@@ -85,63 +86,74 @@ public class LuggageSelectCustomerController implements Initializable {
         lblBrand.setText(selectedLuggage.getBrand());
         lblMaterial.setText(selectedLuggage.getMaterial());
         lblColor.setText(selectedLuggage.getColor());
-        colFirstName.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("firstname"));
-        colLastName.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("lastname"));
-        colGender.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("gender"));
-        colPhone.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("phone"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("address"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("email"));
-        colAction.setCellValueFactory(new PropertyValueFactory<CustomerTabelView, String>("action"));
-        Callback<TableColumn<CustomerTabelView, String>, TableCell<CustomerTabelView, String>> printColumnCellFactory
-                = new Callback<TableColumn<CustomerTabelView, String>, TableCell<CustomerTabelView, String>>() {
-
+        colFirstName.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("firstname"));
+        colLastName.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("lastname"));
+        colGender.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("gender"));
+        colPhone.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("phone"));
+        colAddress.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("address"));
+        colEmail.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("email"));
+        colAction.setCellValueFactory(
+                new PropertyValueFactory<CustomerTabelView, String>("action"));
+        Callback<TableColumn<CustomerTabelView, String>, TableCell<CustomerTabelView,
+                String>> printColumnCellFactory
+                = new Callback<TableColumn<CustomerTabelView, String>, 
+                        TableCell<CustomerTabelView, String>>() {
+            @Override
+            public TableCell call(final TableColumn param) {
+                final TableCell cell = new TableCell() {
                     @Override
-                    public TableCell call(final TableColumn param) {
-                        final TableCell cell = new TableCell() {
+                    public void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            final Button btnPrint = new Button("Select");
+                            btnPrint.setOnAction(new EventHandler<ActionEvent>() {
 
-                            @Override
-                            public void updateItem(Object item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setText(null);
-                                    setGraphic(null);
-                                } else {
-                                    final Button btnPrint = new Button("Select");
-                                    btnPrint.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    param.getTableView().getSelectionModel().select(getIndex());
+                                    CustomerTabelView item = (CustomerTabelView) 
+                                            tblCustomers.getSelectionModel().getSelectedItem();
+                                    if (item != null) {
+                                        try {
+                                            Customer selectedCustomer = 
+                                                    new Customer().getCustomerById(item.getId());
 
-                                        @Override
-                                        public void handle(ActionEvent event) {
-                                            param.getTableView().getSelectionModel().select(getIndex());
-                                            CustomerTabelView item = (CustomerTabelView) tblCustomers.getSelectionModel().getSelectedItem();
-                                            if (item != null) {
-                                                try {
-                                                    Customer selectedCustomer = new Customer().getCustomerById(item.getId());
-                                                    
-                                                    LuggageEditController.setUser(currentUser);
-                                                    LuggageEditController.setCustomer(selectedCustomer);
-                                                    LuggageEditController.setLuggage(selectedLuggage);
-                                                    LuggageEditController.setScreen(screen);
-                                                    screen.change("LuggageEdit");
-                                                } catch (ClassNotFoundException | SQLException | IOException ex) {
-                                                    Logger.getLogger(CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
+                                            LuggageEditController.setUser(currentUser);
+                                            LuggageEditController.setCustomer(selectedCustomer);
+                                            LuggageEditController.setLuggage(selectedLuggage);
+                                            LuggageEditController.setScreen(screen);
+                                            screen.change("LuggageEdit");
+                                        } catch (ClassNotFoundException | SQLException | IOException ex) {
+                                            Logger.getLogger(CustomerOverviewController.
+                                                    class.getName()).log(Level.SEVERE, null, ex);
                                         }
-                                    });
-                                    setGraphic(btnPrint);
-                                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                                    }
                                 }
-                            }
-                        };
-                        return cell;
+                            });
+                            setGraphic(btnPrint);
+                            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                        }
                     }
                 };
+                return cell;
+            }
+        };
         colAction.setCellFactory(printColumnCellFactory);
 
         try {
             tblCustomers.setItems(getCustomerList());
         } catch (Exception ex) {
-            Logger.getLogger(CustomerOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerOverviewController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
     
@@ -170,7 +182,8 @@ public class LuggageSelectCustomerController implements Initializable {
      */
     @FXML
     private void btnSearchCustomerEvent(ActionEvent event) throws Exception {
-        ObservableList<CustomerTabelView> customerList = new CustomerTabelView().getCustomerList(lblSearch.getText());
+        ObservableList<CustomerTabelView> customerList = new CustomerTabelView().
+                getCustomerList(lblSearch.getText());
         tblCustomers.setItems(customerList);
     }
     

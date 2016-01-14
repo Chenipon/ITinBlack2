@@ -39,7 +39,8 @@ public class LuggageOverviewController implements Initializable {
     
     @FXML private Label lblUsername, lblErrorMessage;
     @FXML private TableView tblLuggage;
-    @FXML private TableColumn colType, colBrand, colMaterial, colColor, colComment, colStatus, colResolved, colAction;
+    @FXML private TableColumn colType, colBrand, colMaterial, colColor, 
+            colComment, colStatus, colResolved, colAction;
     @FXML private MenuButton ddwnLuggageType, ddwnResolved;
     @FXML private TextField lblSearch;
     
@@ -77,62 +78,75 @@ public class LuggageOverviewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblUsername.setText(currentUser.getUsername());
-        colType.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("type"));
-        colBrand.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("brand"));
-        colMaterial.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("material"));
-        colColor.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("color"));
-        colComment.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("comment"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("status"));
-        colResolved.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("resolved"));
-        colAction.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("action"));
-        Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView, String>> printColumnCellFactory
-                = new Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView, String>>() {
+        colType.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("type"));
+        colBrand.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("brand"));
+        colMaterial.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("material"));
+        colColor.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("color"));
+        colComment.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("comment"));
+        colStatus.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("status"));
+        colResolved.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("resolved"));
+        colAction.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("action"));
+        Callback<TableColumn<LuggageTabelView, String>, TableCell<LuggageTabelView,
+                String>> printColumnCellFactory
+                = new Callback<TableColumn<LuggageTabelView, String>,
+                        TableCell<LuggageTabelView, String>>() {
+            @Override
+            public TableCell call(final TableColumn param) {
+                final TableCell cell = new TableCell() {
 
                     @Override
-                    public TableCell call(final TableColumn param) {
-                        final TableCell cell = new TableCell() {
+                    public void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            final Button btnPrint = new Button("Edit");
+                            btnPrint.setOnAction(new EventHandler<ActionEvent>() {
 
-                            @Override
-                            public void updateItem(Object item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setText(null);
-                                    setGraphic(null);
-                                } else {
-                                    final Button btnPrint = new Button("Edit");
-                                    btnPrint.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    param.getTableView().getSelectionModel().select(getIndex());
+                                    LuggageTabelView item = (LuggageTabelView) 
+                                            tblLuggage.getSelectionModel().getSelectedItem();
+                                    if (item != null) {
+                                        try {
+                                            Luggage editLuggage = 
+                                                    new Luggage().getLuggageById(item.getId());
 
-                                        @Override
-                                        public void handle(ActionEvent event) {
-                                            param.getTableView().getSelectionModel().select(getIndex());
-                                            LuggageTabelView item = (LuggageTabelView) tblLuggage.getSelectionModel().getSelectedItem();
-                                            if (item != null) {
-                                                try {
-                                                    Luggage editLuggage = new Luggage().getLuggageById(item.getId());
-                                                    
-                                                    LuggageEditController.setUser(currentUser);
-                                                    LuggageEditController.setLuggage(editLuggage);
-                                                    LuggageEditController.setScreen(screen);
-                                                    screen.change("LuggageEdit");
-                                                } catch (ClassNotFoundException | SQLException | IOException ex) {
-                                                    Logger.getLogger(AccountOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
+                                            LuggageEditController.setUser(currentUser);
+                                            LuggageEditController.setLuggage(editLuggage);
+                                            LuggageEditController.setScreen(screen);
+                                            screen.change("LuggageEdit");
+                                        } catch (ClassNotFoundException | SQLException | IOException ex) {
+                                            Logger.getLogger(AccountOverviewController.
+                                                    class.getName()).log(Level.SEVERE, null, ex);
                                         }
-                                    });
-                                    setGraphic(btnPrint);
-                                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                                    }
                                 }
-                            }
-                        };
-                        return cell;
+                            });
+                            setGraphic(btnPrint);
+                            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                        }
                     }
                 };
+                return cell;
+            }
+        };
         colAction.setCellFactory(printColumnCellFactory);
         try {
             tblLuggage.setItems(getLuggageList());
         } catch (Exception ex) {
-            Logger.getLogger(LuggageOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LuggageOverviewController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
     
@@ -146,7 +160,8 @@ public class LuggageOverviewController implements Initializable {
      * established.
      */
     public ObservableList<LuggageTabelView> getLuggageList() throws Exception{
-        ObservableList<LuggageTabelView> luggageList= new LuggageTabelView().getLuggageList();
+        ObservableList<LuggageTabelView> luggageList= 
+                new LuggageTabelView().getLuggageList();
         return luggageList;
     }
 

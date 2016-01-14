@@ -55,9 +55,12 @@ public class LogCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colDate.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("registerdate"));
-        colEmployee.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("employee"));
-        colLogEntry.setCellValueFactory(new PropertyValueFactory<LuggageTabelView, String>("change"));
+        colDate.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("registerdate"));
+        colEmployee.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("employee"));
+        colLogEntry.setCellValueFactory(
+                new PropertyValueFactory<LuggageTabelView, String>("change"));
         try {
             tblCustomerLog.setItems(getLogList());
         } catch (Exception ex) {

@@ -98,8 +98,10 @@ public class CustomerEditController implements Initializable {
         email.setText(editCustomer.getEmail());
         lblUsername.setText(currentUser.getUsername());
         try {
-            lblRegisterDate.setText((new LogTools().getCustomerRegisterDate(editCustomer.getId())).toString());
-            lblRegisterEmployee.setText((new LogTools().getCustomerRegisterEmployee(editCustomer.getEmployeeId())));
+            lblRegisterDate.setText((
+                    new LogTools().getCustomerRegisterDate(editCustomer.getId())).toString());
+            lblRegisterEmployee.setText((
+                    new LogTools().getCustomerRegisterEmployee(editCustomer.getEmployeeId())));
         } catch (SQLException | ParseException | ClassNotFoundException ex) {
             Logger.getLogger(CustomerEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -142,7 +144,8 @@ public class CustomerEditController implements Initializable {
      * @throws IOException when the FXML file could not be loaded.
      */
     @FXML
-    private void btnSaveChangesEvent(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
+    private void btnSaveChangesEvent(ActionEvent event) 
+            throws IOException, ClassNotFoundException, SQLException {
         if (!(firstName.getText().equals("") || lastName.getText().equals("") || 
                 phone.getText().equals(""))) {
             lblErrorMessage.setText("");
@@ -221,8 +224,10 @@ public class CustomerEditController implements Initializable {
         try {
             /* Create new FileChooser */
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("Proof of Registration - customer" + editCustomer.getId());
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf"));
+            fileChooser.setInitialFileName(
+                    "Proof of Registration - customer" + editCustomer.getId());
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("PDF file (*.pdf)", "*.pdf"));
             
             /* Create a new File by selecting a save directory */
             File pdfFile = fileChooser.showSaveDialog(new Stage());
@@ -247,7 +252,7 @@ public class CustomerEditController implements Initializable {
             corendonLogo.scalePercent(20f);
             document.add(corendonLogo);
             document.add(new Paragraph("Proof of registration: Customer", fontbold));
-            document.add(new Paragraph("Name: " + editCustomer.getFirstName() + " " + editCustomer.getLastName()));
+            document.add(new Paragraph("Name: " + editCustomer.getFullName()));
             document.add(new Paragraph("Gender: " + editCustomer.getGender()));
             document.add(new Paragraph("Phone: " + editCustomer.getPhone()));
             document.add(new Paragraph("Address: " + editCustomer.getAddress()));

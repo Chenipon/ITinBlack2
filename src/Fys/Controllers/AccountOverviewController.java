@@ -91,9 +91,10 @@ public class AccountOverviewController implements Initializable {
                 new PropertyValueFactory<AccountTabelView, String>("active"));
         columnAction.setCellValueFactory(
                 new PropertyValueFactory<AccountTabelView, String>("username"));
-        Callback<TableColumn<AccountTabelView, String>, TableCell<AccountTabelView, String>> printColumnCellFactory
-                = new Callback<TableColumn<AccountTabelView, String>, TableCell<AccountTabelView, String>>() {
-
+        Callback<TableColumn<AccountTabelView, String>, 
+                TableCell<AccountTabelView, String>> printColumnCellFactory
+                = new Callback<TableColumn<AccountTabelView, String>,
+                        TableCell<AccountTabelView, String>>() {
                     @Override
                     public TableCell call(final TableColumn param) {
                         final TableCell cell = new TableCell() {
@@ -112,7 +113,8 @@ public class AccountOverviewController implements Initializable {
                                         public void handle(ActionEvent event) {
                                             param.getTableView().getSelectionModel()
                                             .select(getIndex());
-                                            AccountTabelView item = (AccountTabelView) tblUsers
+                                            AccountTabelView item = 
+                                                    (AccountTabelView) tblUsers
                                             .getSelectionModel().getSelectedItem();
                                             if (item != null) {
                                                 try {
@@ -126,7 +128,8 @@ public class AccountOverviewController implements Initializable {
                                                     .setEditUser(editUser);
                                                     screen.change("AccountEdit");
                                                 } catch (Exception ex) {
-                                                    Logger.getLogger(AccountOverviewController.class
+                                                    Logger.getLogger(
+                                                            AccountOverviewController.class
                                                             .getName()).log(Level.SEVERE,
                                                             null, ex);
                                                 }
