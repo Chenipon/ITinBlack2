@@ -83,7 +83,6 @@ public class LogCustomerController implements Initializable {
      * void btnCloseWindowEvent(ActionEvent event) closes the new stage and returns
      * to the main window of the application. 
      * 
-     * @param event
      */
     @FXML
     public void btnCloseWindowEvent(ActionEvent event) {

@@ -52,8 +52,6 @@ public class MainController implements Initializable {
      * initialization of the Controller when it's being fired due to a load of
      * it's connected scene.
      *
-     * @param url
-     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

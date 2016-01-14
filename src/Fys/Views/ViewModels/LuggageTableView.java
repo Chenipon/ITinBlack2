@@ -29,7 +29,7 @@ public class LuggageTableView {
     /**
      * This method gets the id of the Luggage.
      *
-     * @return
+     * @return the id of luggage
      */
     public int getId() {
         return id;
@@ -48,7 +48,7 @@ public class LuggageTableView {
     /**
      * This method gets the type of the Luggage.
      *
-     * @return
+     * @return the type of luggage
      */
     public String getType() {
         return type;
@@ -66,7 +66,7 @@ public class LuggageTableView {
     /**
      * This method gets the brand of the Luggage.
      *
-     * @return
+     * @return the brand of luggage
      */
     public String getBrand() {
         return brand;
@@ -84,7 +84,7 @@ public class LuggageTableView {
     /**
      * This method gets the material of the Luggage.
      *
-     * @return
+     * @return the material of luggage
      */
     public String getMaterial() {
         return material;
@@ -102,7 +102,7 @@ public class LuggageTableView {
     /**
      * This method gets the color of the Luggage.
      *
-     * @return
+     * @return the color of luggage
      */
     public String getColor() {
         return color;
@@ -120,7 +120,7 @@ public class LuggageTableView {
     /**
      * This method gets the comment linked to the Luggage.
      *
-     * @return
+     * @return the comments by luggage
      */
     public String getComment() {
         return comment;
@@ -138,7 +138,7 @@ public class LuggageTableView {
     /**
      * This method gets the status linked to the Luggage.
      *
-     * @return
+     * @return the status of luggage
      */
     public String getStatus() {
         return status;
@@ -156,7 +156,7 @@ public class LuggageTableView {
     /**
      * This method gets the resolved status linked to the Luggage.
      *
-     * @return
+     * @return return resolved status of luggage
      */
     public String getResolved() {
         return resolved;
@@ -176,8 +176,7 @@ public class LuggageTableView {
      * This method gets the list of Luggage, and the details After that has been
      * done.
      *
-     * @see getLuggageList()
-     * @return
+     * @return the ObservableList with all the luggage
      * @throws SQLException when an SQL exception occurred.
      * @throws ClassNotFoundException when the jdbc could not be found.
      */
@@ -218,7 +217,7 @@ public class LuggageTableView {
      * @param searchTerm the terms in the search field. these are input from the
      * user.
      * @param status the status of the luggage.
-     * @return
+     * @return the ObservableList with all the luggage that is valid by search
      * @throws SQLException when an SQL exception occurred.
      * @throws ClassNotFoundException when the jdbc could not be found.
      */

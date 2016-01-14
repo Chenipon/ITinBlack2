@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.AccountAddController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.AccountAddController">
    <center>
       <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -48,18 +48,9 @@
                      </font>
                   </Text>
                   <TextField fx:id="username" layoutX="115.0" layoutY="74.0" prefHeight="25.0" prefWidth="200.0" />
+                  <PasswordField fx:id="password" layoutX="115.0" layoutY="106.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="firstName" layoutX="115.0" layoutY="138.0" prefHeight="25.0" prefWidth="200.0" />
                   <TextField fx:id="lastName" layoutX="115.0" layoutY="169.0" prefHeight="25.0" prefWidth="200.0" />
-                  <Button fx:id="btnAddAccount" alignment="CENTER" layoutX="220.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnAddAccountEvent" prefHeight="25.0" prefWidth="95.0" styleClass="btnRed" text="Add Account" textAlignment="CENTER" textOverrun="CLIP">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Accounts Overview" textAlignment="CENTER" textOverrun="CLIP">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </Button>
                   <MenuButton fx:id="ddwnUserRole" layoutX="115.0" layoutY="201.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="User Role">
                     <items>
                       <MenuItem fx:id="ddwnRoleAdmin" mnemonicParsing="false" onAction="#ddwnRoleAdminEvent" text="Administrator" />
@@ -67,12 +58,21 @@
                         <MenuItem fx:id="ddwnRoleEmployee" mnemonicParsing="false" onAction="#ddwnRoleEmployeeEvent" text="Employee" />
                     </items>
                   </MenuButton>
+                  <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Accounts Overview" textAlignment="CENTER" textOverrun="CLIP">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnAddAccount" alignment="CENTER" layoutX="220.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnAddAccountEvent" prefHeight="25.0" prefWidth="95.0" styleClass="btnRed" text="Add Account" textAlignment="CENTER" textOverrun="CLIP">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
                   <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="284.0" prefHeight="17.0" prefWidth="290.0" textFill="RED">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="password" layoutX="115.0" layoutY="106.0" prefHeight="25.0" prefWidth="200.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>

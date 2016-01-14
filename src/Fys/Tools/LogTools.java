@@ -65,7 +65,6 @@ public class LogTools {
     
     /**
      * This method grabs the date when the luggage is registered.
-     * @see getLuggageRegisterDate()
      * @param id the id of a registered Customer.
      * @return java.util.Date
      * @throws SQLException when the Database could not be contacted.
@@ -88,7 +87,7 @@ public class LogTools {
 
     /**
      * This class grabs the luggage registerd per employee.
-     * @see getLuggageRegisterEmployee()
+     * 
      * @param id the id of a registered Customer.
      * @return username the username of the employee.
      * @throws SQLException when the Database could not be contacted.
@@ -258,9 +257,10 @@ public class LogTools {
     
     /**
      * This method checks if an element of the Customer object has changed.
+     * 
      * @param type The type of luggage that has been changed.
      * @param editCustomer The Customer to check next to the one registered in the Database.
-     * @return
+     * @return a boolean
      * @throws SQLException when the Database could not be contacted.
      * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
