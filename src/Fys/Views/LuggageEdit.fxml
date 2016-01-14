@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.LuggageEditController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Fys.Controllers.LuggageEditController">
    <center>
       <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -52,10 +52,28 @@
                         <Font name="Arial" size="14.0" />
                      </font>
                   </Text>
+                  <Button fx:id="btnPrintProof" alignment="CENTER" layoutX="24.0" layoutY="57.0" mnemonicParsing="false" onAction="#btnPrintProofEvent" prefHeight="34.0" prefWidth="160.0" styleClass="btnRed" text="Save proof of registration" textAlignment="CENTER" textOverrun="CLIP">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
                   <TextField fx:id="type" layoutX="116.0" layoutY="104.0" prefHeight="25.0" prefWidth="350.0" />
                   <TextField fx:id="brand" layoutX="116.0" layoutY="135.0" prefHeight="25.0" prefWidth="350.0" />
                   <TextField fx:id="material" layoutX="116.0" layoutY="166.0" prefHeight="25.0" prefWidth="350.0" />
                   <TextField fx:id="color" layoutX="116.0" layoutY="198.0" prefHeight="25.0" prefWidth="350.0" />
+                  <MenuButton fx:id="ddwnStatus" layoutX="116.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Select...">
+                    <items>
+                      <MenuItem fx:id="ddwnStatusLost" mnemonicParsing="false" onAction="#ddwnStatusLostEvent" text="Lost" />
+                      <MenuItem fx:id="ddwnStatusFound" mnemonicParsing="false" onAction="#ddwnStatusFoundEvent" text="Found" />
+                    </items>
+                  </MenuButton>
+                  <Button fx:id="btnSelectCustomer" layoutX="333.0" layoutY="229.0" mnemonicParsing="false" onAction="#btnSelectCustomerEvent" prefHeight="25.0" prefWidth="132.0" styleClass="btnRed" text="Select Customer" />
+                  <TextArea fx:id="comments" layoutX="116.0" layoutY="264.0" prefHeight="116.0" prefWidth="350.0" />
+                  <CheckBox fx:id="chckResolved" layoutX="116.0" layoutY="392.0" mnemonicParsing="false" text="If this box is ticked, this piece of luggage has been returned to it's owner.">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </CheckBox>
                   <Button fx:id="btnBackToOverview" alignment="CENTER" layoutX="24.0" layoutY="420.0" mnemonicParsing="false" onAction="#btnBackToOverviewEvent" prefHeight="25.0" prefWidth="172.0" styleClass="btnRed" text="Back to Luggage Overview" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="12.0" />
@@ -66,24 +84,12 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <TextArea fx:id="comments" layoutX="116.0" layoutY="264.0" prefHeight="116.0" prefWidth="350.0" />
-                  <Button fx:id="btnPrintProof" alignment="CENTER" layoutX="24.0" layoutY="57.0" mnemonicParsing="false" onAction="#btnPrintProofEvent" prefHeight="34.0" prefWidth="160.0" styleClass="btnRed" text="Save proof of registration" textAlignment="CENTER" textOverrun="CLIP">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </Button>
-                  <MenuButton fx:id="ddwnStatus" layoutX="116.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Select...">
-                    <items>
-                      <MenuItem fx:id="ddwnStatusLost" mnemonicParsing="false" onAction="#ddwnStatusLostEvent" text="Lost" />
-                      <MenuItem fx:id="ddwnStatusFound" mnemonicParsing="false" onAction="#ddwnStatusFoundEvent" text="Found" />
-                    </items>
-                  </MenuButton>
+                  <Button fx:id="btnShowHistory" layoutX="24.0" layoutY="567.0" mnemonicParsing="false" onAction="#btnShowHistoryEvent" prefHeight="25.0" prefWidth="83.0" styleClass="btnRed" text="View History" />
                   <Label fx:id="lblErrorMessage" layoutX="24.0" layoutY="451.0" prefHeight="17.0" prefWidth="442.0" textFill="RED">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnSelectCustomer" layoutX="333.0" layoutY="229.0" mnemonicParsing="false" onAction="#btnSelectCustomerEvent" prefHeight="25.0" prefWidth="132.0" styleClass="btnRed" text="Select Customer" />
                   <AnchorPane fx:id="paneCustomer" layoutX="469.0" layoutY="105.0" prefHeight="149.0" prefWidth="300.0" style="-fx-background-color: #B71C1C;">
                      <children>
                         <Pane prefHeight="43.0" prefWidth="300.0" style="-fx-background-color: #991818;">
@@ -158,12 +164,6 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnShowHistory" layoutX="24.0" layoutY="567.0" mnemonicParsing="false" onAction="#btnShowHistoryEvent" prefHeight="25.0" prefWidth="83.0" styleClass="btnRed" text="View History" />
-                  <CheckBox fx:id="chckResolved" layoutX="116.0" layoutY="392.0" mnemonicParsing="false" text="If this box is ticked, this piece of luggage has been returned to it's owner.">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </CheckBox>
                   <Text layoutX="17.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resolved" AnchorPane.leftAnchor="24.0">
                      <font>
                         <Font name="Arial" size="14.0" />
