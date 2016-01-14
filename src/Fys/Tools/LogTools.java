@@ -29,11 +29,13 @@ public class LogTools {
      * @throws ParseException when the date can't be parsed correctly
      * @throws ClassNotFoundException when the Database class can't be found
      */
-    public java.util.Date getCustomerRegisterDate(int id) throws SQLException, ParseException, ClassNotFoundException {
+    public java.util.Date getCustomerRegisterDate(int id) 
+            throws SQLException, ParseException, ClassNotFoundException {
         String registerdate = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT registerdate FROM customer WHERE id=" + id);
+            ResultSet result = statement.executeQuery(
+                    "SELECT registerdate FROM customer WHERE id=" + id);
             while (result.next()) {
                 registerdate = result.getString(1);
             }
@@ -70,11 +72,13 @@ public class LogTools {
      * @throws ParseException If a conversion of datatype goes wrong.
      * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
-    public java.util.Date getLuggageRegisterDate(int id) throws SQLException, ParseException, ClassNotFoundException {
+    public java.util.Date getLuggageRegisterDate(int id) 
+            throws SQLException, ParseException, ClassNotFoundException {
         String registerdate = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT registerdate FROM luggage WHERE id=" + id);
+            ResultSet result = statement.executeQuery("SELECT registerdate "
+                    + "FROM luggage WHERE id=" + id);
             while (result.next()) {
                 registerdate = result.getString(1);
             }
@@ -90,11 +94,13 @@ public class LogTools {
      * @throws SQLException when the Database could not be contacted.
      * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
-    public String getLuggageRegisterEmployee(int id) throws SQLException, ClassNotFoundException {
+    public String getLuggageRegisterEmployee(int id) 
+            throws SQLException, ClassNotFoundException {
         String username = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT username FROM user WHERE id=" + id);
+            ResultSet result = statement.executeQuery("SELECT username FROM user "
+                    + "WHERE id=" + id);
             while (result.next()) {
                 username = result.getString(1);
             }
@@ -104,16 +110,19 @@ public class LogTools {
     
     /**
      * This method checks if an element in the luggage has changed.
-     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @param type The type of luggage that has been changed. Needed to prevent
+     * double entries into the logs.
      * @param editLuggage The new data of the current luggage.
      * @return boolean luggageChanged
      * @throws SQLException when the Database could not be contacted.
      * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
-    public boolean checkLuggageChanged(Luggage editLuggage, String type) throws ClassNotFoundException, SQLException {
+    public boolean checkLuggageChanged(Luggage editLuggage, String type) 
+            throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM luggage WHERE id=" + editLuggage.getId());
+            ResultSet result = statement.executeQuery("SELECT * FROM luggage "
+                    + "WHERE id=" + editLuggage.getId());
             Luggage dbLuggage = new Luggage();
             while (result.next()) {
                 dbLuggage.setType(result.getString(2));
@@ -160,16 +169,19 @@ public class LogTools {
     /**
      * This method logs whenever a piece of luggage has been changed by an employee.
      * @param editLuggage The new data of the current luggage.
-     * @param currentUser The current user that is editing the Customer, needed to get the ID of this user.
-     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @param currentUser The current user that is editing the Customer, 
+     * needed to get the ID of this user.
+     * @param type The type of luggage that has been changed.
      * @throws SQLException when the Database could not be contacted.
      * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
-    public void logLuggageChanged(Luggage editLuggage, User currentUser, String type) throws ClassNotFoundException, SQLException {
+    public void logLuggageChanged(Luggage editLuggage, User currentUser, String type) 
+            throws ClassNotFoundException, SQLException {
         String change = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM luggage WHERE id=" + editLuggage.getId());
+            ResultSet result = statement.executeQuery("SELECT * FROM luggage "
+                    + "WHERE id=" + editLuggage.getId());
             Luggage dbLuggage = new Luggage();
             while (result.next()) {
                 dbLuggage.setType(result.getString(2));
@@ -180,17 +192,25 @@ public class LogTools {
                 dbLuggage.setStatusId(result.getInt(8));
                 dbLuggage.setResolved(result.getBoolean(11));
             }
-            if (type.equals("type") && !dbLuggage.getType().equals(editLuggage.getType())) {
-                change = ("Type: " + dbLuggage.getType() + " was changed to: " + editLuggage.getType());
+            if (type.equals("type") && !dbLuggage.getType().
+                    equals(editLuggage.getType())) {
+                change = ("Type: " + dbLuggage.getType() + 
+                        " was changed to: " + editLuggage.getType());
             }
-            if (type.equals("brand") && !dbLuggage.getBrand().equals(editLuggage.getBrand())) {
-                change = ("Brand: " + dbLuggage.getBrand() + " was changed to: " + editLuggage.getBrand());
+            if (type.equals("brand") && !dbLuggage.getBrand().
+                    equals(editLuggage.getBrand())) {
+                change = ("Brand: " + dbLuggage.getBrand() + 
+                        " was changed to: " + editLuggage.getBrand());
             }
-            if (type.equals("material") && !dbLuggage.getMaterial().equals(editLuggage.getMaterial())) {
-                change = ("Material: " + dbLuggage.getMaterial() + " was changed to: " + editLuggage.getMaterial());
+            if (type.equals("material") && !dbLuggage.getMaterial().
+                    equals(editLuggage.getMaterial())) {
+                change = ("Material: " + dbLuggage.getMaterial() + 
+                        " was changed to: " + editLuggage.getMaterial());
             }
-            if (type.equals("color") && !dbLuggage.getColor().equals(editLuggage.getColor())) {
-                change = ("Color: " + dbLuggage.getColor() + " was changed to: " + editLuggage.getColor());
+            if (type.equals("color") && !dbLuggage.getColor().
+                    equals(editLuggage.getColor())) {
+                change = ("Color: " + dbLuggage.getColor() +
+                        " was changed to: " + editLuggage.getColor());
             }
             if (editLuggage.getComment() != null) {
                 if (!dbLuggage.getComment().equals(editLuggage.getComment())) {
@@ -199,13 +219,17 @@ public class LogTools {
                     } else if (dbLuggage.getComment().equals("")) {
                         change = ("Comment: \"" + editLuggage.getComment() + "\" was added");
                     } else {
-                        change = ("Comment: \"" + dbLuggage.getComment() + "\" was changed to: \"" + editLuggage.getComment() + "\"");
+                        change = ("Comment: \"" + dbLuggage.getComment() 
+                                + "\" was changed to: \"" + editLuggage.getComment() + "\"");
                     }
                 }
             }
-            if (type.equals("status") && (dbLuggage.getStatusId() != editLuggage.getStatusId())) {
-                change = ("Status: " + (new Status().getStatusById(dbLuggage.getStatusId()).getStatusName())) + 
-                        " was changed to: " + (new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
+            if (type.equals("status") && (
+                    dbLuggage.getStatusId() != editLuggage.getStatusId())) {
+                change = ("Status: " + (
+                        new Status().getStatusById(dbLuggage.getStatusId()).getStatusName())) + 
+                        " was changed to: " + (
+                        new Status().getStatusById(editLuggage.getStatusId()).getStatusName());
             }
             if (type.equals("resolved") && (dbLuggage.isResolved() != editLuggage.isResolved())) {
                 if (editLuggage.isResolved()) {
@@ -217,9 +241,13 @@ public class LogTools {
             db.close();
         }
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO logluggage (logdate,luggageid,employeeid,logtext) VALUES (?,?,?,?)");
-            PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
-            preparedStatement.setString(1, (new DateConverter().convertJavaDateToSqlDate(new java.util.Date())));
+            String query = ("INSERT INTO logluggage "
+                    + "(logdate,luggageid,employeeid,logtext)"
+                    + " VALUES (?,?,?,?)");
+            PreparedStatement preparedStatement = 
+                    (PreparedStatement) db.prepareStatement(query);
+            preparedStatement.setString(1, (
+                    new DateConverter().convertJavaDateToSqlDate(new java.util.Date())));
             preparedStatement.setInt(2, editLuggage.getId());
             preparedStatement.setInt(3, currentUser.getId());
             preparedStatement.setString(4, change);
@@ -230,16 +258,18 @@ public class LogTools {
     
     /**
      * This method checks if an element of the Customer object has changed.
-     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @param type The type of luggage that has been changed.
      * @param editCustomer The Customer to check next to the one registered in the Database.
      * @return
      * @throws SQLException when the Database could not be contacted.
      * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
-    public boolean checkCustomerChanged(Customer editCustomer, String type) throws ClassNotFoundException, SQLException {
+    public boolean checkCustomerChanged(Customer editCustomer, String type) 
+            throws ClassNotFoundException, SQLException {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM customer WHERE id=" + editCustomer.getId());
+            ResultSet result = statement.executeQuery("SELECT * FROM customer"
+                    + " WHERE id=" + editCustomer.getId());
             Customer dbCustomer = new Customer();
             while (result.next()) {
                 dbCustomer.setFirstName(result.getString(2));
@@ -278,16 +308,18 @@ public class LogTools {
     /**
      * This method logs the changes that have been made to a Customer if a value was changed.
      * @param editCustomer The Customer to check next to the one registered in the Database.
-     * @param currentUser The current user that is editing the Customer, needed to get the ID of this user.
-     * @param type The type of luggage that has been changed. Needed to prevent double entries into the logs.
+     * @param currentUser The current user that is editing the Customer
+     * @param type The type of luggage that has been changed.
      * @throws SQLException when the Database could not be contacted.
      * @throws ClassNotFoundException when the JDBC could not be loaded.
      */
-    public void logCustomerChanged(Customer editCustomer, User currentUser, String type) throws ClassNotFoundException, SQLException {
+    public void logCustomerChanged(Customer editCustomer, User currentUser, String type) 
+            throws ClassNotFoundException, SQLException {
         String change = "";
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM customer WHERE id=" + editCustomer.getId());
+            ResultSet result = statement.executeQuery("SELECT * FROM customer "
+                    + "WHERE id=" + editCustomer.getId());
             Customer dbCustomer = new Customer();
             while (result.next()) {
                 dbCustomer.setFirstName(result.getString(2));
@@ -297,30 +329,45 @@ public class LogTools {
                 dbCustomer.setAddress(result.getString(6));
                 dbCustomer.setEmail(result.getString(7));
             }
-            if (type.equals("firstName") && !dbCustomer.getFirstName().equals(editCustomer.getFirstName())) {
-                change = ("First name: " + dbCustomer.getFirstName() + " was changed to: " + editCustomer.getFirstName());
+            if (type.equals("firstName") && !dbCustomer.getFirstName().
+                    equals(editCustomer.getFirstName())) {
+                change = ("First name: " + dbCustomer.getFirstName() 
+                        + " was changed to: " + editCustomer.getFirstName());
             }
-            if (type.equals("lastName") && !dbCustomer.getLastName().equals(editCustomer.getLastName())) {
-                change = ("Last name: " + dbCustomer.getLastName() + " was changed to: " + editCustomer.getLastName());
+            if (type.equals("lastName") && !dbCustomer.getLastName().
+                    equals(editCustomer.getLastName())) {
+                change = ("Last name: " + dbCustomer.getLastName() 
+                        + " was changed to: " + editCustomer.getLastName());
             }
-            if (type.equals("gender") && !dbCustomer.getGender().equals(editCustomer.getGender())) {
-                change = ("Gender: " + dbCustomer.getGender() + " was changed to: " + editCustomer.getGender());
+            if (type.equals("gender") && !dbCustomer.getGender().
+                    equals(editCustomer.getGender())) {
+                change = ("Gender: " + dbCustomer.getGender() 
+                        + " was changed to: " + editCustomer.getGender());
             }
-            if (type.equals("phone") && !dbCustomer.getPhone().equals(editCustomer.getPhone())) {
-                change = ("Phone number: " + dbCustomer.getPhone() + " was changed to: " + editCustomer.getPhone());
+            if (type.equals("phone") && !dbCustomer.getPhone().
+                    equals(editCustomer.getPhone())) {
+                change = ("Phone number: " + dbCustomer.getPhone() 
+                        + " was changed to: " + editCustomer.getPhone());
             }
-            if (type.equals("address") && !dbCustomer.getAddress().equals(editCustomer.getAddress())) {
-                change = ("Address: " + dbCustomer.getAddress() + " was changed to: " + editCustomer.getAddress());
+            if (type.equals("address") && !dbCustomer.getAddress().
+                    equals(editCustomer.getAddress())) {
+                change = ("Address: " + dbCustomer.getAddress() 
+                        + " was changed to: " + editCustomer.getAddress());
             }
-            if (type.equals("email") && !dbCustomer.getEmail().equals(editCustomer.getEmail())) {
-                change = ("Email: " + dbCustomer.getEmail() + " was changed to: " + editCustomer.getEmail());
+            if (type.equals("email") && !dbCustomer.getEmail().
+                    equals(editCustomer.getEmail())) {
+                change = ("Email: " + dbCustomer.getEmail() 
+                        + " was changed to: " + editCustomer.getEmail());
             }
             db.close();
         }
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
-            String query = ("INSERT INTO logcustomer (logdate,customerid,employeeid,logtext) VALUES (?,?,?,?)");
+            String query = ("INSERT INTO logcustomer "
+                    + "(logdate,customerid,employeeid,logtext)"
+                    + " VALUES (?,?,?,?)");
             PreparedStatement preparedStatement = (PreparedStatement) db.prepareStatement(query);
-            preparedStatement.setString(1, (new DateConverter().convertJavaDateToSqlDate(new java.util.Date())));
+            preparedStatement.setString(1, (
+                    new DateConverter().convertJavaDateToSqlDate(new java.util.Date())));
             preparedStatement.setInt(2, editCustomer.getId());
             preparedStatement.setInt(3, currentUser.getId());
             preparedStatement.setString(4, change);
