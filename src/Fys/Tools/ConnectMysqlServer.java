@@ -9,7 +9,6 @@ import java.sql.SQLException;
  * that can be used to make connections with the Database.
  *
  * @author Daan Befort, IS106-2
- * @author Javadoc: John Ghatas, IS106-2
  */
 public class ConnectMysqlServer {
 
@@ -26,7 +25,8 @@ public class ConnectMysqlServer {
      */
     public Connection dbConnect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fys", "root", "PASSWORD");
+        connection = DriverManager.getConnection(
+                "jdbc:mysql://127.0.0.1:3306/fys", "root", "12qw12qw");
         return connection;
     }
 }

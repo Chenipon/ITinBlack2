@@ -24,7 +24,6 @@ public class AccountTabelView {
     
     /**
      * This method grabs the id of the user, used to create the table.
-     * @see getId()
      * @return
      */
     public int getId() {
@@ -113,7 +112,8 @@ public class AccountTabelView {
     }
 
     /**
-     * This method gets the state of the user's account (disabled or active), used to create the table.
+     * This method gets the state of the user's account (disabled or active), 
+     * used to create the table.
      * @see getActive()
      * @return
      */
@@ -122,7 +122,8 @@ public class AccountTabelView {
     }
 
     /**
-     * This method sets the state of the user's account (disabled or active), used to create the table.
+     * This method sets the state of the user's account (disabled or active), 
+     * used to create the table.
      * @see setActive()
      * @param active
      */
@@ -163,7 +164,8 @@ public class AccountTabelView {
 
     /**
      * This method gets the list of accounts, and the details
-     * After that has been done, the method generates a table containing those details, this method reacts to the user's search terms.
+     * After that has been done, the method generates a table containing those details, 
+     * this method reacts to the user's search terms.
      * @see getAccountList()
      * @param searchTerm
      * @return
@@ -174,7 +176,8 @@ public class AccountTabelView {
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
-            result = statement.executeQuery("SELECT * FROM user WHERE username LIKE '%" + searchTerm + "%' OR firstname LIKE '%" + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%'");
+            result = statement.executeQuery("SELECT * FROM user WHERE username LIKE "
+                    + "'%" + searchTerm + "%' OR firstname LIKE '%" + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%'");
             while (result.next()) {
                 AccountTabelView foundUsers = new AccountTabelView();
                 Role role = new Role().getRoleById(result.getInt(6));
