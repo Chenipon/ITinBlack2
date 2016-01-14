@@ -394,7 +394,7 @@ public class LuggageEditController implements Initializable {
             if (connectedCustomer.getId() != 0) {
                 document.add(new Paragraph(" "));
                 document.add(new Paragraph("Connected customer", fontbold));
-                document.add(new Paragraph("Name: " + connectedCustomer.getFullname()));
+                document.add(new Paragraph("Name: " + connectedCustomer.getFullName()));
                 document.add(new Paragraph("Address: " + connectedCustomer.getAddress()));
                 document.add(new Paragraph("Email: " + connectedCustomer.getEmail()));
                 document.add(new Paragraph("Telephone number: " + connectedCustomer.getPhone()));

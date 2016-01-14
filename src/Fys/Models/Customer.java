@@ -106,7 +106,7 @@ public class Customer {
      *
      * @return the full name of a Customer object.
      */
-    public String getFullname() {
+    public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
 
