@@ -21,12 +21,12 @@ public class ConnectMysqlServer {
      *
      * @return the Connection object that can be used to connect with the
      * Database.
-     * @throws ClassNotFoundException when the JBDC could not be loaded
-     * @throws SQLException when the Database could not be contacted.
+     * @throws ClassNotFoundException when the jdbc could not be found.
+     * @throws SQLException when an SQL exception occured.
      */
     public Connection dbConnect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fys", "root", "12qw12qw");
+        connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fys", "root", "PASSWORD");
         return connection;
     }
 }
