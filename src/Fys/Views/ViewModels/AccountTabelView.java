@@ -4,14 +4,16 @@ import Fys.Models.Role;
 import Fys.Tools.ConnectMysqlServer;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
+ * This class is used to fill data into a TableView, which is displayed on the
+ * AccountOverview screen.
  *
- * @author Daan
- * @author Javadoc: John Ghatas, IS106-2
+ * @author Daan Befort, IS106-2
  */
 public class AccountTabelView {
 
@@ -21,124 +23,133 @@ public class AccountTabelView {
     private String lastname;
     private String role;
     private String active;
-    
+
     /**
-     * This method grabs the id of the user, used to create the table.
-     * @return
+     * public int getId() gets the id of the User object.
+     *
+     * @return the id of the User object. This is the Primary Key in the
+     * database.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * This method sets the id of the user, used to create the table.
-     * @see setId()
-     * @param id
+     * public void setId(int id) sets the id of the User object.
+     *
+     * @param id the id of the User object. This is the Primary Key in the
+     * database.
      */
     public void setId(int id) {
         this.id = id;
     }
-    
+
     /**
-     * This method gets the username of the user, used to create the table.
-     * @see getUsername()
-     * @return
+     * public String getUsername() gets the username of the User object.
+     *
+     * @return the username of the User object.
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * This method sets the username of the user, used to create the table.
-     * @see setUsername()
-     * @param username
+     * public void setUsername(String username) sets the username of the User
+     * object.
+     *
+     * @param username the username of the User object.
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
-     * This method gets the first name of the user, used to create the table.
-     * @see getFirstname()
-     * @return
+     * public String getFirstname() gets the first name of the User object.
+     *
+     * @return the first name of the User object.
      */
     public String getFirstname() {
         return firstname;
     }
 
     /**
-     * This method sets the first name of the user, used to create the table.
-     * @see setFirstname()
-     * @param firstname
+     * public void setFirstname(String firstname) sets the first name of the
+     * User object.
+     *
+     * @param firstname the first name of the User object.
      */
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
     /**
-     * This method gets the last name of the user, used to create the table.
-     * @see getLastname()
-     * @return
+     * public String getLastname() gets the last name of the User object.
+     *
+     * @return the last name of the User object.
      */
     public String getLastname() {
         return lastname;
     }
 
     /**
-     * This method sets the last name of the user, used to create the table.
-     * @see setLastname()
-     * @param lastname
+     * public void setLastname(String lastname) sets the last name of the User
+     * object.
+     *
+     * @param lastname the last name of the User object.
      */
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
     /**
-     * This method gets the role of the user, used to create the table.
-     * @see getRole()
-     * @return
+     * public String getRole() gets the role of the User object.
+     *
+     * @return the role name of the User object.
      */
     public String getRole() {
         return role;
     }
 
     /**
-     * This method sets the role of the user, used to create the table.
-     * @see setRole()
-     * @param role
+     * public void setRole(String role) sets the role of the User object.
+     *
+     * @param role the role name of the User object.
      */
     public void setRole(String role) {
         this.role = role;
     }
 
     /**
-     * This method gets the state of the user's account (disabled or active), 
-     * used to create the table.
-     * @see getActive()
-     * @return
+     * public String getActive() gets the state of the User object (disabled or
+     * active).
+     *
+     * @return the activity of the User object.
      */
     public String getActive() {
         return active;
     }
 
     /**
-     * This method sets the state of the user's account (disabled or active), 
-     * used to create the table.
-     * @see setActive()
-     * @param active
+     * public void setActive(String active) sets the state of the User object
+     * (disabled or active).
+     *
+     * @param active the activity of the User object.
      */
     public void setActive(String active) {
         this.active = active;
     }
 
     /**
-     * This method gets the list of accounts, and the details
-     * After that has been done, the method generates a table containing those details.
-     * @see getAccountList()
-     * @return
-     * @throws Exception
+     * public ObservableList<AccountTabelView> getAccountList() gets the list of
+     * accounts from the database.
+     *
+     * @return an ObservableList containing a list of all Users from the
+     * database.
+     * @throws SQLException when an SQL exception occurred.
+     * @throws ClassNotFoundException when the jdbc could not be found.
      */
-    public ObservableList<AccountTabelView> getAccountList() throws Exception {
+    public ObservableList<AccountTabelView> getAccountList()
+            throws SQLException, ClassNotFoundException {
         ObservableList<AccountTabelView> users = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
@@ -163,21 +174,25 @@ public class AccountTabelView {
     }
 
     /**
-     * This method gets the list of accounts, and the details
-     * After that has been done, the method generates a table containing those details, 
-     * this method reacts to the user's search terms.
-     * @see getAccountList()
-     * @param searchTerm
-     * @return
-     * @throws Exception
+     * public ObservableList<AccountTabelView> getAccountList(String searchTerm)
+     * gets the list of accounts from the database based of a search term.
+     *
+     * @param searchTerm the search term.
+     * @return an ObservableList containing a list of all Users from the
+     * database.
+     * @throws SQLException when an SQL exception occurred.
+     * @throws ClassNotFoundException when the jdbc could not be found.
      */
-    public ObservableList<AccountTabelView> getAccountList(String searchTerm) throws Exception {
+    public ObservableList<AccountTabelView> getAccountList(String searchTerm)
+            throws SQLException, ClassNotFoundException {
         ObservableList<AccountTabelView> users = FXCollections.observableArrayList();
         try (Connection db = new ConnectMysqlServer().dbConnect()) {
             Statement statement = db.createStatement();
             ResultSet result;
             result = statement.executeQuery("SELECT * FROM user WHERE username LIKE "
-                    + "'%" + searchTerm + "%' OR firstname LIKE '%" + searchTerm + "%' OR lastname LIKE '%" + searchTerm + "%'");
+                    + "'%" + searchTerm + "%' OR firstname LIKE '%"
+                    + searchTerm + "%' OR lastname LIKE '%"
+                    + searchTerm + "%'");
             while (result.next()) {
                 AccountTabelView foundUsers = new AccountTabelView();
                 Role role = new Role().getRoleById(result.getInt(6));
